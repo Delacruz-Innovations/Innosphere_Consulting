@@ -1,0 +1,230 @@
+import React, { useState } from 'react';
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Facebook, 
+  Twitter, 
+  Linkedin, 
+  Instagram, 
+  Youtube,
+  Send
+} from 'lucide-react';
+import Logo from '../assets/Logo.png'
+
+const Footer = () => {
+const [email, setEmail] = useState('');
+const [subscribed, setSubscribed] = useState(false);
+const [isSubmitting, setIsSubmitting] = useState(false);
+const [error, setError] = useState('');
+
+const handleSubscribe = async (e) => {
+  e.preventDefault();
+  
+  if (!email) {
+    setError('Please enter your email');
+    setTimeout(() => setError(''), 3000);
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setError('Please enter a valid email');
+    setTimeout(() => setError(''), 3000);
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError('');
+
+  try {
+    // Your Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxnE1s_tnRV4lNJOcqtHqBNpsxvxnqd2tyNF-7bUkjB/dev';
+
+    // Send to Google Sheets
+    const response = await fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        subscribedAt: new Date().toLocaleString(),
+        status: 'active'
+      })
+    });
+
+    // Since mode is 'no-cors', we assume success if no error is thrown
+    console.log('Newsletter subscription successful');
+    setSubscribed(true);
+    setEmail('');
+    
+    // Hide success message after 5 seconds
+    setTimeout(() => setSubscribed(false), 5000);
+    
+  } catch (error) {
+    console.error('Error subscribing to newsletter: ', error);
+    setError('Failed to subscribe. Please try again.');
+    setTimeout(() => setError(''), 3000);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+  const socialLinks = [
+    { icon: Facebook, href: 'https://facebook.com', name: 'Facebook' },
+    { icon: Twitter, href: 'https://twitter.com', name: 'Twitter' },
+    { icon: Linkedin, href: 'https://linkedin.com', name: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com', name: 'Instagram' },
+    { icon: Youtube, href: 'https://youtube.com', name: 'YouTube' }
+  ];
+
+  const contactInfo = [
+    { 
+      icon: Mail, 
+      text: 'info@innosphare.com',
+      href: 'mailto:info@innosphare.com'
+    },
+    { 
+      icon: Phone, 
+      text: '+971 4 123 4567',
+      href: 'tel:+97141234567'
+    },
+    { 
+      icon: MapPin, 
+      text: 'Dubai, UAE',
+      href: 'https://maps.app.goo.gl/Hk6C2E1Eeu7dSKUg8'
+    }
+  ];
+
+  return (
+    <footer className="bg-gray-950 relative overflow-hidden border-t border-gray-800">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-transparent to-purple-950/20"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Main Footer Content */}
+        <div className="py-10 sm:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            {/* Left Side - Company Info & Newsletter */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Company Logo */}
+              <a href="/" className="inline-flex items-center gap-2.5">
+                <img src={Logo} className='w-44 h-14 object-cover' alt="" />
+              </a>
+              
+              {/* Description */}
+              <p className="text-gray-400 text-sm max-w-md leading-relaxed">
+                Designing high-performance organizations through innovative structures and cultures that drive excellence.
+              </p>
+
+              {/* Newsletter */}
+           <div className="max-w-md">
+  <h3 className="text-white font-semibold text-base mb-3">
+    Stay Updated
+  </h3>
+  <form onSubmit={handleSubscribe} className="relative">
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="Enter your email"
+      required
+      disabled={isSubmitting}
+      className="w-full px-4 py-2.5 pr-12 bg-gray-900/50 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-gray-900 transition-all disabled:opacity-50"
+    />
+    <button
+      type="submit"
+      disabled={isSubmitting}
+      className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-500 text-white p-2 rounded-md hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+    >
+      <Send className="w-4 h-4" />
+    </button>
+  </form>
+  {subscribed && (
+    <p className="text-green-400 text-xs mt-2 animate-pulse">
+      ✓ Successfully subscribed!
+    </p>
+  )}
+  {error && (
+    <p className="text-red-400 text-xs mt-2">
+      {error}
+    </p>
+  )}
+</div>
+
+              {/* Contact Info - Compact */}
+              <div className="flex flex-wrap gap-4 sm:gap-6 pt-2">
+                {contactInfo.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={index}
+                      target='_blank'
+                      href={item.href}
+                      className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors group"
+                    >
+                      <Icon className="w-4 h-4 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{item.text}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Side - Social Links */}
+            <div className="lg:col-span-5 lg:text-right">
+              <h3 className="text-white font-semibold text-base mb-4 lg:mb-5">
+                Connect With Us
+              </h3>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                {socialLinks.map((social, index) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30"
+                      aria-label={social.name}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="py-5 border-t border-gray-800/50">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <p className="text-gray-500">
+              © {new Date().getFullYear()} Innosphare Consulting. All rights reserved.
+            </p>
+            
+            <div className="flex items-center gap-4">
+              <a href="/privacy-policy" className="text-gray-500 hover:text-blue-400 transition-colors">
+                Privacy
+              </a>
+              <span className="text-gray-700">•</span>
+              <a href="/terms" className="text-gray-500 hover:text-blue-400 transition-colors">
+                Terms
+              </a>
+              <span className="text-gray-700">•</span>
+              <a href="/cookies" className="text-gray-500 hover:text-blue-400 transition-colors">
+                Cookies
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
