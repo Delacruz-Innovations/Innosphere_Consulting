@@ -14,7 +14,7 @@ import InsightsList from './Pages/InsightsList'
 import InsightDetails from './Components/InsightDetails'
 import ContactPage from './Pages/ContactPage'
 import ConsultantForm from './Pages/ConsultantForm'
-import { Facebook, MessageCircle, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, MessageCircle, Instagram, Linkedin, Mail, Phone, MapPin, Twitter } from 'lucide-react';
 
 const App = () => {
   return (
@@ -40,24 +40,24 @@ const App = () => {
       </Routes>
         {/* Social Media Sidebar */}
       <div className="fixed left-0 top-1/2 transform -translate-y-1/2 flex flex-col gap-3 z-50">
-        <a href="#"
+        <a href="https://web.facebook.com/"
         target="_blank"
          rel="noopener noreferrer"
                       className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30">
           <Facebook size={20} className="text-white" />
         </a>
-        <a href="#"
+        <a href="https://x.com/"
         target="_blank"
         rel="noopener noreferrer"
                       className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30">
-          <MessageCircle size={20} className="text-white" />
+          <Twitter size={20} className="text-white" />
         </a>
-        <a href="#"target="_blank"
+        <a href="https://www.instagram.com/"target="_blank"
          rel="noopener noreferrer"
                       className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30">
           <Instagram size={20} className="text-white" />
         </a>
-        <a href="#"
+        <a href="https://www.linkedin.com/"
         target="_blank"
          rel="noopener noreferrer"
                       className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30">
