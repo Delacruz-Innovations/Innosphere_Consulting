@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, X } from 'lucide-react';
-import image from '../assets/hero.jpeg'
+import image from '../assets/hero.png'
 import { gsap } from 'gsap';
 const Hero = () => {
   const [videoOpen, setVideoOpen] = useState(false);
