@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Minimize2 } from 'lucide-react';
-import Mia from '../assets/amari.png'
+import Mia from '../assets/mia.png'
 
 
 // KNOWLEDGE BASE - Innosphere Consulting
@@ -12,7 +12,7 @@ const knowledgeBase = {
   
   services: {
     keywords: ['service', 'offer', 'what do you do', 'help with', 'provide'],
-    response: `Our Service:
+    response: `Our Services:
 
 • Digital Transformation & Process Automation
 • SaaS/PaaS Development
