@@ -11,8 +11,8 @@ const AboutPage = () => {
         {/* <HeroSection /> */}
         <AboutUs />
         <StrategyAccordion />
-        <LeadershipTeam />
         <MissionVisionValues />
+        <LeadershipTeam />
     </>
   )
 }

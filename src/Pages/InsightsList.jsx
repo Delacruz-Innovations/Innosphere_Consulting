@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import insightsData from '../Components/insightsData';
 
 const InsightsList = () => {
   const navigate = useNavigate();
@@ -46,68 +47,8 @@ const InsightsList = () => {
     return () => observer.disconnect();
   }, []);
 
-  const insights = [
-    {
-      id: 1,
-      slug: 'digital-transformation-trends-2025',
-      title: "Digital Transformation Trends Shaping 2025",
-      category: "Technology & Innovation",
-      excerpt: "Explore the emerging technologies and strategies that are revolutionizing how businesses operate in an increasingly digital world.",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
-      date: "January 15, 2025",
-      readTime: "5 min read"
-    },
-    {
-      id: 2,
-      slug: 'strategic-planning-post-pandemic',
-      title: "Strategic Planning in a Post-Pandemic World",
-      category: "Strategy & Planning",
-      excerpt: "How organizations are adapting their strategic frameworks to navigate uncertainty and build resilience.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-      date: "January 10, 2025",
-      readTime: "7 min read"
-    },
-    {
-      id: 3,
-      slug: 'ai-operations-efficiency',
-      title: "Leveraging AI for Operational Excellence",
-      category: "Operations & Efficiency",
-      excerpt: "Practical applications of artificial intelligence in streamlining operations and enhancing productivity.",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
-      date: "January 5, 2025",
-      readTime: "6 min read"
-    },
-    {
-      id: 4,
-      slug: 'sustainable-business-practices',
-      title: "Building Sustainable Business Models",
-      category: "Sustainability",
-      excerpt: "Integrating environmental and social governance into core business strategy for long-term success.",
-      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80",
-      date: "December 28, 2024",
-      readTime: "8 min read"
-    },
-    {
-      id: 5,
-      slug: 'data-driven-decision-making',
-      title: "The Power of Data-Driven Decision Making",
-      category: "Analytics & Insights",
-      excerpt: "Transform your organization with advanced analytics and business intelligence strategies.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      date: "December 20, 2024",
-      readTime: "5 min read"
-    },
-    {
-      id: 6,
-      slug: 'change-management-best-practices',
-      title: "Change Management: Leading Through Transformation",
-      category: "People & Culture",
-      excerpt: "Essential frameworks and approaches for successfully managing organizational change initiatives.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-      date: "December 15, 2024",
-      readTime: "6 min read"
-    }
-  ];
+  // Get insights from imported data
+  const insights = insightsData.insights;
 
   const handleInsightClick = (slug) => {
     navigate(`/insights/${slug}`);
@@ -132,7 +73,7 @@ const InsightsList = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Insights
             </h1>
-            <div className="w-16 h-0.5 bg-blue-500 mb-6 "></div>
+            <div className="w-16 h-0.5 bg-blue-500 mb-6"></div>
             <p className="text-gray-400 text-lg leading-relaxed max-w-3xl hidden">
               Expert perspectives and thought leadership on the latest trends, strategies, and innovations 
               shaping the future of business consulting.
@@ -161,7 +102,7 @@ const InsightsList = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                   <div className="absolute top-6 left-6">
                     <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded text-sm font-bold shadow-lg border border-gray-700">
-                      Article #{String(insight.id).padStart(2, '0')}
+                      {insight.featured ? 'Featured' : 'Article'}
                     </span>
                   </div>
                 </div>

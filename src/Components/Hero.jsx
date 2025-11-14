@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, X } from 'lucide-react';
-import Navbar from './Navbar';
+import image from '../assets/hero.jpeg'
 import { gsap } from 'gsap';
 const Hero = () => {
   const [videoOpen, setVideoOpen] = useState(false);
@@ -78,7 +78,7 @@ useEffect(() => {
     1.2
   )
   .fromTo(
-    logosRef.current.children,
+    logosRef.current,
     { y: 50, opacity: 0 },
     { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
     1.5
@@ -127,15 +127,12 @@ const handleCloseVideo = () => {
     <div ref={heroRef} className="relative min-h-screen bg-black overflow-hidden">
       {/* Background with gradient overlay */}
       {/* Background Video */}
-<video 
-  autoPlay 
-  loop 
-  muted 
-  playsInline
-  className="absolute inset-0 w-full h-full object-cover opacity-30"
->
-  <source src="https://media.istockphoto.com/id/1646546807/video/manager-partnership-or-business-people-shaking-hands-in-meeting-b2b-negotiation-or-discussion.mp4?s=mp4-640x640-is&k=20&c=edAqTFgCZkUvn-UTNg7nngYn4xFdFra57qIfPqGbq0M=" type="video/mp4" />
-</video>
+<img
+src={image}
+alt='innnosphare'
+  className="absolute inset-0 w-full h-full object-cover opacity-30"/>
+
+
 
       {/* Animated background shapes */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4a7ba7]/10 rounded-full blur-3xl animate-pulse"></div>
@@ -186,7 +183,7 @@ const handleCloseVideo = () => {
 
             <div ref={titleRef} className="space-y-4">
              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white leading-tight tracking-tight">
-Empowering Digital Futures, Building Smarter Businesses, Securing Tomorrow.
+Empowering UAE Businesses to Scale Globally.
 
 </h1>
 
@@ -220,16 +217,9 @@ Empowering Digital Futures, Building Smarter Businesses, Securing Tomorrow.
         </div>
 
         {/* Client Logos */}
-        <div ref={logosRef} className="mt-10">
-          <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="h-12 flex items-center"><span className="text-white text-2xl font-bold">CHEVRON</span></div>
-            <div className="h-12 flex items-center"><span className="text-white text-2xl font-bold">ENEC</span></div>
-            <div className="h-12 flex items-center"><span className="text-white text-2xl font-bold">ARAMCO</span></div>
-            <div className="h-12 flex items-center"><span className="text-white text-2xl font-bold">SIEMENS</span></div>
-            <div className="h-12 flex items-center"><span className="text-white text-xl font-bold">WFP</span></div>
-            <div className="h-12 flex items-center"><span className="text-white text-lg">وزارة الاقتصاد</span></div>
-          </div>
-        </div>
+       <button className='mt-20 p-6 bg-[#0a1929] text-white font-semibold rounded-md text-xl'>
+        Book A 30 Minute Strategy Session
+       </button>
       </div>
 
       {/* Video Modal */}

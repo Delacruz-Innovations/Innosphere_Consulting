@@ -9,44 +9,44 @@ const overlayRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const leaders = [
-    {
-      id: 1,
-      name: "Alexandra Hayes",
-      title: "Chief Executive Officer",
-      specialty: "Strategic Vision & Growth",
-      image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500&h=500&fit=crop",
-      bio: "Alexandra brings 20+ years of executive leadership, having scaled three startups to successful exits. Her vision centers on sustainable growth and fostering innovation cultures.",
-      achievements: [
-        "Built $500M+ revenue organizations",
-        "Featured in Forbes Top 50 CEOs",
-        "Board member at 3 Fortune 500 companies"
-      ],
-      contact: {
-        email: "alexandra.hayes@company.com",
-        phone: "+1 (555) 123-4567",
-        location: "New York, NY"
-      },
-      color: "from-emerald-500 to-teal-600"
-    },
-    {
-      id: 2,
-      name: "James Park",
-      title: "Chief Technology Officer",
-      specialty: "AI & Cloud Architecture",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=500&fit=crop",
-      bio: "James is a pioneer in enterprise AI solutions with multiple patents in machine learning. He leads our technical strategy and product innovation initiatives.",
-      achievements: [
-        "15+ patents in AI/ML technologies",
-        "Former VP Engineering at major tech company",
-        "PhD in Computer Science from MIT"
-      ],
-      contact: {
-        email: "james.park@company.com",
-        phone: "+1 (555) 234-5678",
-        location: "San Francisco, CA"
-      },
-      color: "from-blue-500 to-indigo-600"
-    },
+   {
+  id: 1,
+  name: "Omoloye Boluwatife Amoss",
+  title: "Junior Software Developer",
+  specialty: "Expert Full Stack Developer",
+  image: "https://codex65.netlify.app/assets/ME-B-9Umdx_.jpg",
+  bio: "I am a passionate full stack developer dedicated to building seamless, intuitive, and high-performing digital experiences. I transform complex ideas into sleek, responsive, and scalable web applications — from pixel-perfect user interfaces to robust backend architectures. I believe every line of code tells a story, and I'm committed to making yours exceptional.",
+  achievements: [
+    "Developed and deployed over 15 high-quality websites in the last 5 years",
+    "Contributed to multiple successful projects both locally and internationally",
+    "Strong collaborator with excellent teamwork and communication skills"
+  ],
+  contact: {
+    email: "omoloyeamoss65@gmail.com",
+    phone: "+234 806 193 6756",
+    location: "Lagos, Nigeria"
+  },
+  color: "from-emerald-500 to-teal-600"
+},
+{
+  id: 2,
+  name: "Tosin Ojo",
+  title: "Founder & CEO",
+  specialty: "Senior Business Analyst",
+  image: "https://media.licdn.com/dms/image/v2/D4E03AQGl342D1FrLkw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1729240307610?e=1764806400&v=beta&t=lNlRIeJGT6fLWesFXySgDE8NTQToUCvnGBJiTkn1nBE",
+  bio: "A seasoned Senior Business Consultant delivering end-to-end, high-impact solutions and driving sustainable business growth for organizations across multiple industries and sectors.",
+  achievements: [
+    "Worked with reputable organizations both locally and internationally",
+    "Founder and CEO of multiple successful business ventures",
+    "Recognized for strategic leadership and strong decision-making expertise"
+  ],
+  contact: {
+    email: "delacruzltd.sam@gmail.com",
+    phone: "+44 7342 274470",
+    location: "United Arab Emirates"
+  },
+  color: "from-blue-500 to-indigo-600"
+},
     {
       id: 3,
       name: "Priya Sharma",
@@ -65,63 +65,6 @@ const overlayRef = useRef(null);
         location: "London, UK"
       },
       color: "from-purple-500 to-pink-600"
-    },
-    {
-      id: 4,
-      name: "Michael Torres",
-      title: "Chief Financial Officer",
-      specialty: "Financial Strategy & Operations",
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&h=500&fit=crop",
-      bio: "Michael oversees all financial operations with a focus on strategic investments and operational efficiency. His expertise spans private equity, M&A, and corporate finance.",
-      achievements: [
-        "Led 5 successful acquisitions totaling $2B",
-        "CPA and CFA charterholder",
-        "Former Partner at top consulting firm"
-      ],
-      contact: {
-        email: "michael.torres@company.com",
-        phone: "+1 (555) 456-7890",
-        location: "Chicago, IL"
-      },
-      color: "from-orange-500 to-red-600"
-    },
-    {
-      id: 5,
-      name: "Lisa Chen",
-      title: "Chief People Officer",
-      specialty: "Culture & Talent Development",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=500&fit=crop",
-      bio: "Lisa champions inclusive workplace cultures and innovative HR practices. She's passionate about employee development and building high-performing teams.",
-      achievements: [
-        "Built HR frameworks for 50+ companies",
-        "Keynote speaker on future of work",
-        "Reduced turnover by 60% organization-wide"
-      ],
-      contact: {
-        email: "lisa.chen@company.com",
-        phone: "+1 (555) 567-8901",
-        location: "Austin, TX"
-      },
-      color: "from-cyan-500 to-blue-600"
-    },
-    {
-      id: 6,
-      name: "Robert Adeyemi",
-      title: "Chief Product Officer",
-      specialty: "Product Innovation & UX",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=500&fit=crop",
-      bio: "Robert drives product strategy with a user-first approach. His background in design thinking and agile methodologies has delivered award-winning products.",
-      achievements: [
-        "Launched 20+ successful products",
-        "Red Dot Design Award winner",
-        "Former Director of Product at unicorn startup"
-      ],
-      contact: {
-        email: "robert.adeyemi@company.com",
-        phone: "+1 (555) 678-9012",
-        location: "Seattle, WA"
-      },
-      color: "from-yellow-500 to-orange-600"
     }
   ];
 
@@ -254,8 +197,8 @@ useEffect(() => {
 
         {/* Modal */}
         {activeProfile && (
-         <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center mt-30 justify-center p-4 bg-black/80 backdrop-blur-md">
-            <div ref={modalRef} className="relative bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-800 shadow-2xl">
+         <div ref={overlayRef} className="fixed inset-0 z-50 flex items-center  pt-40 justify-center p-4 bg-black/80 backdrop-blur-md ">
+            <div ref={modalRef} className="relative bg-slate-900 w-full  max-w-3xl  max-h-[80vh] overflow-y-scroll no-scrollbar rounded-2xl border border-slate-800 shadow-2xl">
               {/* Header with gradient */}
               <div className={`relative bg-gradient-to-br ${activeProfile.color} p-8 sm:p-12`}>
                <button

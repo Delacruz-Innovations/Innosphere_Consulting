@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
-
+import caseStudiesDataObj from '../Components/caseStudiesData';
 const CaseStudiesList = () => {
   const heroRef = useRef(null);
   const cardsRef = useRef([]);
@@ -17,6 +17,7 @@ const CaseStudiesList = () => {
         heroRef.current.style.transform = 'translateY(0)';
       }, 100);
     }
+    
 
     const observerOptions = {
       threshold: 0.15,
@@ -44,59 +45,10 @@ const CaseStudiesList = () => {
     return () => observer.disconnect();
   }, []);
 
-  const caseStudies = [
-    {
-      id: 1,
-      slug: 'strategic-plan-development',
-      title: "Strategic Plan Development",
-      category: "Strategy & Planning",
-      excerpt: "A subsidiary of a leading national energy company required a strategic execution plan to kick off its journey to spin-off as a standalone private enterprise.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
-    },
-    {
-      id: 2,
-      slug: 'operational-excellence-sla',
-      title: "Operational Excellence through SLA",
-      category: "Operations & Efficiency",
-      excerpt: "Development of a comprehensive service-level agreement to enhance operational efficiency at the enterprise level.",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
-    },
-    {
-      id: 3,
-      slug: 'nuclear-energy-financial-model',
-      title: "Nuclear Energy Financial Model",
-      category: "Finance & Investment",
-      excerpt: "A build-finance-own-operate model to facilitate a new nuclear power plant integrated model.",
-      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80"
-    },
-    {
-      id: 4,
-      slug: 'digital-transformation-initiative',
-      title: "Digital Transformation Initiative",
-      category: "Technology & Innovation",
-      excerpt: "End-to-end digital transformation for a financial services company to modernize legacy systems and improve customer experience.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-    },
-    {
-      id: 5,
-      slug: 'supply-chain-optimization',
-      title: "Supply Chain Optimization",
-      category: "Operations & Efficiency",
-      excerpt: "Redesigning supply chain network for a manufacturing company to reduce costs and improve delivery times.",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80"
-    },
-    {
-      id: 6,
-      slug: 'change-management-program',
-      title: "Change Management Program",
-      category: "People & Culture",
-      excerpt: "Comprehensive change management initiative to support merger integration and cultural alignment.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
-    }
-  ];
+
 
   const handleCaseClick = (slug) => {
-    window.location.href = `/cases/${slug}`;
+    window.location.href = `/Innosphere_Consulting/cases/${slug}`;
   };
 
   const handleNavigation = (path) => {
@@ -104,6 +56,11 @@ const CaseStudiesList = () => {
     setMobileMenuOpen(false);
   };
 
+  const caseStudies = Object.entries(caseStudiesDataObj).map(([slug, data]) => ({
+  ...data,
+  slug: slug,
+  excerpt: data.overview.substring(0, 150) + '...' // Create excerpt from overview
+}));
   return (
     <div className="min-h-screen bg-gray-950">
    

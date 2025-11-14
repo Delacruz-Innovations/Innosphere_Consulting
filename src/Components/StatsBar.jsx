@@ -52,10 +52,10 @@ const StatsBar = () => {
   }, []);
 
   const stats = [
-    { number: 150, suffix: '+', label: 'Licensed Activities' },
-    { number: 25, suffix: '+', label: 'Years of Experience' },
-    { number: 50, suffix: '+', label: 'Industries Served' },
-    { number: 500, suffix: '+', label: 'Projects Completed' }
+    { number: 36, suffix: '+', label: 'Project Delivered' },
+    { number: 91, suffix: '%', label: 'Client Satisfaction' },
+    { number: 11, suffix: '+', label: 'Expert Consultants' },
+    { number: 15, suffix: '+', label: 'Years Of Expreince' }
   ];
 
   return (

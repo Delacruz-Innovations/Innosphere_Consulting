@@ -1,95 +1,105 @@
-  // All case studies data (keeping structure concise for space)
-  const caseStudiesData = {
-    'strategic-plan-development': {
-      id: 1,
-      title: "Strategic Plan Development",
-      category: "Strategy & Planning",
-      client: "National Energy Company",
-      duration: "18 months",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80",
-      overview: "A subsidiary of a leading national energy company required a strategic execution plan to kick off its journey to spin-off as a standalone private enterprise. With over 15,000 employees and $4B in annual revenue, the transition required comprehensive planning.",
-      details: {
-        situation: "Our client is one of the largest producers of electricity in the Middle East, contributing over 60% of total production in their region. The company needed to convert from a specialized energy supplier to an independent entity with diversified customer stratification.",
-        challenge: "The spin-off process presented multiple complex challenges:\n\n• Navigating intricate regulatory requirements while avoiding monopoly concerns\n• Meeting specific client risk investment criteria and stakeholder expectations\n• Streamlining operations at scale while maintaining business continuity\n• Addressing concerns from 15,000+ employees during the transition\n• Positioning the new entity for competitive success in a rapidly evolving market",
-        action: "Our approach combined strategic planning expertise with deep industry knowledge:\n\n• Conducted comprehensive stakeholder engagement across all organizational levels\n• Developed financial modeling and scenario planning for various market conditions\n• Performed technology infrastructure assessment and created modernization roadmap\n• Established regulatory compliance framework with legal and policy experts\n• Designed change management strategy with multi-channel communication plan",
-        result: "The strategic planning initiative delivered transformative outcomes:\n\n• Successfully launched as independent entity with strong market positioning\n• Achieved 23% improvement in operational efficiency within first year\n• Realized $150M in cost savings through optimized processes\n• Secured regulatory approval across all jurisdictions\n• Maintained 95% employee retention during transition period"
-      }
-    },
-    'operational-excellence-sla': {
-      id: 2,
-      title: "Operational Excellence through SLA",
-      category: "Operations & Efficiency",
-      client: "Telecommunications Provider",
-      duration: "10 months",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
-      overview: "Development of a comprehensive service-level agreement framework to enhance operational efficiency for a telecommunications provider serving over 8 million subscribers.",
-      details: {
-        situation: "A major telecommunications provider with operations spanning 12 regional offices needed to standardize service delivery across multiple departments.",
-        challenge: "The organization faced critical operational challenges:\n\n• Lack of unified service standards leading to inconsistent customer experiences\n• Internal conflicts between departments due to unclear responsibility boundaries\n• Average resolution times varying by 300% across different regions",
-        action: "We designed and implemented a comprehensive SLA framework:\n\n• Developed clear KPIs aligned with strategic business objectives\n• Created tiered response time commitments based on issue severity levels\n• Established escalation procedures with defined ownership at each level",
-        result: "The SLA framework implementation exceeded expectations:\n\n• 40% improvement in average service delivery times across all regions\n• 65% reduction in internal disputes and cross-departmental conflicts\n• Customer satisfaction scores increased from 67% to 89%"
-      }
-    },
-    'nuclear-energy-financial-model': {
-      id: 3,
-      title: "Nuclear Energy Financial Model",
-      category: "Finance & Investment",
-      client: "Government Energy Authority",
-      duration: "24 months",
-      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80",
-      overview: "A sophisticated build-finance-own-operate (BFOO) financial model attracting $2.5B in private investment for nuclear power plant development.",
-      details: {
-        situation: "A government energy authority embarked on an ambitious new-build nuclear energy program requiring a comprehensive financial model. The project represented a $5.8 billion investment over a 10-year construction period.",
-        challenge: "The nuclear project presented unique financial complexities:\n\n• Complex capital requirements spanning multiple decades\n• Long-term ROI calculations requiring sophisticated modeling\n• Intricate regulatory frameworks with evolving compliance requirements",
-        action: "We developed a groundbreaking BFOO financial model:\n\n• Multi-phase capital structure with staged investment milestones\n• Sophisticated risk-sharing mechanisms between government and private investors\n• Revenue guarantee structures ensuring investor returns",
-        result: "The financial model achieved remarkable outcomes:\n\n• Successfully secured $2.5B in private investment commitments\n• Demonstrated viable 25-year returns meeting all investor hurdle rates\n• Framework now serves as template for 4 additional regional projects"
-      }
-    },
-    'digital-transformation-initiative': {
-      id: 4,
-      title: "Digital Transformation Initiative",
-      category: "Technology & Innovation",
-      client: "Regional Banking Institution",
-      duration: "18 months",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
-      overview: "End-to-end digital transformation modernizing 20+ year old legacy systems for a bank with 85 branches and $3.2B in assets.",
-      details: {
-        situation: "A regional bank faced an existential threat from digital-first competitors. The institution struggled with legacy mainframe systems, manual processes, and declining customer satisfaction.",
-        challenge: "The bank confronted critical modernization challenges:\n\n• Outdated infrastructure running on 20+ year old mainframe systems\n• Critical business data trapped in isolated, siloed databases\n• Need to maintain 24/7 operational continuity during transformation",
-        action: "We executed a comprehensive phased digital transformation:\n\n• Cloud migration strategy with carefully designed hybrid architecture\n• API-first integration layer connecting all disparate systems\n• Modern mobile banking platform with biometric security features",
-        result: "The digital transformation delivered exceptional outcomes:\n\n• 85% reduction in transaction processing time (3 days to 4 hours)\n• 120% increase in mobile banking adoption (25% to 55%)\n• $12M in annual operational cost savings"
-      }
-    },
-    'supply-chain-optimization': {
-      id: 5,
-      title: "Supply Chain Optimization",
-      category: "Operations & Efficiency",
-      client: "Manufacturing Company",
-      duration: "14 months",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80",
-      overview: "Comprehensive supply chain redesign reducing costs by 30% and improving on-time delivery from 72% to 97%.",
-      details: {
-        situation: "A manufacturing company with 8 distributed facilities generated $450M in annual revenue but faced mounting challenges. Supply chain inefficiencies were costing approximately $45M annually.",
-        challenge: "The supply chain presented systemic challenges:\n\n• Complex multi-tier supplier network with over 200 vendors\n• Lack of real-time visibility into inventory levels and shipment status\n• $18M in working capital tied up in unnecessary safety stock",
-        action: "We conducted comprehensive end-to-end supply chain transformation:\n\n• Network optimization analysis using advanced modeling techniques\n• Demand forecasting tools leveraging machine learning algorithms\n• Warehouse consolidation (from 12 to 7 facilities)",
-        result: "The supply chain optimization delivered substantial improvements:\n\n• 30% reduction in total logistics costs ($13.5M annually)\n• 50% decrease in stockout incidents\n• On-time delivery improved from 72% to 97%"
-      }
-    },
-    'change-management-program': {
-      id: 6,
-      title: "Change Management Program",
-      category: "People & Culture",
-      client: "Merged Enterprise",
-      duration: "18 months",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80",
-      overview: "Comprehensive change management supporting merger integration, achieving 90% employee retention and exceeding synergy targets by 15%.",
-      details: {
-        situation: "Two established companies merged to create a market leader with combined revenue of $1.8B and 5,200 employees. Previous industry merger experience had resulted in 40% average talent loss.",
-        challenge: "The merger integration faced critical people challenges:\n\n• Fundamentally conflicting corporate cultures (hierarchical vs. collaborative)\n• Widespread fear of job losses and organizational restructuring\n• Aggressive 18-month integration timeline pressured by investor expectations",
-        action: "We developed and executed comprehensive change management:\n\n• Cultural assessment identifying integration opportunities and risks\n• Multi-channel communication strategy (town halls, newsletters, intranet)\n• Change champion network of 120 volunteers across locations",
-        result: "The change management program exceeded all targets:\n\n• 90% employee retention (vs. 60% industry average)\n• Synergy targets exceeded by 15% ($45M vs. $39M target)\n• Merged entity achieved #1 market position within 2 years"
-      }
+// All case studies data with new format: Challenge → Approach → Result → Impact Metrics
+const caseStudiesData = {
+  'dbt-digital-transformation': {
+    id: 1,
+    title: "Department for Business & Trade – Digital Transformation",
+    category: "Digital Transformation",
+    client: "UK Government / Public Sector",
+    duration: "18 months",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80",
+    overview: "The department was undergoing a large-scale migration from DataHub to the GOV.UK backend, with multiple legacy systems and cross-border teams handling highly sensitive data. Processes were inconsistent, and stakeholders were frustrated by misaligned operations.",
+    details: {
+      challenge: "The department was undergoing a large-scale migration from DataHub to the GOV.UK backend, with multiple legacy systems and cross-border teams handling highly sensitive data:\n\n• Multiple legacy systems with inconsistent processes across departments\n• Cross-border teams handling highly sensitive data requiring strict security protocols\n• Stakeholder frustration due to misaligned operations and workflows\n• Need to comply with Government Digital Service (GDS) standards\n• Risk of disruption during large-scale migration\n• Complex coordination across multiple regions and functions",
+      approach: "Led process mapping initiatives to understand workflows, identify gaps, and streamline operations:\n\n• Conducted comprehensive process mapping to understand current workflows\n• Worked closely with cross-functional, multi-region teams to gather requirements\n• Validated requirements in line with Government Digital Service (GDS) standards\n• Identified gaps and opportunities for streamlining operations\n• Produced detailed migration artefacts to ensure seamless transitions\n• Implemented safeguards to minimize disruption during migration",
+      result: "The digital transformation delivered significant improvements in operational efficiency and data integrity:\n\n• Reduced process inconsistencies across regions\n• Improved operational efficiency and alignment between teams\n• Ensured secure and accurate data migration while protecting sensitive information\n• Delivered a foundation for scalable and efficient digital operations\n• Minimal disruption during the migration process\n• Future-ready framework supporting long-term digital transformation goals",
+      impactMetrics: [
+        { value: 'Improved', label: 'Operational alignment' },
+        { value: '100%', label: 'Data integrity maintained' },
+        { value: 'Future-Ready', label: 'Scalable framework' },
+        { value: 'Multi-Region', label: 'Teams coordinated' }
+      ]
     }
-  };
+  },
+  'nhs-crm-modernisation': {
+    id: 2,
+    title: "NHS England – Replatforming & CRM Modernisation",
+    category: "Healthcare Transformation",
+    client: "Healthcare / Public Sector",
+    duration: "14 months",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
+    overview: "NHS 111 online was outdated, with duplicated workflows that caused frustration for call handlers and administrators. The CRM system was under-optimised, leading to inefficiencies in managing clinical data.",
+    details: {
+      challenge: "NHS 111 online faced critical challenges impacting service delivery and user experience:\n\n• Outdated online service platform requiring modernization\n• Duplicated workflows causing frustration for call handlers and administrators\n• Under-optimised CRM system limiting efficiency\n• Inefficiencies in managing clinical data\n• Processing errors affecting data accuracy\n• Need for improved user experience across all touchpoints",
+      approach: "Acted as Lead Business Consultant to retool the online service and digitise the CRM:\n\n• Collaborated with clinical authors, IT teams, and administrators\n• Mapped workflows to identify friction points and inefficiencies\n• Co-created practical, user-focused solutions with stakeholders\n• Redesigned CRM workflows for optimal efficiency\n• Implemented digital tools to replace manual processes\n• Conducted user testing to ensure improved experience",
+      result: "The CRM modernisation delivered substantial improvements in user experience and operational efficiency:\n\n• Enhanced experience for call handlers and administrators\n• Streamlined workflows reducing processing errors\n• Improved data accuracy across clinical systems\n• Increased confidence among staff using new digital tools\n• Empowered teams with modern, intuitive interfaces\n• Foundation for continued digital innovation in healthcare",
+      impactMetrics: [
+        { value: 'Enhanced', label: 'User experience' },
+        { value: 'Reduced', label: 'Processing errors' },
+        { value: 'Increased', label: 'Staff confidence' },
+        { value: 'Improved', label: 'Data accuracy' }
+      ]
+    }
+  },
+  'easyjet-digital-retail': {
+    id: 3,
+    title: "Easyjet – Digital Retail & Ancillary Revenue Growth",
+    category: "Digital Commerce",
+    client: "Aviation / Travel",
+    duration: "12 months",
+    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80",
+    overview: "Easyjet needed to enhance personalization in digital retail to drive ancillary revenue. The challenge was aligning commercial strategy with IT systems and ensuring smooth adoption across teams.",
+    details: {
+      challenge: "Easyjet faced challenges in maximizing ancillary revenue through digital channels:\n\n• Need to enhance personalization in digital retail experiences\n• Misalignment between commercial strategy and IT systems\n• Limited customer behaviour insights affecting merchandising decisions\n• Cross-team collaboration gaps between commercial and IT departments\n• Lack of optimised workflows for personalization\n• Need for smooth adoption of new systems across teams",
+      approach: "Led the business analysis workstream for Datalex Merchandiser implementation:\n\n• Bridged the gap between commercial, IT, and vendor teams\n• Aligned requirements across all stakeholder groups\n• Mapped customer behaviour to inform personalization strategy\n• Optimised workflows for personalization and efficiency\n• Facilitated collaboration between commercial and IT teams\n• Ensured smooth system adoption through comprehensive training",
+      result: "The digital retail transformation delivered measurable revenue growth and improved collaboration:\n\n• Increased ancillary revenue through personalised retail experiences\n• Improved collaboration between commercial and IT teams\n• Empowered teams with clearer data and actionable insights\n• Measurable performance improvements across key metrics\n• Enhanced customer experience through better personalization\n• Foundation for continued digital commerce innovation",
+      impactMetrics: [
+        { value: 'Increased', label: 'Ancillary revenue' },
+        { value: 'Improved', label: 'Cross-team alignment' },
+        { value: 'Enhanced', label: 'Personalization' },
+        { value: 'Actionable', label: 'Data insights' }
+      ]
+    }
+  },
+  'sky-betting-crm-optimisation': {
+    id: 4,
+    title: "Sky Betting & Gaming – CRM & Operational Optimisation",
+    category: "Technology & Operations",
+    client: "Gambling / Technology",
+    duration: "10 months",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    overview: "Sky Betting & Gaming's CRM and operational systems were fragmented, limiting visibility into customer behaviour and slowing decision-making.",
+    details: {
+      challenge: "Sky Betting & Gaming faced operational challenges limiting business effectiveness:\n\n• Fragmented CRM and operational systems across the organization\n• Limited visibility into customer behaviour and lifecycle\n• Slow decision-making due to data gaps\n• Inefficient workflows reducing operational effectiveness\n• Lack of scalable, measurable processes\n• Need for improved analytics and insights capabilities",
+      approach: "Served as Lead Business Consultant, reviewing and optimising CRM workflows:\n\n• Reviewed existing CRM workflows to identify inefficiencies\n• Identified gaps in processes and data management\n• Implemented optimisations across CRM systems\n• Collaborated with senior stakeholders to design scalable processes\n• Aligned improvements with business objectives\n• Enhanced analytics capabilities for better insights",
+      result: "The CRM optimisation delivered significant improvements in efficiency and decision-making:\n\n• Streamlined CRM processes for better customer lifecycle management\n• Enhanced analytics and insights to support strategic decisions\n• Increased efficiency and collaboration across departments\n• Improved operational clarity throughout the organization\n• Data-driven decision-making capabilities established\n• Foundation for continued operational excellence",
+      impactMetrics: [
+        { value: 'Streamlined', label: 'CRM processes' },
+        { value: 'Enhanced', label: 'Analytics capabilities' },
+        { value: 'Increased', label: 'Operational efficiency' },
+        { value: 'Improved', label: 'Cross-dept collaboration' }
+      ]
+    }
+  },
+  'lloyds-systems-consolidation': {
+    id: 5,
+    title: "Lloyds Banking Group – Legacy Systems Consolidation",
+    category: "Systems Integration",
+    client: "Banking / Financial Services",
+    duration: "18 months",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80",
+    overview: "The bank managed 26 legacy loan systems, resulting in slow processing times, fragmented customer experiences, and high maintenance costs.",
+    details: {
+      challenge: "Lloyds Banking Group faced significant challenges with legacy systems:\n\n• Management of 26 separate legacy loan systems causing complexity\n• Slow processing times impacting customer service\n• Fragmented customer experiences across different systems\n• High maintenance costs for multiple redundant systems\n• Process redundancies reducing operational efficiency\n• Need for unified, efficient system architecture",
+      approach: "Led the analysis stream for the consolidation initiative as Senior Business Consultant:\n\n• Mapped end-to-end loan processes across all 26 systems\n• Identified and removed process redundancies\n• Collaborated across departments to define unified system requirements\n• Designed consolidated system architecture\n• Implemented strong change management practices\n• Ensured smooth transition with minimal business disruption",
+      result: "The systems consolidation delivered substantial improvements in efficiency and customer experience:\n\n• 30% reduction in loan processing times\n• Improved client experience and faster service delivery\n• Enhanced customer satisfaction through unified experience\n• Reduced operational and maintenance costs through consolidation\n• Simplified system landscape improving agility\n• Foundation for future digital banking innovations",
+      impactMetrics: [
+        { value: '30%', label: 'Faster processing times' },
+        { value: 'Improved', label: 'Customer satisfaction' },
+        { value: 'Reduced', label: 'Maintenance costs' },
+        { value: '26→1', label: 'Systems consolidated' }
+      ]
+    }
+  }
+};
 
-  export default caseStudiesData
+export default caseStudiesData;

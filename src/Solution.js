@@ -2,186 +2,148 @@ const solutionsData = {
   solutions: [
     {
       id: 1,
-      slug: 'technology-it-services',
-      icon: 'server',
-      title: 'Technology & IT Services',
-      shortDescription: 'Comprehensive IT consultancy and technology solutions for modern businesses.',
-      fullDescription: 'We provide end-to-end IT services spanning strategy, systems integration, web portals, custom software development, and cloud infrastructure. Our solutions are designed to meet regulatory compliance while driving digital transformation across industries including BFSI and healthcare. Transform your technology landscape with our expert-led approach to IT modernization.',
-      marketOpportunity: 'Many UAE firms lack regulated cloud playbooks; Innosphere offers compliant cloud adoption and PDPL-ready data strategies.',
-      licenses: ['IT Consultancy', 'Computer Service Activities', 'Web Portals', 'Programming', 'Software Publishing', 'Wholesale IT Equipment'],
-      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800',
-      approach: [
-        {
-          id: '01',
-          title: 'IT Strategy & Systems Integration',
-          description: 'We develop comprehensive IT strategies and seamlessly integrate systems to optimize your technology landscape and improve operational efficiency across your entire organization.'
-        },
-        {
-          id: '02',
-          title: 'Web Portals & Digital Platforms',
-          description: 'Build powerful web portals including e-commerce, intranet, and B2B platforms tailored to your business needs with seamless user experiences that drive engagement and conversions.'
-        },
-        {
-          id: '03',
-          title: 'Custom Application & Software Development',
-          description: 'Create bespoke software solutions with custom application development and programming services that perfectly align with your business requirements and scale with your growth.'
-        },
-        {
-          id: '04',
-          title: 'SaaS & Software Publishing',
-          description: 'Launch your software products with our SaaS and packaged software publishing services, bringing your solutions to market efficiently with proven go-to-market strategies.'
-        },
-        {
-          id: '05',
-          title: 'Compliance-Driven Cloud Solutions',
-          description: 'Deploy cloud landing zones specifically designed for BFSI and healthcare sectors, ensuring full regulatory compliance including PDPL-ready data strategies for UAE market requirements.'
-        },
-        {
-          id: '06',
-          title: 'IT Equipment & Software Supply',
-          description: 'Access wholesale supply of IT equipment and licensed software, providing you with the tools and resources needed to power your operations with enterprise-grade technology.'
-        }
-      ]
-    },
-    {
-      id: 2,
-      slug: 'cyber-security-consulting',
-      icon: 'shield',
-      title: 'Cyber Security Consulting',
-      shortDescription: 'Comprehensive cybersecurity solutions ensuring compliance and resilience.',
-      fullDescription: 'In an era of evolving cyber threats, protecting your digital assets is paramount. Our cybersecurity consulting services provide comprehensive risk assessments, compliance audits, and robust defense frameworks tailored to UAE regulations. We help organizations build cyber resilience through proactive security measures, incident response strategies, and continuous monitoring.',
-      marketOpportunity: 'With PDPL in force, BFSI, healthcare, and semi-government entities require localized compliance accelerators — an area underserved by generic IT shops.',
-      licenses: ['Cyber Security Consulting'],
-      image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800',
-      approach: [
-        {
-          id: '01',
-          title: 'Cyber Risk Assessments & Compliance Audits',
-          description: 'Conduct thorough cyber risk assessments and compliance audits against PDPL, GDPR, and ISO standards to identify vulnerabilities and ensure regulatory adherence across your digital infrastructure.'
-        },
-        {
-          id: '02',
-          title: 'Identity & Consent Management',
-          description: 'Implement robust identity and consent management solutions with seamless UAE PASS integration, ensuring secure authentication and compliance with local digital identity regulations.'
-        },
-        {
-          id: '03',
-          title: 'Data Security & Incident Response',
-          description: 'Deploy advanced data security frameworks and incident response protocols that protect sensitive information, minimize breach impact, and ensure business continuity during security events.'
-        },
-        {
-          id: '04',
-          title: 'Cyber Resilience & Awareness Programs',
-          description: 'Build organizational cyber resilience through comprehensive awareness programs, security training, and cultural transformation initiatives that make security everyone\'s responsibility.'
-        }
-      ]
-    },
-    {
-      id: 3,
-      slug: 'business-management-consulting',
-      icon: 'briefcase',
-      title: 'Business & Management Consulting',
-      shortDescription: 'Strategic consulting for sustainable growth and operational excellence.',
-      fullDescription: 'Drive transformational change with our business and management consulting services. We partner with organizations to develop winning strategies, optimize operations, and achieve measurable results. From corporate strategy to project feasibility, market entry analysis to workforce optimization, our consultants bring deep expertise and practical insights that translate into competitive advantage.',
-      marketOpportunity: 'Mid-market firms and SMEs lack access to affordable, structured management consulting, creating space for value-driven digital packs aligned to Dubai D33.',
+      slug: 'strategy-business-transformation',
+      icon: 'target',
+      title: 'Strategy & Business Transformation',
+      shortDescription: 'Helping organizations rethink business models, streamline operations, and achieve scalable growth.',
+      fullDescription: 'We partner with organizations to reimagine their business models, optimize operations, and create sustainable pathways for growth. Our strategic consulting approach combines deep industry expertise with practical implementation frameworks that deliver measurable results.',
+      marketOpportunity: 'Mid-market firms and SMEs lack access to affordable, structured strategy consulting that drives real business transformation.',
       licenses: ['Management Consultancies', 'Consultancy Project Development'],
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800',
       approach: [
         {
           id: '01',
-          title: 'Corporate Strategy & Project Feasibility',
-          description: 'Develop robust corporate strategies and conduct comprehensive project feasibility studies that align with your vision, mitigate risks, and maximize return on investment.'
+          title: 'Corporate Strategy & Business Model Innovation',
+          description: 'Develop robust corporate strategies and reimagine business models that create competitive advantage, unlock new revenue streams, and position your organization for long-term success.'
         },
         {
           id: '02',
-          title: 'Market Entry Analysis for UAE and GCC',
-          description: 'Navigate UAE and GCC markets with confidence through detailed market entry analysis, regulatory guidance, and localized strategies that accelerate market penetration and growth.'
+          title: 'Operational Excellence & Process Optimization',
+          description: 'Streamline operations through intelligent process reengineering, eliminating inefficiencies, reducing costs, and enhancing productivity across the entire value chain.'
         },
         {
           id: '03',
-          title: 'Process Reengineering & Workforce Optimization',
-          description: 'Transform operations through intelligent process reengineering and workforce optimization strategies that eliminate inefficiencies, reduce costs, and enhance productivity.'
+          title: 'Market Entry & Growth Strategy',
+          description: 'Navigate UAE and GCC markets with confidence through detailed market entry analysis, expansion strategies, and localized approaches that accelerate growth and market penetration.'
         },
         {
           id: '04',
-          title: 'CRM + WFM Integration for Measurable CX',
-          description: 'Integrate Customer Relationship Management and Workforce Management systems to deliver measurable customer experience improvements backed by data-driven insights and automation.'
+          title: 'Change Management & Organizational Development',
+          description: 'Lead successful transformation initiatives through structured change management, organizational design, and cultural development programs that ensure adoption and sustainability.'
+        }
+      ]
+    },
+    {
+      id: 2,
+      slug: 'digital-technology-transformation',
+      icon: 'server',
+      title: 'Digital & Technology Transformation',
+      shortDescription: 'Designing, developing, and deploying technology solutions that modernize and optimize performance.',
+      fullDescription: 'Transform your technology landscape with our comprehensive digital transformation services. We design, develop, and deploy cutting-edge technology solutions that modernize systems, optimize performance, and drive operational excellence across your organization.',
+      marketOpportunity: 'Many UAE firms lack regulated cloud playbooks and modern technology frameworks; we offer compliant, future-ready solutions.',
+      licenses: ['IT Consultancy', 'Computer Service Activities', 'Web Portals', 'Programming', 'Software Publishing'],
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800',
+      approach: [
+        {
+          id: '01',
+          title: 'Cloud Transformation & Infrastructure Modernization',
+          description: 'Deploy compliance-driven cloud solutions with PDPL-ready data strategies, modernizing infrastructure for BFSI and healthcare sectors while ensuring regulatory adherence.'
+        },
+        {
+          id: '02',
+          title: 'Custom Software Development & Integration',
+          description: 'Build bespoke applications and seamlessly integrate systems to optimize your technology landscape, improving efficiency and enabling digital-first operations.'
+        },
+        {
+          id: '03',
+          title: 'Web Portals & Digital Platforms',
+          description: 'Create powerful web portals including e-commerce, B2B platforms, and customer portals with seamless user experiences that drive engagement and business growth.'
+        },
+        {
+          id: '04',
+          title: 'Enterprise Architecture & Technology Strategy',
+          description: 'Develop comprehensive IT strategies and enterprise architecture frameworks that align technology investments with business objectives and future-proof your operations.'
         },
         {
           id: '05',
-          title: 'Project Development Consulting & PMO Support',
-          description: 'Accelerate project success with expert project development consulting and PMO support that ensures on-time, on-budget delivery with continuous stakeholder alignment.'
+          title: 'Cybersecurity & Compliance Integration',
+          description: 'Embed security by design with comprehensive cybersecurity frameworks, PDPL compliance, and risk management strategies that protect digital assets and build trust.'
+        }
+      ]
+    },
+    {
+      id: 3,
+      slug: 'product-leadership-scale-up-advisory',
+      icon: 'lightbulb',
+      title: 'Product Leadership & Scale-Up Advisory',
+      shortDescription: 'Embedding product-led thinking and leadership in fast-growing startups and enterprises.',
+      fullDescription: 'Accelerate your growth journey with our product leadership and scale-up advisory services. We embed product-led thinking, build high-performing product teams, and establish frameworks that enable fast-growing startups and enterprises to scale sustainably.',
+      marketOpportunity: 'Fast-growing companies need strategic product leadership guidance to scale effectively and compete in global markets.',
+      licenses: ['Management Consultancies', 'Software Publishing'],
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800',
+      approach: [
+        {
+          id: '01',
+          title: 'Product Strategy & Roadmap Development',
+          description: 'Define winning product strategies and develop actionable roadmaps that align with market needs, business goals, and resource capabilities for sustainable growth.'
+        },
+        {
+          id: '02',
+          title: 'Product-Led Growth & Go-to-Market',
+          description: 'Implement product-led growth strategies and execute effective go-to-market plans that drive user acquisition, retention, and expansion in target markets.'
+        },
+        {
+          id: '03',
+          title: 'Product Team Building & Operating Models',
+          description: 'Build high-performing product teams and establish product operating models that foster innovation, collaboration, and continuous delivery of customer value.'
+        },
+        {
+          id: '04',
+          title: 'Scale-Up Operations & Growth Advisory',
+          description: 'Navigate the complexities of scaling with expert advisory on funding readiness, operational excellence, and strategic partnerships that accelerate growth trajectories.'
+        },
+        {
+          id: '05',
+          title: 'Product Analytics & Data-Driven Decision Making',
+          description: 'Implement product analytics frameworks and establish data-driven decision-making processes that optimize product performance and customer outcomes.'
         }
       ]
     },
     {
       id: 4,
-      slug: 'marketing-branding-advertising',
-      icon: 'megaphone',
-      title: 'Marketing, Branding & Advertising',
-      shortDescription: 'Data-driven marketing strategies that build brands and deliver ROI.',
-      fullDescription: 'In today\'s competitive landscape, effective marketing requires the perfect blend of creativity and analytics. Our integrated marketing services combine end-to-end advertising campaigns, digital marketing excellence, and brand strategy with MarTech implementation. We create compelling narratives in both Arabic and English, backed by data analytics that prove measurable ROI and sustainable brand growth.',
-      marketOpportunity: 'Most competitors focus on creative-only execution; Innosphere bridges brand + MarTech + analytics for measurable ROI.',
-      licenses: ['Advertising', 'Web Portals', 'IT Services'],
-      image: 'https://images.unsplash.com/photo-1557838923-2985c318be48?w=800',
+      slug: 'capability-building-training',
+      icon: 'book-open',
+      title: 'Capability Building & Training',
+      shortDescription: 'Through CoreConnectAcademy, we build internal capability via Business Analysis and Product Leadership training programs.',
+      fullDescription: 'Build lasting organizational capability through CoreConnectAcademy. Our comprehensive training programs in Business Analysis and Product Leadership empower your teams with the skills, frameworks, and mindsets needed to drive continuous innovation and excellence.',
+      marketOpportunity: 'Organizations require structured capability development programs that bridge the gap between strategy and execution.',
+      licenses: ['Management Consultancies', 'IT Services'],
+      image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800',
       approach: [
         {
           id: '01',
-          title: 'End-to-End Advertising Campaigns',
-          description: 'Execute comprehensive advertising campaigns combining digital and traditional channels with strategic planning, creative excellence, and performance optimization for maximum impact.'
+          title: 'Business Analysis Training Programs',
+          description: 'Comprehensive Business Analysis training covering requirements gathering, process modeling, stakeholder management, and analytical techniques aligned with IIBA standards.'
         },
         {
           id: '02',
-          title: 'Digital Marketing Excellence',
-          description: 'Drive online growth through expert SEO, SEM, PPC, and programmatic advertising strategies that increase visibility, generate qualified leads, and maximize conversion rates.'
+          title: 'Product Leadership Development',
+          description: 'Product Leadership programs that develop product thinking, strategic decision-making, and leadership skills essential for driving product success in competitive markets.'
         },
         {
           id: '03',
-          title: 'Brand Identity & Reputation Management',
-          description: 'Build powerful brand identities and protect brand reputation through strategic positioning, consistent messaging, and proactive reputation management across all touchpoints.'
+          title: 'Agile & Digital Transformation Workshops',
+          description: 'Hands-on workshops in Agile methodologies, Scrum, Lean, and digital transformation practices that enable teams to deliver faster and adapt to changing business needs.'
         },
         {
           id: '04',
-          title: 'Creative Content Studio',
-          description: 'Produce engaging content for Arabic and English campaigns through our in-house creative studio, delivering culturally resonant stories that connect with diverse audiences.'
+          title: 'Custom Corporate Training & Upskilling',
+          description: 'Tailored corporate training programs designed to address specific organizational needs, close skill gaps, and build competitive advantage through continuous learning.'
         },
         {
           id: '05',
-          title: 'MarTech Implementation & Analytics',
-          description: 'Deploy advanced MarTech solutions including CRM, marketing automation, and analytics platforms that provide actionable insights and demonstrate clear ROI on marketing investments.'
-        }
-      ]
-    },
-    {
-      id: 5,
-      slug: 'software-innovation-labs',
-      icon: 'lightbulb',
-      title: 'Software & Innovation (Innosphere Labs)',
-      shortDescription: 'Cutting-edge AI solutions and proprietary software development.',
-      fullDescription: 'Innosphere Labs represents the future of software innovation. We develop proprietary SaaS solutions, implement AI pilots, and create data analytics platforms that drive intelligent decision-making. Our research and development partnerships ensure you stay ahead of technological curves, experimenting with emerging technologies in a safe, structured environment that accelerates innovation.',
-      marketOpportunity: 'UAE organisations are eager to experiment with AI but lack safe rollout frameworks — a gap Innosphere fills with AI-readiness packages.',
-      licenses: ['Computer Programming', 'Software Publishing', 'IT Services'],
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800',
-      approach: [
-        {
-          id: '01',
-          title: 'Proprietary SaaS Development & Publishing',
-          description: 'Design, develop, and publish proprietary SaaS solutions that solve real business problems with scalable architecture, intuitive interfaces, and enterprise-grade security.'
-        },
-        {
-          id: '02',
-          title: 'AI Pilots & Intelligent Systems',
-          description: 'Deploy AI pilot projects including chatbots, predictive analytics, and RAG systems that demonstrate tangible value while establishing safe, ethical AI adoption frameworks.'
-        },
-        {
-          id: '03',
-          title: 'Data Analytics & Decision Intelligence',
-          description: 'Build sophisticated data analytics and decision intelligence platforms that transform raw data into strategic insights, enabling confident, data-driven decision making.'
-        },
-        {
-          id: '04',
-          title: 'Research & Development Partnerships',
-          description: 'Collaborate through R&D partnerships that explore emerging technologies, validate innovative concepts, and co-create solutions that position your organization as an innovation leader.'
+          title: 'Certification Preparation & Career Development',
+          description: 'Structured certification preparation for industry-recognized credentials and career development pathways that enhance professional growth and organizational capability.'
         }
       ]
     }

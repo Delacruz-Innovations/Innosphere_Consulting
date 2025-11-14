@@ -1,13 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, Share2, Linkedin, Twitter, Facebook } from 'lucide-react';
-
-// Import the article data
-import articleData from '../articleData.json'
+import insightsData from '../Components/insightsData';
 
 const InsightDetails = () => {
+  const { slug } = useParams();
+  const navigate = useNavigate();
   const heroRef = useRef(null);
   const contentRef = useRef(null);
   const [activeSection, setActiveSection] = useState('');
+
+  // Find the article based on slug
+  const article = insightsData.insights.find(insight => insight.slug === slug);
+
+  // If article not found, redirect to insights list
+  useEffect(() => {
+    if (!article) {
+      navigate('/insights');
+    }
+  }, [article, navigate]);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -41,12 +52,26 @@ const InsightDetails = () => {
   }, []);
 
   const handleBack = () => {
-    window.history.back();
+    navigate('/insights');
   };
 
   const handleShare = (platform) => {
-    console.log(`Share on ${platform}`);
+    const url = window.location.href;
+    const text = article.title;
+    
+    const shareUrls = {
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+    };
+    
+    window.open(shareUrls[platform], '_blank', 'width=600,height=400');
   };
+
+  // If article is not found, return null (will redirect)
+  if (!article) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-950">
@@ -56,23 +81,23 @@ const InsightDetails = () => {
           ref={heroRef}
           className="container mx-auto px-6 pt-24 pb-16"
         >
-         
+       
 
           <div className="max-w-4xl pt-8">
             <span className="inline-block text-blue-400 text-sm font-semibold tracking-wider uppercase mb-4">
-              {articleData.category}
+              {article.category}
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              {articleData.title}
+              {article.title}
             </h1>
             <div className="flex flex-wrap items-center gap-6 text-gray-400 mb-8">
               <div className="flex items-center">
                 <Calendar size={18} className="mr-2" />
-                <span>{articleData.date}</span>
+                <span>{article.date}</span>
               </div>
               <div className="flex items-center">
                 <Clock size={18} className="mr-2" />
-                <span>{articleData.readTime}</span>
+                <span>{article.readTime}</span>
               </div>
             </div>
           </div>
@@ -88,8 +113,8 @@ const InsightDetails = () => {
               {/* Hero Image */}
               <div className="relative rounded-xl overflow-hidden mb-12 shadow-2xl">
                 <img
-                  src={articleData.heroImage}
-                  alt={articleData.title}
+                  src={article.image}
+                  alt={article.title}
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
@@ -98,95 +123,64 @@ const InsightDetails = () => {
               {/* Introduction */}
               <div data-section id="introduction" className="mb-12">
                 <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                  {articleData.introduction}
+                  {article.content.intro}
                 </p>
               </div>
 
               {/* Main Sections */}
-              {articleData.sections.map((section, index) => (
+              {article.content.sections.map((section, index) => (
                 <div 
                   key={index}
                   data-section 
-                  id={section.id}
+                  id={`section-${index}`}
                   className="mb-12"
                 >
                   <h2 className="text-3xl font-bold text-white mb-6">
                     {section.heading}
                   </h2>
                   
-                  {section.content.map((paragraph, pIndex) => (
-                    <p key={pIndex} className="text-gray-300 text-lg leading-relaxed mb-6">
-                      {paragraph}
-                    </p>
-                  ))}
-
-                  {section.image && (
-                    <div className="float-right ml-8 mb-6 w-full md:w-1/2 rounded-lg overflow-hidden shadow-xl">
-                      <img
-                        src={section.image}
-                        alt={section.heading}
-                        className="w-full h-auto"
-                      />
-                    </div>
-                  )}
-
-                  {section.points && (
-                    <div className="space-y-4 mb-6">
-                      {section.points.map((point, pointIndex) => (
-                        <div key={pointIndex} className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-                          <h3 className="text-xl font-bold text-blue-400 mb-3">
-                            {point.title}
-                          </h3>
-                          <p className="text-gray-300 leading-relaxed">
-                            {point.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                    {section.body}
+                  </p>
                 </div>
               ))}
 
-              {/* Conclusion */}
-              <div data-section id="conclusion" className="mb-12">
-                <h2 className="text-3xl font-bold text-white mb-6">
-                  {articleData.conclusion.heading}
-                </h2>
-                {articleData.conclusion.content.map((paragraph, index) => (
-                  <p key={index} className="text-gray-300 text-lg leading-relaxed mb-6">
-                    {paragraph}
+              {/* Author Note as Conclusion */}
+              {article.content.authorNote && (
+                <div data-section id="conclusion" className="mb-12 bg-blue-900/20 border border-blue-800/50 rounded-lg p-8">
+                  <h2 className="text-2xl font-bold text-white mb-4">
+                    Final Thoughts
+                  </h2>
+                  <p className="text-gray-300 text-lg leading-relaxed italic">
+                    {article.content.authorNote}
                   </p>
-                ))}
-              </div>
+                </div>
+              )}
 
-              {/* Authors Section */}
+              {/* Author Section */}
               <div className="mt-16 pt-12 border-t border-gray-800">
-                <h3 className="text-2xl font-bold text-white mb-8">Authors</h3>
-                <div className="space-y-6">
-                  {articleData.authors.map((author, index) => (
-                    <div key={index} className="flex items-start gap-6 bg-gray-900 rounded-lg p-6">
-                      <img
-                        src={author.image}
-                        alt={author.name}
-                        className="w-20 h-20 rounded-full object-cover"
-                      />
-                      <div>
-                        <h4 className="text-xl font-bold text-white mb-2">
-                          {author.name}
-                        </h4>
-                        <p className="text-blue-400 text-sm mb-3">
-                          {author.title}
-                        </p>
-                      </div>
+                <h3 className="text-2xl font-bold text-white mb-8">About the Author</h3>
+                <div className="bg-gray-900 rounded-lg p-6">
+                  <div className="flex items-start gap-6">
+                    <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                      {article.author.name.charAt(0)}
                     </div>
-                  ))}
+                    <div>
+                      <h4 className="text-xl font-bold text-white mb-2">
+                        {article.author.name}
+                      </h4>
+                      <p className="text-gray-300 leading-relaxed">
+                        {article.author.bio}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </article>
 
             {/* Sidebar */}
             <aside className="lg:col-span-4">
-              <div className="sticky top-34 space-y-8">
+              <div className="sticky top-24 space-y-8">
                 {/* Share Section */}
                 <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
                   <h3 className="text-lg font-bold text-white mb-4 flex items-center">
@@ -235,28 +229,30 @@ const InsightDetails = () => {
                           Introduction
                         </a>
                       </li>
-                      {articleData.sections.map((section, index) => (
+                      {article.content.sections.map((section, index) => (
                         <li key={index}>
                           <a
-                            href={`#${section.id}`}
+                            href={`#section-${index}`}
                             className={`block text-sm hover:text-blue-400 transition-colors ${
-                              activeSection === section.id ? 'text-blue-400 font-semibold' : 'text-gray-400'
+                              activeSection === `section-${index}` ? 'text-blue-400 font-semibold' : 'text-gray-400'
                             }`}
                           >
                             {section.heading}
                           </a>
                         </li>
                       ))}
-                      <li>
-                        <a
-                          href="#conclusion"
-                          className={`block text-sm hover:text-blue-400 transition-colors ${
-                            activeSection === 'conclusion' ? 'text-blue-400 font-semibold' : 'text-gray-400'
-                          }`}
-                        >
-                          {articleData.conclusion.heading}
-                        </a>
-                      </li>
+                      {article.content.authorNote && (
+                        <li>
+                          <a
+                            href="#conclusion"
+                            className={`block text-sm hover:text-blue-400 transition-colors ${
+                              activeSection === 'conclusion' ? 'text-blue-400 font-semibold' : 'text-gray-400'
+                            }`}
+                          >
+                            Final Thoughts
+                          </a>
+                        </li>
+                      )}
                     </ul>
                   </nav>
                 </div>
@@ -267,20 +263,23 @@ const InsightDetails = () => {
                     Related Insights
                   </h3>
                   <div className="space-y-4">
-                    {articleData.relatedArticles.map((article, index) => (
-                      <a
-                        key={index}
-                        href={`/insights/${article.slug}`}
-                        className="block group"
-                      >
-                        <div className="text-sm text-blue-400 mb-1">
-                          {article.category}
-                        </div>
-                        <div className="text-white group-hover:text-blue-400 transition-colors font-semibold">
-                          {article.title}
-                        </div>
-                      </a>
-                    ))}
+                    {insightsData.insights
+                      .filter(insight => insight.id !== article.id)
+                      .slice(0, 3)
+                      .map((relatedArticle, index) => (
+                        <a
+                          key={index}
+                          href={`/Innosphere_Consulting/insights/${relatedArticle.slug}`}
+                          className="block group"
+                        >
+                          <div className="text-sm text-blue-400 mb-1">
+                            {relatedArticle.category}
+                          </div>
+                          <div className="text-white group-hover:text-blue-400 transition-colors font-semibold">
+                            {relatedArticle.title}
+                          </div>
+                        </a>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -299,8 +298,11 @@ const InsightDetails = () => {
             <p className="text-gray-400 text-lg mb-8">
               Subscribe to our newsletter for the latest articles and industry trends.
             </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors shadow-lg shadow-blue-900/30">
-              Subscribe Now
+            <button 
+              onClick={() => navigate('/insights')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors shadow-lg shadow-blue-900/30"
+            >
+              View All Insights
             </button>
           </div>
         </div>

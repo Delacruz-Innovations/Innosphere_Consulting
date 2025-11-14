@@ -21,11 +21,12 @@ const MissionVisionValues = () => {
 
   const visionText = 'A digitally empowered Africa where innovation drives inclusion, efficiency, and sustainable growth.';
 
-  const valuePoints = [
-    'Excellence: Every line of code, every consultation, every project — delivered to global standards.',
-    'Integrity: We believe trust is the foundation of every successful digital partnership.',
-    'Innovation: We never replicate; we rethink, reimagine, and rebuild better',
-  ];
+const valuePoints = [
+  'Impact: Creating digital solutions that drive real business growth and transformation.',
+  'Integrity: We believe trust is the foundation of every successful digital partnership.',
+  'Innovation: We never replicate; we rethink, reimagine, and rebuild better.',
+  'Inclusion: Building technology that serves everyone, everywhere.',
+];
 
   const Ambition = [
     {

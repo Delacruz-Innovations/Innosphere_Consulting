@@ -39,11 +39,11 @@ const SolutionDetail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
       {/* Hero Section with Animated Background */}
-      <div className="relative pt-30 pb-16 px-6 overflow-hidden">
+      <div className="relative pt-38 pb-16 px-6 overflow-hidden">
         {/* Animated Orbs */}
         <div className="absolute inset-0 z-0">
           <div
-            className="absolute top-0 right-1/4 w-96 h-96 md:w-[600px] md:h-[600px] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 animate-pulse"
+            className="absolute top-0 right-1/4 w-96 h-96 md:w-[600px] md:h-[600px] rounded-full "
             style={{
               filter: 'blur(120px)',
               opacity: 0.2,
@@ -51,7 +51,7 @@ const SolutionDetail = () => {
             }}
           ></div>
           <div
-            className="absolute -top-20 left-0 w-80 h-80 md:w-[500px] md:h-[500px] rounded-full bg-gradient-to-br from-blue-500 to-purple-600"
+            className="absolute -top-20 left-0 w-80 h-80 md:w-[500px] md:h-[500px] rounded-full "
             style={{
               filter: 'blur(100px)',
               opacity: 0.15,
@@ -61,15 +61,7 @@ const SolutionDetail = () => {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          {/* Back Button
-          <button
-            onClick={() => navigate('/service')}
-            className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-8"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Solutions
-          </button> */}
-
+      
           {/* Title with staggered animation */}
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
@@ -184,7 +176,7 @@ const SolutionDetail = () => {
         <div className={`mt-32 text-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           <div className="rounded-3xl p-12">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to begin your journey ?
+              What your next big move ?
             </h3>
             <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
               We are a professional, enthusiastic and innovative team, dedicated to providing professional
@@ -192,7 +184,7 @@ const SolutionDetail = () => {
               become more productive and profitable.
             </p>
            <Link to='/consultation'> <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 flex gap-2 items-center justify-center mx-auto">
-              Books A Consultaion <ArrowRight />
+              Book A free consultation <ArrowRight />
             </button>
             </Link>
           </div>

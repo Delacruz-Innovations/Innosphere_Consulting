@@ -1,16 +1,236 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, MessageCircle, X, MinusCircle } from 'lucide-react';
+import { MessageCircle, X, Send, Minimize2 } from 'lucide-react';
+import Mia from '../assets/amari.png'
+
+// KNOWLEDGE BASE - Innosphere Consulting
+const knowledgeBase = {
+  company: {
+    keywords: ['who are you', 'about', 'innosphere', 'what is innnosphere', 'company'],
+    response: `We're Innosphere Consulting - a Nigerian IT consultancy delivering digital transformation, SaaS/PaaS solutions, and IT consulting tailored for businesses across Nigeria and internationally. Founded in 2017, we serve tech, finance, education, government, and SMEs with practical, scalable solutions.`
+  },
+  
+  services: {
+    keywords: ['service', 'offer', 'what do you do', 'help with', 'provide'],
+    response: `Our Services:
+
+• Digital Transformation & Process Automation
+• SaaS/PaaS Development
+• IT Consulting & Change Management
+• Training & Support
+• Brand Management
+• Digital Marketing (SEO, social media, content)
+
+Which service interests you?`
+  },
+  
+  digitalTransformation: {
+    keywords: ['digital transformation', 'automation', 'process', 'streamline', 'integrate'],
+    response: `We help businesses streamline operations, reduce manual tasks, integrate systems, and implement automation solutions to boost productivity and efficiency. Our solutions are designed for the Nigerian business environment with measurable outcomes.`
+  },
+  
+  saas: {
+    keywords: ['saas', 'paas', 'software', 'platform', 'custom software'],
+    response: `We design and build scalable, secure SaaS/PaaS platforms customized for your business needs. Your team can access software, collaborate efficiently, and scale operations without heavy IT infrastructure costs. Request a demo through our consultation page!`
+  },
+  
+  pricing: {
+    keywords: ['price', 'cost', 'pricing', 'package', 'how much', 'fee', 'payment'],
+    response: `Our Packages:
+
+**Standard**: From ₦750,000
+**Premium**: Enhanced features & support
+**Enterprise**: Full-scale solutions
+**Custom/Bespoke**: Tailored multi-service packages
+
+We offer monthly subscriptions, long-term discounts, and flexible payment plans (30% deposit, remainder on milestones). Book a free consultation for a detailed quote!`
+  },
+  
+  consultation: {
+    keywords: ['consultation', 'schedule', 'appointment', 'meeting', 'book', 'demo', 'free'],
+    response: `📞 Book a FREE 30-minute consultation!
+
+📧 Email: info@innosphereconsultiong.com
+📱 WhatsApp: Available on our website
+🌐 Book Online: Use our "Book a Free Consultation" button
+
+We respond within 24 hours and offer virtual meetings via Zoom, Teams, or Google Meet. Ready to get started?`
+  },
+  
+  process: {
+    keywords: ['process', 'how do you work', 'delivery', 'timeline', 'steps'],
+    response: `Our 7-Step Process:
+
+1. Discovery
+2. Planning
+3. Validation
+4. Implementation
+5. Training
+6. Monitoring
+7. Ongoing Support
+
+Typical projects take 4-12 weeks for SMEs. We measure success through KPIs, ROI analysis, and user satisfaction. Want to learn more?`
+  },
+  
+  training: {
+    keywords: ['training', 'support', 'learn', 'ongoing', 'help'],
+    response: `Yes! We provide comprehensive role-based training, user manuals, online resources, and ongoing support to ensure your team confidently uses the systems. Training is included in all packages, with continuous optimization available through retainer agreements.`
+  },
+  
+  industries: {
+    keywords: ['industry', 'sector', 'serve', 'tech', 'finance', 'education', 'government', 'sme'],
+    response: `Industries We Serve:
+
+💼 Tech & Startups
+🏦 Finance & Banking
+🎓 Education
+🏛️ Government & Public Sector
+🎭 Entertainment
+🏢 SMEs across Nigeria
+
+Every solution considers local challenges and growth potential. What's your industry?`
+  },
+  
+  location: {
+    keywords: ['location', 'where', 'office', 'address', 'lagos', 'nigeria'],
+    response: `📍 Main Office: Lagos, Nigeria
+
+We operate remotely to serve clients across Nigeria and internationally. You can visit our Lagos office by appointment, or we can meet virtually. Contact us to schedule!`
+  },
+  
+  founder: {
+    keywords: ['founder', 'tosin', 'who founded', 'ceo', 'leadership'],
+    response: `Innosphere Consulting was founded by Tosin Samuel Ojo, who brings over a decade of expertise in business consulting, IT transformation, and digital strategy. Our leadership team holds SC Clearance and complies with industry standards.`
+  },
+  
+  mission: {
+    keywords: ['mission', 'vision', 'values', 'why'],
+    response: `🎯 Vision: A digitally empowered Africa where innovation drives inclusion and growth.
+
+🚀 Mission: To deliver reliable, scalable, and context-relevant digital systems for organizations in transition.
+
+We combine international best practices with local market expertise for practical, measurable results.`
+  },
+  
+  portfolio: {
+    keywords: ['portfolio', 'case study', 'projects', 'examples', 'references', 'testimonials'],
+    response: `We have proven results across government, finance, education, and SMEs with measurable business outcomes. Visit our Case Study / Portfolio page to see client testimonials and detailed project examples. Want to discuss your specific needs?`
+  },
+  
+  brandMarketing: {
+    keywords: ['brand', 'marketing', 'digital marketing', 'seo', 'social media', 'content'],
+    response: `Our Brand & Marketing Services:
+
+• Brand Strategy & Visual Identity
+• SEO & Content Creation
+• Social Media Management
+• Paid Campaigns & Analytics
+• Lead Generation
+
+We create strong, consistent branding that resonates with your target audience and drives revenue. Interested?`
+  },
+  
+  changeManagement: {
+    keywords: ['change management', 'adoption', 'stakeholder', 'migration'],
+    response: `We guide businesses through technology adoption, system migration, and stakeholder engagement with proven change management frameworks. This ensures smooth transitions and maximizes system adoption across your organization.`
+  }
+};
+
+// All 50 questions for rotation
+const allQuestions = [
+  "What is Innosphere Consulting?",
+  "Where is Innosphere Consulting located?",
+  "How long have you been in business?",
+  "What industries do you serve?",
+  "Who founded Innosphere Consulting?",
+  "What is your mission and vision?",
+  "How do you differ from other IT consultancies?",
+  "Can you provide references or case studies?",
+  "Are you SC cleared or certified?",
+  "Do you operate outside Nigeria?",
+  "What services do you offer?",
+  "Can you explain Digital Transformation?",
+  "How can SaaS/PaaS help my business?",
+  "What does IT Consulting involve?",
+  "Do you provide staff training?",
+  "Can you help with Brand Management?",
+  "What digital marketing services do you offer?",
+  "Are your solutions tailored for Nigerian SMEs?",
+  "Do you provide custom software development?",
+  "How do I choose the right service?",
+  "How do you deliver your services?",
+  "Can you explain your 7-step process?",
+  "How long does a typical project take?",
+  "Do you offer ongoing support?",
+  "Can you help with change management?",
+  "How do you measure project success?",
+  "Will my team need training?",
+  "How do you handle system integration?",
+  "Do you provide workflow analysis for SMEs?",
+  "Can you optimize existing systems?",
+  "What are your service packages?",
+  "Do you offer custom solutions?",
+  "How much does a typical project cost?",
+  "Are there monthly subscription options?",
+  "Can I book a free consultation?",
+  "Do you offer discounts for long-term engagements?",
+  "How is payment structured?",
+  "Are your packages scalable?",
+  "Can I combine services into one package?",
+  "Is pricing negotiable for enterprises?",
+  "How can I contact you directly?",
+  "Do you have a WhatsApp line?",
+  "Can I schedule a consultation online?",
+  "Do you respond to emails quickly?",
+  "Are virtual consultations available?",
+  "Can I visit your office in Lagos?",
+  "How do I request a demo?",
+  "How do I subscribe to your newsletter?",
+  "Can you provide testimonials?",
+  "Who should I speak to about custom solutions?"
+];
 
 const DeChatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [showQuickQuestions, setShowQuickQuestions] = useState(false);
+  const [suggestedQuestions, setSuggestedQuestions] = useState([]);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const messagesEndRef = useRef(null);
-  const inactivityTimerRef = useRef(null);
-  const hasShownInactivityMessage = useRef(false);
+  const inputRef = useRef(null);
+  const rotationIntervalRef = useRef(null);
+
+  // Shuffle array function
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+
+  // Get 5 random questions
+  const getRandomQuestions = () => {
+    const shuffled = shuffleArray(allQuestions);
+    return shuffled.slice(0, 3);
+  };
+
+  // Initialize and rotate questionsa
+  useEffect(() => {
+    setSuggestedQuestions(getRandomQuestions());
+
+    rotationIntervalRef.current = setInterval(() => {
+      setSuggestedQuestions(getRandomQuestions());
+    }, 20000);
+
+    return () => {
+      if (rotationIntervalRef.current) {
+        clearInterval(rotationIntervalRef.current);
+      }
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -20,543 +240,259 @@ const DeChatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Typing animation effect on first open
+  // Show welcome message when chat opens
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      setIsTyping(true);
-      const welcomeMessage = "Hello 👋! Welcome to Innosphere Consulting – your partner in digital transformation, IT solutions, and business growth across Nigeria. I'm here to guide you, answer your questions, and help you explore our services. How can I assist you today? You can ask about our services, book a consultation, or learn more about us.";
+    if (isOpen && !isMinimized) {
+      inputRef.current?.focus();
       
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages([{ type: 'bot', text: welcomeMessage }]);
+      // Show welcome message only once when chat first opens
+      if (!hasInteracted && messages.length === 0) {
+        setIsTyping(true);
         setTimeout(() => {
-          setShowQuickQuestions(true);
-        }, 500);
-      }, 2000);
-    }
-  }, [isOpen]);
-
-  // Inactivity timer
-  useEffect(() => {
-    if (messages.length > 0 && !hasShownInactivityMessage.current) {
-      // Clear existing timer
-      if (inactivityTimerRef.current) {
-        clearTimeout(inactivityTimerRef.current);
-      }
-
-      // Set new timer for 30 seconds
-      inactivityTimerRef.current = setTimeout(() => {
-        if (!hasShownInactivityMessage.current) {
-          const inactivityMsg = {
-            type: 'bot',
-            text: "Hey there! 😊 Are you still with me? I'm super excited to help you out! Just type anything and let's chat! 🎉"
+          const welcomeMessage = {
+            id: 1,
+            text: "👋 Hello! I'm Mia, your virtual assistant at Innosphere Consulting. I'm here to help you explore our solutions, answer your questions, and guide you every step of the way. How can I assist you today?",
+            sender: 'bot',
+            timestamp: new Date()
           };
-          setMessages(prev => [...prev, inactivityMsg]);
-          hasShownInactivityMessage.current = true;
-        }
-      }, 30000); // 30 seconds
-    }
-
-    return () => {
-      if (inactivityTimerRef.current) {
-        clearTimeout(inactivityTimerRef.current);
+          setMessages([welcomeMessage]);
+          setIsTyping(false);
+          setHasInteracted(true);
+        }, 800);
       }
-    };
-  }, [messages]);
+    }
+  }, [isOpen, isMinimized]);
 
-  const resetInactivityTimer = () => {
-    hasShownInactivityMessage.current = false;
-  };
-
-  const knowledgeBase = {
-    company: {
-      keywords: ['who are you', 'about', 'innosphere', 'what is innosphere', 'company', 'what is your company'],
-      response: `Yay! So happy you asked! 🎈 We're Innosphere Consulting - like the coolest tech helpers in Nigeria! We've been around since 2017 helping businesses do amazing stuff with computers and technology. We work with all kinds of companies - big ones, small ones, schools, banks, even the government! Pretty awesome, right? 😄`
-    },
+  // Intelligent response matching
+  const getBotResponse = (userMessage) => {
+    const lowerMessage = userMessage.toLowerCase();
     
-    location: {
-      keywords: ['location', 'where', 'office', 'address', 'lagos', 'nigeria', 'where are you located', 'where is innosphere'],
-      response: `Ooh! We're in Lagos, Nigeria! 🇳🇬 That's our main home base! But guess what? We can work with anyone anywhere because we do lots of video calls and stuff. You can come visit our office if you want, or we can just chat online! Super flexible! 🏢✨`
-    },
-    
-    history: {
-      keywords: ['how long', 'been in business', 'experience', 'years', 'established', 'founded when'],
-      response: `We started way back in 2017! That's like... a bunch of years ago! We've been helping people with tech stuff for all this time. We've worked with so many cool businesses and learned SO much! 🎂🎉`
-    },
-    
-    industries: {
-      keywords: ['industry', 'industries', 'sector', 'serve', 'tech', 'finance', 'education', 'government', 'sme', 'who do you serve'],
-      response: `Oh my gosh, we work with EVERYONE! 🌟
-
-💼 Tech companies & startups
-🏦 Banks and money people
-🎓 Schools and universities
-🏛️ Government offices
-🎭 Entertainment folks
-🏢 Small and medium businesses
-
-Literally everyone! What kind of business are you? Tell me, tell me! 😊`
-    },
-    
-    founder: {
-      keywords: ['founder', 'tosin', 'who founded', 'ceo', 'leadership', 'tosin samuel ojo'],
-      response: `Our founder is Mr. Tosin Samuel Ojo! He's super smart and has been doing this tech consulting thing for over 10 years! He knows like... EVERYTHING about helping businesses with technology! And he has special security clearance too, which is pretty cool! 🌟👨‍💼`
-    },
-    
-    mission: {
-      keywords: ['mission', 'vision', 'values', 'why', 'purpose', 'goal'],
-      response: `Ooh, I love talking about this! 💫
-
-Our BIG dream is to help all of Africa get super amazing with technology! We want innovation everywhere!
-
-And what we do every day is help companies get the right tech systems that actually WORK for them - not confusing stuff that nobody understands!
-
-We mix the best ideas from around the world with what really works here in Nigeria! Pretty neat, huh? 🚀✨`
-    },
-    
-    difference: {
-      keywords: ['differ', 'different', 'why choose', 'what makes you', 'competitive advantage', 'unique'],
-      response: `Oh! What makes us special? Well... we're not just some faraway company that doesn't get it! We REALLY understand how business works in Nigeria! We combine super cool international tech ideas with real solutions that actually work here! We don't just copy-paste stuff - we make it perfect for YOU! 🎯💙`
-    },
-    
-    portfolio: {
-      keywords: ['portfolio', 'case study', 'case studies', 'projects', 'examples', 'references', 'testimonials', 'clients'],
-      response: `YES! We've done SO many cool projects! 🎨 We helped government offices, banks, schools, and small businesses do amazing things! You can check out our Case Study page to see all the awesome stuff we did! Wanna tell me about YOUR business? I'm so curious! 😄`
-    },
-    
-    clearance: {
-      keywords: ['sc cleared', 'clearance', 'certified', 'certification', 'security'],
-      response: `Yep yep! Our founder and main consultants have SC Clearance! That's like a special security badge that says we're super trustworthy and can work on important stuff! We follow all the rules and have all the right certifications! 🛡️✅`
-    },
-    
-    international: {
-      keywords: ['outside nigeria', 'international', 'global', 'overseas', 'abroad', 'worldwide'],
-      response: `Absolutely! Even though we live in Nigeria, we help people EVERYWHERE! 🌍 We can do video calls, help with cloud software, and work on digital transformation projects no matter where you are! Distance is no problem at all! 🚀`
-    },
-    
-    services: {
-      keywords: ['service', 'services', 'offer', 'what do you do', 'help with', 'provide', 'solutions'],
-      response: `Oh boy, we do SO many cool things! Let me list them! 🎉
-
-• Digital Transformation (making your business super modern!)
-• Process Automation (robots doing boring tasks!)
-• SaaS/PaaS Development (custom software just for you!)
-• IT Consulting & Change Management (helping everyone adapt!)
-• Training & Support (teaching your team everything!)
-• Brand Management (making you look AWESOME!)
-• Digital Marketing (getting everyone to know about you!)
-
-Which one sounds interesting to you? 😊`
-    },
-    
-    digitalTransformation: {
-      keywords: ['digital transformation', 'automation', 'process automation', 'streamline', 'integrate', 'productivity'],
-      response: `Okay so imagine your business but like... SUPER powered! ⚡ We help you get rid of boring manual stuff, connect all your systems together so they talk to each other, and make everything run smoothly! It's like giving your business superpowers! We make it all work perfectly for Nigerian businesses! Cool, right? 🚀`
-    },
-    
-    saas: {
-      keywords: ['saas', 'paas', 'software', 'platform', 'custom software', 'development'],
-      response: `This is SO exciting! 💻✨ We build special software JUST for you! It's like having your own custom app that does exactly what you need! Your team can use it anywhere, and you don't need fancy expensive computers! Plus it grows with your business! Wanna see a demo? It's really cool! 🎮`
-    },
-    
-    itConsulting: {
-      keywords: ['it consulting', 'change management', 'technology adoption', 'migration', 'stakeholder'],
-      response: `Change can be scary, but we make it FUN! 🎪 We help everyone in your company get excited about new technology! We guide you step by step, make sure everyone understands what's happening, and help the transition be super smooth! No stress, all success! 🌈`
-    },
-    
-    training: {
-      keywords: ['training', 'support', 'learn', 'ongoing', 'help', 'staff training', 'team training'],
-      response: `Oh yes YES! We LOVE teaching! 🎓 We show your team how to use everything, give them manuals and guides, make fun training sessions, and we're always there to help when they need us! Nobody gets left behind - everyone becomes a tech superstar! 🌟 And we keep helping even after the project is done!`
-    },
-    
-    brandMarketing: {
-      keywords: ['brand', 'branding', 'brand management', 'marketing', 'digital marketing', 'seo', 'social media', 'content'],
-      response: `Let's make you FAMOUS! 🎨🎉
-
-We can help with:
-• Making your brand look super cool
-• Getting you on Google's first page (SEO!)
-• Running your social media like Instagram & Facebook
-• Creating awesome content
-• Running ads that actually work
-• Tracking everything to see what works best!
-
-We'll make everyone want to work with you! Exciting, right? 🚀`
-    },
-    
-    smeServices: {
-      keywords: ['sme', 'small business', 'nigerian sme', 'small medium enterprise'],
-      response: `Small businesses are our FAVORITE! 💙 We totally get what it's like to run a business in Nigeria - the challenges, the opportunities, everything! We make solutions that fit your budget and actually work in the real Nigerian market! We want to see you GROW! 🌱✨`
-    },
-    
-    customDevelopment: {
-      keywords: ['custom software', 'bespoke', 'tailored', 'specific needs'],
-      response: `YES! We build whatever you dream up! 🎨💻 Tell us what you need and we'll create software that does EXACTLY that! It'll be secure, it'll grow with you, and it'll be perfect for your business! No two businesses are the same, so no two solutions should be either! Let's build something amazing together! 🚀`
-    },
-    
-    chooseService: {
-      keywords: ['which service', 'right service', 'choose', 'recommend'],
-      response: `Let's figure it out together! 🤔💡 Book a free chat with us and we'll talk about your business, what you need, what your dreams are, and then we'll recommend the PERFECT package for you! No pressure, just helpful advice! Ready to start? 😊`
-    },
-    
-    process: {
-      keywords: ['process', 'how do you work', 'delivery', 'methodology', 'steps', 'workflow'],
-      response: `We have 7 super cool steps! 🎯
-
-1. Discovery (we learn about YOU!)
-2. Planning (we design the perfect solution!)
-3. Validation (we make sure everything's right!)
-4. Implementation (we build it!)
-5. Training (we teach everyone!)
-6. Monitoring (we watch it work!)
-7. Ongoing Support (we're always here!)
-
-Most small business projects take about 4-12 weeks! Big ones take longer but we keep you updated every step! 🚀`
-    },
-    
-    timeline: {
-      keywords: ['timeline', 'how long', 'duration', 'timeframe', 'project time'],
-      response: `Great question! ⏰ For small and medium businesses, it usually takes about 4 to 12 weeks! For bigger, fancier projects it might take longer! But don't worry - we'll tell you exactly how long YOUR project will take when we chat! Everyone's different! Book a consultation and let's figure it out together! 📅✨`
-    },
-    
-    ongoingSupport: {
-      keywords: ['ongoing support', 'after project', 'maintenance', 'continued support'],
-      response: `We don't just build stuff and disappear! 💙 We stick around! We offer training, fix any problems, make things better over time, and answer all your questions! You can get this through monthly plans! We're like your tech best friend - always there when you need us! 🤝✨`
-    },
-    
-    success: {
-      keywords: ['measure success', 'kpi', 'roi', 'metrics', 'results'],
-      response: `We love seeing results! 📊✨ We track things like:
-• Are you making more money? (ROI!)
-• Is everyone actually using the system?
-• Are things running smoother?
-• Are people happy?
-
-We use fancy KPIs and reports, but basically we make sure you're getting real value! Numbers don't lie! 🎯`
-    },
-    
-    integration: {
-      keywords: ['integration', 'integrate', 'existing systems', 'connect systems'],
-      response: `We're like tech matchmakers! 💕 We make all your different systems talk to each other nicely! Your old stuff, new stuff, everything works together smoothly! Data flows everywhere it needs to go, and nothing breaks! It's like magic but it's actually just really good engineering! ✨`
-    },
-    
-    workflowAnalysis: {
-      keywords: ['workflow', 'process analysis', 'bottleneck', 'efficiency'],
-      response: `Oh we LOVE finding problems and fixing them! 🔍 We look at how you do things now, find the slow parts, the confusing parts, the annoying parts... and then BOOM! We recommend ways to make everything faster and easier! It's like a makeover for your business processes! 🎨✨`
-    },
-    
-    optimizeExisting: {
-      keywords: ['optimize', 'improve', 'enhance', 'existing system', 'without replacement'],
-      response: `Don't throw away the baby with the bathwater! 🛁 If your current system works okay, we can make it work GREAT! We don't force you to replace everything - we just make what you have better, faster, and more connected! Smart upgrades, not wasteful spending! 💡`
-    },
-    
-    pricing: {
-      keywords: ['price', 'cost', 'pricing', 'package', 'packages', 'how much', 'fee', 'payment'],
-      response: `Let's talk money! 💰
-
-**Standard Package**: Starts at ₦750,000
-**Premium Package**: More features & support!
-**Enterprise Package**: For the big players!
-**Custom/Bespoke**: Mix and match anything you want!
-
-We also do monthly subscriptions, give discounts for long-term deals, and you can pay in parts (30% at start, rest as we finish things)! 
-
-Want exact numbers for YOUR project? Let's book a free consultation! 🎯✨`
-    },
-    
-    customSolutions: {
-      keywords: ['custom solution', 'bespoke solution', 'tailored package', 'unique needs'],
-      response: `YOUR business is special, so your solution should be too! 🎨 Our Custom/Bespoke package is like a buffet - pick whatever you need! Multiple services, special features, whatever makes sense for YOU! Let's have a discovery call and design something perfect! Ready? 😊✨`
-    },
-    
-    subscription: {
-      keywords: ['subscription', 'monthly', 'retainer', 'recurring'],
-      response: `Monthly plans are AWESOME! 📅💙 You get:
-• Ongoing support whenever you need it
-• Regular training updates
-• System improvements
-• Marketing campaigns running all the time
-
-It's like having a tech team on call! And it grows with you! Pay monthly, get value forever! 🚀`
-    },
-    
-    consultation: {
-      keywords: ['consultation', 'schedule', 'appointment', 'meeting', 'book', 'free consultation'],
-      response: `Let's chat! It's FREE! 🎉
-
-📧 Email: info@innosphereconsulting.com
-📱 WhatsApp: On our website!
-🌐 Book Online: Just click the button!
-
-We'll respond super fast (within 24 hours!) and we can meet on Zoom, Teams, or Google Meet! Or in person if you're in Lagos! 
-
-Ready to start your transformation? Let's goooo! 🚀✨`
-    },
-    
-    discount: {
-      keywords: ['discount', 'discounts', 'savings', 'long-term'],
-      response: `Who doesn't love saving money? 💰✨ Yes! If you sign up for a long time or get multiple services, we'll give you sweet discounts! The more you commit, the more you save! Let's talk and I'll tell you all the ways we can make it affordable! 🎁`
-    },
-    
-    paymentStructure: {
-      keywords: ['payment structure', 'how to pay', 'payment terms', 'deposit'],
-      response: `Super simple! 💳 Usually it's:
-• 30% upfront (to get started!)
-• Rest when we hit milestones!
-• Or monthly if you prefer!
-
-We're flexible! We'll figure out what works for YOU during our consultation! No scary surprise fees! 😊✨`
-    },
-    
-    scalable: {
-      keywords: ['scalable', 'grow', 'growing business', 'expansion'],
-      response: `Growing? YAY! 🌱🚀 Our solutions grow WITH you! Need more users? No problem! Need more features? We got you! Want to add more services? Easy peasy! We build everything thinking about tomorrow, not just today! Your success is our success! 💙✨`
-    },
-    
-    combineServices: {
-      keywords: ['combine services', 'multiple services', 'bundle'],
-      response: `Mix and match time! 🎨 Our Custom/Bespoke package lets you combine ANYTHING you want! Want digital transformation + marketing + training? Done! Want software development + brand management? Perfect! We'll bundle it all up into one awesome package! 🎁✨`
-    },
-    
-    enterprisePricing: {
-      keywords: ['enterprise pricing', 'large business', 'big company', 'negotiable'],
-      response: `Big businesses get special treatment! 🏢✨ We'll sit down, understand your massive needs, and create custom pricing just for you! Every enterprise is different, so we talk one-on-one to make it perfect! Book a consultation and let's chat about your empire! 👑`
-    },
-    
-    contact: {
-      keywords: ['contact', 'reach', 'get in touch', 'email', 'phone', 'call'],
-      response: `SO many ways to reach us! Pick your favorite! 🎉
-
-📧 Email: info@innosphereconsulting.com
-📱 Phone: +234 XXX XXX XXXX
-💬 WhatsApp: Link on our website!
-🌐 Website Form: Super easy!
-
-We promise to reply within 24 hours! We're excited to hear from you! 😊💙`
-    },
-    
-    whatsapp: {
-      keywords: ['whatsapp', 'chat', 'instant message'],
-      response: `WhatsApp is perfect for quick chats! 💬✨ Just click our WhatsApp link on the website and BOOM - instant connection to a real consultant! We love WhatsApp! So fast, so easy! Let's chat! 🚀`
-    },
-    
-    virtual: {
-      keywords: ['virtual', 'online meeting', 'remote', 'zoom', 'teams'],
-      response: `Virtual meetings are our JAM! 💻✨ We use Zoom, Teams, or Google Meet - whatever you like! Super convenient - you don't even have to leave your office (or home!). Book your time and let's meet in the cloud! ☁️😊`
-    },
-    
-    visitOffice: {
-      keywords: ['visit', 'office visit', 'come to office', 'in person'],
-      response: `Come see us in person! 🏢 We're in Lagos! Just book an appointment first so we're ready for you! We'd love to meet face-to-face, show you around, and have a good old-fashioned chat! Coffee's on us! ☕😊`
-    },
-    
-    demo: {
-      keywords: ['demo', 'demonstration', 'show me', 'preview'],
-      response: `DEMOS ARE SO FUN! 🎮✨ We can show you how our SaaS/PaaS platforms work, what digital transformation looks like in action, all the cool stuff! Just book through our consultation page and we'll prepare an awesome demo just for YOU! Get ready to be wowed! 🌟`
-    },
-    
-    newsletter: {
-      keywords: ['newsletter', 'subscribe', 'insights', 'blog', 'updates'],
-      response: `Stay in the loop! 📬✨ Put your email on our website under Insights/Blog and get monthly goodies:
-• Cool tech tips
-• Industry news
-• Transformation stories
-• Helpful guides
-
-Knowledge is power! Let's keep you powered up! 💪😊`
-    },
-    
-    responseTime: {
-      keywords: ['response time', 'how fast', 'quickly', 'how soon'],
-      response: `We're FAST! ⚡ We try to respond within 24 hours to everything - emails, WhatsApp, contact forms! For super urgent stuff, just call us directly! We don't like keeping people waiting! Time is precious! ⏰💙`
+    // Greetings
+    if (/^(hello|hi|hey|greetings|good morning|good afternoon|good evening)/.test(lowerMessage)) {
+      return "👋 Hello! I'm Mia, your virtual assistant at Innosphere Consulting. I'm here to help you explore our solutions, answer your questions, and guide you every step of the way. How can I assist you today?";
     }
     
-  };
-
-  const findBestMatch = (userInput) => {
-    const input = userInput.toLowerCase();
+    // Thanks
+    if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+      return "You're very welcome! Feel free to ask if you have any other questions. We're here to help! 😊";
+    }
+    
+    // Search through knowledge base
     let bestMatch = null;
     let highestScore = 0;
-
+    
     for (const [key, data] of Object.entries(knowledgeBase)) {
       let score = 0;
       for (const keyword of data.keywords) {
-        if (input.includes(keyword)) {
-          score += keyword.split(' ').length;
+        if (lowerMessage.includes(keyword)) {
+          score++;
         }
       }
+      
       if (score > highestScore) {
         highestScore = score;
-        bestMatch = data;
+        bestMatch = data.response;
       }
     }
+    
+    // If we found a good match
+    if (bestMatch && highestScore > 0) {
+      return bestMatch;
+    }
+    
+    // Default response for unmatched queries
+    return `I'd be happy to help! I can assist you with:
 
-    return highestScore > 0 ? bestMatch : null;
+• Services & Solutions
+• Pricing & Packages
+• Booking Consultations
+• Our Process & Timeline
+• Industries We Serve
+• Case Studies & Portfolio
+
+📧 contact@innosphereconsulting.com
+📱 WhatsApp us via our website
+
+What would you like to know?`;
   };
 
-  const handleSend = () => {
-    if (input.trim() === '') return;
+  const handleSendMessage = () => {
+    if (inputValue.trim() === '') return;
 
-    const userMessage = { type: 'user', text: input };
+    const userMessage = {
+      id: messages.length + 1,
+      text: inputValue,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
     setMessages(prev => [...prev, userMessage]);
-    resetInactivityTimer();
-
+    setInputValue('');
     setIsTyping(true);
-    setTimeout(() => {
-      setIsTyping(false);
-      const match = findBestMatch(input);
-      const botResponse = match 
-        ? { type: 'bot', text: match.response }
-        : { 
-            type: 'bot', 
-            text: "Hmm, I'm not totally sure what you mean! 🤔 But don't worry! Can you ask me about:\n\n• Our services (we do SO much!)\n• Pricing (let's talk money!)\n• Booking a consultation (it's free!)\n• How we work\n• Industries we help\n• How to contact us\n\nOr just book a free consultation and we'll figure it out together! 🎉" 
-          };
-      setMessages(prev => [...prev, botResponse]);
-    }, 1000);
 
-    setInput('');
+    setTimeout(() => {
+      const botMessage = {
+        id: messages.length + 2,
+        text: getBotResponse(inputValue),
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botMessage]);
+      setIsTyping(false);
+    }, 1200);
+  };
+
+  const handleSuggestedQuestion = (question) => {
+    setInputValue(question);
+    setTimeout(() => {
+      handleSendMessage();
+    }, 100);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      handleSendMessage();
     }
   };
 
-  const quickQuestions = [
-    "What services do you offer?",
-    "How much does it cost?",
-    "Book a consultation",
-    "Tell me about your company"
-  ];
-
-  const handleQuickQuestion = (question) => {
-    setInput(question);
-    resetInactivityTimer();
-    setShowQuickQuestions(false);
-    setTimeout(() => handleSend(), 100);
-  };
-
-  if (!isOpen) {
-    return (
-      <div className="fixed bottom-6 right-6 z-50">
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+      {!isOpen ? (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
+          className="bg-white hover:shadow-xl rounded-full p-1 shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center group border-4 border-blue-600"
+          aria-label="Open chat"
         >
-          <MessageCircle size={28} />
+          <img 
+            src={Mia} 
+            alt="Mia Avatar"
+            className="w-14 h-14 rounded-full object-cover"
+          />
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+            1
+          </span>
         </button>
-      </div>
-    );
-  }
-
-  if (isMinimized) {
-    return (
-      <div className="fixed bottom-6 right-6 z-50 w-80">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-t-2xl flex justify-between items-center shadow-xl cursor-pointer"
-             onClick={() => setIsMinimized(false)}>
-          <div className="flex items-center gap-3">
-            <MessageCircle size={24} />
-            <span className="font-semibold">Innosphere Consulting</span>
-          </div>
-          <X size={20} onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} className="cursor-pointer hover:bg-white/20 rounded p-1" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="bg-white/20 p-2 rounded-full">
-            <MessageCircle size={24} />
-          </div>
-          <div>
-            <h3 className="font-bold text-lg">Innosphere Consulting</h3>
-            <p className="text-xs text-blue-100">Always here to help</p>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <MinusCircle size={20} onClick={() => setIsMinimized(true)} className="cursor-pointer hover:bg-white/20 rounded p-1" />
-          <X size={20} onClick={() => setIsOpen(false)} className="cursor-pointer hover:bg-white/20 rounded p-1" />
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-50 to-white">
-        {isTyping && messages.length === 0 && (
-          <div className="mb-4 flex justify-start">
-            <div className="max-w-[80%] p-3 rounded-2xl bg-white text-gray-800 shadow-md rounded-bl-none border border-gray-100">
-              <div className="flex gap-1">
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
+      ) : (
+        <div className={`bg-white rounded-lg shadow-2xl transition-all duration-300 ${isMinimized ? 'h-16' : 'h-[600px]'} w-96 flex flex-col overflow-hidden border border-gray-200`}>
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="bg-white rounded-full p-0.5">
+                <img 
+                  src={Mia} 
+                  alt="Mia Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Mia</h3>
+                <p className="text-xs text-blue-100">Online - I am here to help</p>
               </div>
             </div>
-          </div>
-        )}
-        {messages.map((msg, idx) => (
-          <div key={idx} className={`mb-4 flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] p-3 rounded-2xl ${
-              msg.type === 'user' 
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-br-none' 
-                : 'bg-white text-gray-800 shadow-md rounded-bl-none border border-gray-100'
-            }`}>
-              <p className="text-sm whitespace-pre-line">{msg.text}</p>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setIsMinimized(!isMinimized)}
+                className="hover:bg-white/20 rounded p-1 transition-colors"
+                aria-label="Minimize chat"
+              >
+                <Minimize2 size={18} />
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="hover:bg-white/20 rounded p-1 transition-colors"
+                aria-label="Close chat"
+              >
+                <X size={18} />
+              </button>
             </div>
           </div>
-        ))}
-        {isTyping && messages.length > 0 && (
-          <div className="mb-4 flex justify-start">
-            <div className="max-w-[80%] p-3 rounded-2xl bg-white text-gray-800 shadow-md rounded-bl-none border border-gray-100">
-              <div className="flex gap-1">
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
-              </div>
-            </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
 
-      {/* Quick Questions */}
-      {showQuickQuestions && messages.length === 1 && (
-        <div className="px-4 pb-3 flex gap-2 flex-wrap">
-          {quickQuestions.map((q, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleQuickQuestion(q)}
-              className="text-xs bg-blue-50 text-blue-600 px-3 py-2 rounded-full hover:bg-blue-100 transition-colors"
-            >
-              {q}
-            </button>
-          ))}
+          {!isMinimized && (
+            <>
+              {/* Messages */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`max-w-[85%] rounded-lg p-3 ${
+                        message.sender === 'user'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white text-gray-800 border border-gray-200 shadow-sm'
+                      }`}
+                    >
+                      <p className="text-sm whitespace-pre-line">{message.text}</p>
+                      <span className={`text-xs mt-1 block ${message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
+                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+                      <div className="flex space-x-2">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Suggested Questions - Show only with welcome message */}
+              {messages.length === 2 && (
+                <div className="p-3 bg-white border-t border-gray-200">
+                  <p className="text-xs text-gray-600 mb-2 font-medium">Popular Questions:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedQuestions.map((question, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSuggestedQuestion(question)}
+                        className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition-colors border border-gray-300"
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Input */}
+              <div className="p-4 bg-white border-t border-gray-200">
+                <div className="flex items-center space-x-2">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask me anything..."
+                    className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  />
+                  <button
+                    onClick={handleSendMessage}
+                    disabled={inputValue.trim() === ''}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg p-2 transition-colors"
+                    aria-label="Send message"
+                  >
+                    <Send size={20} />
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  Powered by intelligent knowledge base
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
-
-      {/* Input */}
-      <div className="p-4 bg-white border-t border-gray-200">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your question..."
-            className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          />
-          <button
-            onClick={handleSend}
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-2 hover:shadow-lg transition-all"
-          >
-            <Send size={20} />
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

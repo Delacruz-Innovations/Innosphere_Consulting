@@ -8,7 +8,8 @@ import CTABanner from '../Components/CTABanner'
 import SolutionsApp from '../Components/SolutionsApp'
 import AboutUs from '../Components/AboutUs'
 import Testimonials from '../Components/Testimonials'
-import RequestCallBack from '../Components/RequestCallBack'
+import RequestCallBack from '../Components/CTABanner1'
+import InnosphereHero from '../Components/InnosphereAbout'
 
 const Homepage = () => {
   return (
@@ -16,7 +17,8 @@ const Homepage = () => {
     
     <Hero />
     <StatsBar />
-    <SolutionsApp />
+    <InnosphereHero />
+    {/* <SolutionsApp /> */}
     {/* <AboutUs /> */}
     <Testimonials />
     {/* <ServicesOverview /> */}

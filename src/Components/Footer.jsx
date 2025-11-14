@@ -8,7 +8,7 @@ import {
   Linkedin, 
   Instagram, 
   Youtube,
-  Send
+  Send,
 } from 'lucide-react';
 import Logo from '../assets/Logo.png'
 import { Link } from 'react-router-dom';
@@ -83,8 +83,8 @@ const handleSubscribe = async (e) => {
   const contactInfo = [
     { 
       icon: Mail, 
-      text: 'info@innosphare.com',
-      href: 'mailto:info@innosphare.com'
+      text: 'connect@innosphereconsulting.ae',
+      href: 'mailto:connect@innosphereconsulting.ae'
     },
     { 
       icon: Phone, 
@@ -93,15 +93,21 @@ const handleSubscribe = async (e) => {
     },
     { 
       icon: MapPin, 
-      text: 'Dubai, UAE',
+      text: 'Dubai Internet City, UAE',
       href: 'https://maps.app.goo.gl/Hk6C2E1Eeu7dSKUg8'
+    },
+    { 
+      icon: Linkedin, 
+      text: 'Innosphere Consulting UAE',
+      href: 'https://www.linkedin.com/in/innosphere-consulting-226459396/'
     }
+
   ];
 
   return (
     <footer className="bg-gray-950 relative overflow-hidden border-t border-gray-800">
       {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-transparent to-purple-950/20"></div>
+      <div className="absolute inset-0 from-blue-950/20 via-transparent to-purple-950/20"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Content */}
@@ -117,7 +123,7 @@ const handleSubscribe = async (e) => {
               
               {/* Description */}
               <p className="text-gray-400 text-sm max-w-md leading-relaxed">
-                Designing high-performance organizations through innovative structures and cultures that drive excellence.
+               We will move things around as we go along but use this for now  Engineering Value. Delivering Excellence
               </p>
 
               {/* Newsletter */}
@@ -138,7 +144,7 @@ const handleSubscribe = async (e) => {
     <button
       type="submit"
       disabled={isSubmitting}
-      className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-500 text-white p-2 rounded-md hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+      className="absolute right-1.5 top-1/2 -translate-y-1/2 from-blue-600 to-blue-500 text-white p-2 rounded-md hover:shadow-lg hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
     >
       <Send className="w-4 h-4" />
     </button>
@@ -166,7 +172,7 @@ const handleSubscribe = async (e) => {
                       href={item.href}
                       className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors group"
                     >
-                      <Icon className="w-4 h-4 flex-shrink-0" />
+                      <Icon className="w-4 h-4 " />
                       <span className="text-xs sm:text-sm">{item.text}</span>
                     </a>
                   );
@@ -204,7 +210,7 @@ const handleSubscribe = async (e) => {
         <div className="py-5 border-t border-gray-800/50">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <p className="text-gray-500">
-              © {new Date().getFullYear()} Innosphare Consulting. All rights reserved.
+              © {new Date().getFullYear()} Innosphare Consulting. Registration No - 4435 All rights reserved.
             </p>
             
             <div className="flex items-center gap-4">

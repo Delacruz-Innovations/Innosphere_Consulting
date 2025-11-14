@@ -101,10 +101,6 @@ const CaseStudyDetails = () => {
 
   return (
     <div className="min-h-screen bg-gray-950">
-   
-
-    
-
       {/* Hero Section - Mobile with background image */}
       <div className="relative py-20">
         {/* Mobile Background Image */}
@@ -153,29 +149,11 @@ const CaseStudyDetails = () => {
         </div>
       </div>
 
-      {/* Content Sections */}
+      {/* Content Sections - New Format */}
       <div ref={contentRef} className="bg-gray-900 py-16 md:py-20">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
             
-            {/* Situation */}
-            <div className="mb-16">
-              <div className="flex items-start mb-6">
-                <div className="w-12 h-12 bg-blue-600/10 rounded-lg flex items-center justify-center border border-blue-600/30 mr-4 flex-shrink-0">
-                  <div className="w-6 h-6 bg-blue-600 rounded"></div>
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">The Situation</h2>
-                  <div className="w-16 h-0.5 bg-blue-500"></div>
-                </div>
-              </div>
-              <div className="ml-0 md:ml-16">
-                <p className="text-gray-300 leading-relaxed text-base md:text-lg whitespace-pre-line">
-                  {currentCase.details.situation}
-                </p>
-              </div>
-            </div>
-
             {/* Challenge */}
             <div className="mb-16">
               <div className="flex items-start mb-6">
@@ -194,20 +172,20 @@ const CaseStudyDetails = () => {
               </div>
             </div>
 
-            {/* Action */}
+            {/* Approach */}
             <div className="mb-16">
               <div className="flex items-start mb-6">
                 <div className="w-12 h-12 bg-blue-600/10 rounded-lg flex items-center justify-center border border-blue-600/30 mr-4 flex-shrink-0">
                   <div className="w-6 h-6 bg-blue-600 rounded"></div>
                 </div>
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Our Action</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Our Approach</h2>
                   <div className="w-16 h-0.5 bg-blue-500"></div>
                 </div>
               </div>
               <div className="ml-0 md:ml-16">
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg whitespace-pre-line">
-                  {currentCase.details.action}
+                  {currentCase.details.approach}
                 </p>
               </div>
             </div>
@@ -227,6 +205,33 @@ const CaseStudyDetails = () => {
                 <p className="text-gray-300 leading-relaxed text-base md:text-lg whitespace-pre-line">
                   {currentCase.details.result}
                 </p>
+              </div>
+            </div>
+
+            {/* Impact Metrics */}
+            <div className="mb-16">
+              <div className="flex items-start mb-6">
+                <div className="w-12 h-12 bg-blue-600/10 rounded-lg flex items-center justify-center border border-blue-600/30 mr-4 flex-shrink-0">
+                  <div className="w-6 h-6 bg-blue-600 rounded"></div>
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Impact Metrics</h2>
+                  <div className="w-16 h-0.5 bg-blue-500"></div>
+                </div>
+              </div>
+              <div className="ml-0 md:ml-16">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {currentCase.details.impactMetrics && currentCase.details.impactMetrics.map((metric, index) => (
+                    <div key={index} className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
+                      <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2">
+                        {metric.value}
+                      </div>
+                      <p className="text-gray-300 text-sm md:text-base">
+                        {metric.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -297,8 +302,6 @@ const CaseStudyDetails = () => {
           </div>
         </div>
       </div>
-
-  
     </div>
   );
 };
