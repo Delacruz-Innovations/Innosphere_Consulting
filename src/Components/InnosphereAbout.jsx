@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Zap, TrendingUp, Users, Globe } from 'lucide-react';
-
+import { logEvent } from '../utils/analytics';
 const InnosphereAbout = () => {
+      useEffect(() => {
+    logEvent('Section View', 'About Section Viewed', 'Innosphere About');
+  }, []);
+
   const pillars = [
     {
       icon: TrendingUp,
@@ -24,6 +28,12 @@ const InnosphereAbout = () => {
       description: "Deep UAE and GCC market knowledge combined with world-class methodologies—the best of both worlds."
     }
   ];
+
+
+    // Add this function to track pillar card interactions
+  const handlePillarClick = (pillarTitle) => {
+    logEvent('User Interaction', 'Pillar Card Clicked', pillarTitle);
+  };
 
   return (
     <div className="bg-[#0a1929] text-white py-20 md:py-32">
@@ -66,6 +76,7 @@ const InnosphereAbout = () => {
               {pillars.map((pillar, index) => (
                 <div
                   key={index}
+                     onClick={() => handlePillarClick(pillar.title)}
                   className="group relative bg-gradient-to-br from-gray-900 to-black border border-gray-800 hover:border-cyan-500/50 rounded-2xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20"
                 >
                   {/* Gradient overlay on hover */}
