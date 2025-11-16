@@ -1,18 +1,96 @@
 // src/utils/analytics.js
 import ReactGA from "react-ga4";
-import { useRef } from 'react';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+// Storage keys
+const STORAGE_KEYS = {
+  FIRST_VISIT: 'ga_first_visit',
+  PAGE_COUNT: 'ga_page_count',
+  SESSION_START: 'ga_session_start'
+};
+
 // Initialize GA4
 export const initGA = () => {
-  ReactGA.initialize("G-JJ7L25T8TX", {
-    gaOptions: {
-      debug_mode: process.env.NODE_ENV === 'development',
-    },
-    gtagOptions: {
-      send_page_view: false // We'll handle page views manually
+  try {
+    ReactGA.initialize("G-YR41KNK4DC", {
+      gaOptions: {
+        debug_mode: isDevelopment,
+      },
+      gtagOptions: {
+        send_page_view: false // We'll handle page views manually
+      }
+    });
+    
+    // Track first visit
+    trackFirstVisit();
+    
+    if (isDevelopment) {
+      console.log("GA4 Initialized successfully");
     }
-  });
-  console.log("GA4 Initialized");
+  } catch (error) {
+    console.error("Failed to initialize GA4:", error);
+  }
 };
+
+// Track first visit
+const trackFirstVisit = () => {
+  try {
+    const firstVisit = localStorage.getItem(STORAGE_KEYS.FIRST_VISIT);
+    
+    if (!firstVisit) {
+      // This is the user's first visit
+      const timestamp = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEYS.FIRST_VISIT, timestamp);
+      localStorage.setItem(STORAGE_KEYS.PAGE_COUNT, '0');
+      
+      // Send first visit event
+      ReactGA.event({
+        category: 'User Journey',
+        action: 'First Visit',
+        label: 'New User',
+        nonInteraction: false
+      });
+      
+      if (isDevelopment) {
+        console.log('✓ First Visit tracked:', timestamp);
+      }
+    } else {
+      // Returning user
+      const daysSinceFirstVisit = Math.floor(
+        (Date.now() - new Date(firstVisit).getTime()) / (1000 * 60 * 60 * 24)
+      );
+      
+      if (isDevelopment) {
+        console.log(`Returning user - First visited ${daysSinceFirstVisit} days ago`);
+      }
+    }
+  } catch (error) {
+    console.error("Error tracking first visit:", error);
+  }
+};
+
+// Get user stats
+export const getUserStats = () => {
+  try {
+    const firstVisit = localStorage.getItem(STORAGE_KEYS.FIRST_VISIT);
+    const pageCount = parseInt(localStorage.getItem(STORAGE_KEYS.PAGE_COUNT) || '0');
+    
+    return {
+      isFirstVisit: !firstVisit,
+      firstVisitDate: firstVisit,
+      totalPagesViewed: pageCount
+    };
+  } catch (error) {
+    return {
+      isFirstVisit: true,
+      firstVisitDate: null,
+      totalPagesViewed: 0
+    };
+  }
+};
+
+// Helper function to get page title from pathname
 const getPageTitle = (pathname) => {
   const routes = {
     '/': 'Home',
@@ -28,6 +106,7 @@ const getPageTitle = (pathname) => {
     '/Industries': 'Industries',
     '/our_services': 'Our Services'
   };
+  
   if (routes[pathname]) return routes[pathname];
   if (pathname.startsWith('/solution/')) return 'Solution Detail';
   if (pathname.startsWith('/cases/')) return 'Case Study Detail';
@@ -37,26 +116,60 @@ const getPageTitle = (pathname) => {
 
 // Log page views
 export const logPageView = (path, title) => {
-  const pagePath = path || window.location.pathname + window.location.search;
-  const pageTitle = title || document.title;
-  
-  ReactGA.send({ 
-    hitType: "pageview", 
-    page: pagePath,
-    title: pageTitle 
-  });
-  console.log(`Page view logged: ${pagePath} - ${pageTitle}`);
+  try {
+    const pagePath = path || window.location.pathname + window.location.search;
+    const pageTitle = title || getPageTitle(window.location.pathname);
+    
+    // Increment page count
+    const currentCount = parseInt(localStorage.getItem(STORAGE_KEYS.PAGE_COUNT) || '0');
+    const newCount = currentCount + 1;
+    localStorage.setItem(STORAGE_KEYS.PAGE_COUNT, newCount.toString());
+    
+    // Send page view with custom parameters
+    ReactGA.send({ 
+      hitType: "pageview", 
+      page: pagePath,
+      title: pageTitle,
+      page_count: newCount // Custom parameter
+    });
+    
+    // Track pages viewed milestone
+    if ([1, 5, 10, 20, 50].includes(newCount)) {
+      ReactGA.event({
+        category: 'User Journey',
+        action: 'Pages Viewed Milestone',
+        label: `${newCount} Pages`,
+        value: newCount
+      });
+    }
+    
+    if (isDevelopment) {
+      console.log(`✓ Page view logged: ${pagePath} - ${pageTitle} (Total: ${newCount} pages)`);
+    }
+  } catch (error) {
+    console.error("Error logging page view:", error);
+  }
 };
 
 // Track custom events
 export const logEvent = (category, action, label = null, value = null) => {
-  ReactGA.event({
-    category: category,
-    action: action,
-    label: label,
-    value: value
-  });
-  console.log(`Event logged: ${category} - ${action}${label ? ` - ${label}` : ''}`);
+  try {
+    const eventParams = {
+      category: category,
+      action: action,
+    };
+
+    if (label) eventParams.label = label;
+    if (value !== null) eventParams.value = value;
+
+    ReactGA.event(eventParams);
+    
+    if (isDevelopment) {
+      console.log(`✓ Event logged: ${category} - ${action}${label ? ` - ${label}` : ''}${value !== null ? ` (${value})` : ''}`);
+    }
+  } catch (error) {
+    console.error("Error logging event:", error);
+  }
 };
 
 // Track button clicks
@@ -78,6 +191,137 @@ export const trackOutboundLink = (url) => {
 export const trackDownload = (fileName) => {
   logEvent("Download", "Click", fileName);
 };
+
+// ============================================
+// KEY EVENTS TRACKING
+// ============================================
+
+// Track key conversion events
+export const trackKeyEvent = (eventName, eventParams = {}) => {
+  try {
+    ReactGA.event({
+      category: 'Key Events',
+      action: eventName,
+      label: eventParams.label || null,
+      value: eventParams.value || null,
+      ...eventParams
+    });
+    
+    if (isDevelopment) {
+      console.log(`✓ Key Event: ${eventName}`, eventParams);
+    }
+  } catch (error) {
+    console.error("Error tracking key event:", error);
+  }
+};
+
+// Specific key events
+export const trackFormSubmission = (formName, formData = {}) => {
+  trackKeyEvent('Form Submission', {
+    label: formName,
+    form_name: formName,
+    ...formData
+  });
+};
+
+export const trackConsultationRequest = (details = {}) => {
+  trackKeyEvent('Consultation Request', {
+    label: 'Consultation Form',
+    ...details
+  });
+};
+
+export const trackContactSubmission = (contactType = 'General') => {
+  trackKeyEvent('Contact Submission', {
+    label: contactType,
+    contact_type: contactType
+  });
+};
+
+export const trackNewsletterSignup = (email = null) => {
+  trackKeyEvent('Newsletter Signup', {
+    label: 'Newsletter',
+    has_email: !!email
+  });
+};
+
+export const trackCTAConversion = (ctaName, ctaLocation) => {
+  trackKeyEvent('CTA Conversion', {
+    label: `${ctaName} - ${ctaLocation}`,
+    cta_name: ctaName,
+    cta_location: ctaLocation
+  });
+};
+
+export const trackResourceDownload = (resourceName, resourceType) => {
+  trackKeyEvent('Resource Download', {
+    label: resourceName,
+    resource_name: resourceName,
+    resource_type: resourceType
+  });
+};
+
+export const trackPhoneClick = () => {
+  trackKeyEvent('Phone Click', {
+    label: 'Phone Number Clicked'
+  });
+};
+
+export const trackEmailClick = () => {
+  trackKeyEvent('Email Click', {
+    label: 'Email Address Clicked'
+  });
+};
+
+export const trackSocialEngagement = (platform, action = 'Click') => {
+  trackKeyEvent('Social Engagement', {
+    label: platform,
+    platform: platform,
+    action: action
+  });
+};
+
+export const trackCaseStudyView = (caseStudyName) => {
+  trackKeyEvent('Case Study View', {
+    label: caseStudyName,
+    case_study: caseStudyName
+  });
+};
+
+export const trackInsightView = (insightTitle) => {
+  trackKeyEvent('Insight View', {
+    label: insightTitle,
+    insight: insightTitle
+  });
+};
+
+export const trackSolutionView = (solutionName) => {
+  trackKeyEvent('Solution View', {
+    label: solutionName,
+    solution: solutionName
+  });
+};
+
+export const trackVideoEngagement = (videoTitle, action, progress = null) => {
+  trackKeyEvent('Video Engagement', {
+    label: `${videoTitle} - ${action}`,
+    video_title: videoTitle,
+    video_action: action,
+    video_progress: progress
+  });
+};
+
+export const trackChatbotInteraction = (action, message = null) => {
+  trackKeyEvent('Chatbot Interaction', {
+    label: action,
+    chatbot_action: action,
+    message_preview: message ? message.substring(0, 50) : null
+  });
+};
+
+// ============================================
+// END KEY EVENTS TRACKING
+// ============================================
 
 // Track scroll depth
 export const trackScrollDepth = (depth, pageTitle) => {
@@ -148,20 +392,24 @@ export const setupScrollTracking = (pageTitle, milestones = [25, 50, 75, 100]) =
   const tracked = new Set();
 
   const handleScroll = () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercent = (scrollTop / scrollHeight) * 100;
+    try {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 
-    if (scrollPercent > maxScroll) {
-      maxScroll = scrollPercent;
-    }
-
-    milestones.forEach((milestone) => {
-      if (scrollPercent >= milestone && !tracked.has(milestone)) {
-        tracked.add(milestone);
-        trackScrollDepth(milestone, pageTitle);
+      if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
       }
-    });
+
+      milestones.forEach((milestone) => {
+        if (scrollPercent >= milestone && !tracked.has(milestone)) {
+          tracked.add(milestone);
+          trackScrollDepth(milestone, pageTitle);
+        }
+      });
+    } catch (error) {
+      console.error("Scroll tracking error:", error);
+    }
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
@@ -170,24 +418,29 @@ export const setupScrollTracking = (pageTitle, milestones = [25, 50, 75, 100]) =
 
 // Section visibility tracking utility
 export const setupSectionTracking = (pageTitle) => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const sectionName = entry.target.getAttribute('data-section');
-          if (sectionName) {
-            trackSectionView(sectionName, pageTitle);
+  try {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionName = entry.target.getAttribute('data-section');
+            if (sectionName) {
+              trackSectionView(sectionName, pageTitle);
+            }
           }
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
+        });
+      },
+      { threshold: 0.5 }
+    );
 
-  const sections = document.querySelectorAll('[data-section]');
-  sections.forEach((section) => observer.observe(section));
+    const sections = document.querySelectorAll('[data-section]');
+    sections.forEach((section) => observer.observe(section));
 
-  return () => observer.disconnect();
+    return () => observer.disconnect();
+  } catch (error) {
+    console.error("Section tracking setup error:", error);
+    return () => {};
+  }
 };
 
 // Time on page tracking utility
@@ -195,9 +448,13 @@ export const setupTimeTracking = (pageTitle) => {
   const startTime = Date.now();
 
   return () => {
-    const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    if (timeSpent > 0) {
-      trackTimeOnPage(timeSpent, pageTitle);
+    try {
+      const timeSpent = Math.round((Date.now() - startTime) / 1000);
+      if (timeSpent > 0) {
+        trackTimeOnPage(timeSpent, pageTitle);
+      }
+    } catch (error) {
+      console.error("Time tracking error:", error);
     }
   };
 };
@@ -206,6 +463,7 @@ export default {
   initGA,
   logPageView,
   logEvent,
+  getUserStats,
   trackButtonClick,
   trackFormSubmit,
   trackOutboundLink,
@@ -226,4 +484,20 @@ export default {
   setupScrollTracking,
   setupSectionTracking,
   setupTimeTracking,
+  // Key Events
+  trackKeyEvent,
+  trackFormSubmission,
+  trackConsultationRequest,
+  trackContactSubmission,
+  trackNewsletterSignup,
+  trackCTAConversion,
+  trackResourceDownload,
+  trackPhoneClick,
+  trackEmailClick,
+  trackSocialEngagement,
+  trackCaseStudyView,
+  trackInsightView,
+  trackSolutionView,
+  trackVideoEngagement,
+  trackChatbotInteraction,
 };

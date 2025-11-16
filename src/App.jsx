@@ -23,6 +23,8 @@ import Industries from './Pages/Industries';
 
 import { initGA, logPageView, logEvent } from './utils/analytics';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 // Get page title based on route
 const getPageTitle = (pathname) => {
   const routes = {
@@ -53,50 +55,60 @@ const getPageTitle = (pathname) => {
   return '404 Not Found';
 };
 
+// Safe wrapper for GA events
+const safeLogEvent = (...args) => {
+  try {
+    logEvent(...args);
+  } catch (error) {
+    if (isDevelopment) {
+      console.error('GA Event Error:', error);
+    }
+  }
+};
+
 // Component to track route changes and user behavior
 function RouteTracker() {
   const location = useLocation();
   const pageStartTime = useRef(Date.now());
   const previousPath = useRef(location.pathname);
-  const sessionStartTime = useRef(Date.now());
 
   useEffect(() => {
     const currentPath = location.pathname + location.search;
     const pageTitle = getPageTitle(location.pathname);
 
+    // Track time on previous page before navigating
     if (previousPath.current !== location.pathname && previousPath.current) {
       const timeSpent = Math.round((Date.now() - pageStartTime.current) / 1000);
       const previousTitle = getPageTitle(previousPath.current);
       if (timeSpent > 0) {
-        logEvent('Engagement', 'Time on Page', previousTitle, timeSpent);
+        safeLogEvent('Engagement', 'Time on Page', previousTitle, timeSpent);
       }
     }
 
-    logPageView(currentPath, pageTitle);
+    // Log new page view
+    try {
+      logPageView(currentPath, pageTitle);
+    } catch (error) {
+      if (isDevelopment) {
+        console.error('GA Page View Error:', error);
+      }
+    }
+
     pageStartTime.current = Date.now();
     previousPath.current = location.pathname;
   }, [location]);
 
+  // Track time on page when component unmounts (route change)
   useEffect(() => {
-    const handleBeforeUnload = () => {
-      const totalSessionTime = Math.round((Date.now() - sessionStartTime.current) / 1000);
+    return () => {
       const currentPageTime = Math.round((Date.now() - pageStartTime.current) / 1000);
-      const currentTitle = getPageTitle(location.pathname);
+      const currentTitle = getPageTitle(previousPath.current);
 
       if (currentPageTime > 0) {
-        logEvent('Engagement', 'Time on Page', currentTitle, currentPageTime);
-      }
-      if (totalSessionTime > 0) {
-        logEvent('Engagement', 'Total Session Time', 'Site Wide', totalSessionTime);
+        safeLogEvent('Engagement', 'Time on Page', currentTitle, currentPageTime);
       }
     };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      handleBeforeUnload();
-    };
-  }, [location.pathname]);
+  }, []);
 
   return null;
 }
@@ -104,25 +116,38 @@ function RouteTracker() {
 function ScrollDepthTracker() {
   const location = useLocation();
   const trackedDepths = useRef(new Set());
+  const scrollTimeout = useRef(null);
 
   useEffect(() => {
     trackedDepths.current = new Set();
 
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      // Debounce scroll events
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
 
-      [25, 50, 75, 100].forEach(milestone => {
-        if (scrollPercent >= milestone && !trackedDepths.current.has(milestone)) {
-          trackedDepths.current.add(milestone);
-          logEvent('Scroll', `${milestone}% Depth`, getPageTitle(location.pathname));
-        }
-      });
+      scrollTimeout.current = setTimeout(() => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+        [25, 50, 75, 100].forEach(milestone => {
+          if (scrollPercent >= milestone && !trackedDepths.current.has(milestone)) {
+            trackedDepths.current.add(milestone);
+            safeLogEvent('Scroll', `${milestone}% Depth`, getPageTitle(location.pathname));
+          }
+        });
+      }, 100);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
   }, [location.pathname]);
 
   return null;
@@ -131,19 +156,25 @@ function ScrollDepthTracker() {
 function InteractionTracker() {
   useEffect(() => {
     const handleClick = (e) => {
-      const link = e.target.closest('a');
-      const button = e.target.closest('button');
-      
-      if (link) {
-        const href = link.getAttribute('href');
-        if (href?.startsWith('http') && !href.includes(window.location.hostname)) {
-          logEvent('Outbound Link', 'Click', href);
+      try {
+        const link = e.target.closest('a');
+        const button = e.target.closest('button');
+        
+        if (link) {
+          const href = link.getAttribute('href');
+          if (href?.startsWith('http') && !href.includes(window.location.hostname)) {
+            safeLogEvent('Outbound Link', 'Click', href);
+          }
         }
-      }
-      
-      if (button) {
-        const buttonText = button.textContent.trim() || button.getAttribute('aria-label') || 'Unknown Button';
-        logEvent('Button', 'Click', buttonText);
+        
+        if (button) {
+          const buttonText = button.textContent?.trim() || button.getAttribute('aria-label') || 'Unknown Button';
+          safeLogEvent('Button', 'Click', buttonText);
+        }
+      } catch (error) {
+        if (isDevelopment) {
+          console.error('Click tracking error:', error);
+        }
       }
     };
 
@@ -154,31 +185,106 @@ function InteractionTracker() {
   return null;
 }
 
+// Track when user leaves the site
+function BeforeUnloadTracker() {
+  const sessionStartTime = useRef(Date.now());
+  const pageStartTime = useRef(Date.now());
+  const location = useLocation();
+
+  useEffect(() => {
+    pageStartTime.current = Date.now();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const totalSessionTime = Math.round((Date.now() - sessionStartTime.current) / 1000);
+      const currentPageTime = Math.round((Date.now() - pageStartTime.current) / 1000);
+      const currentTitle = getPageTitle(location.pathname);
+
+      if (currentPageTime > 0) {
+        safeLogEvent('Engagement', 'Time on Page', currentTitle, currentPageTime);
+      }
+      if (totalSessionTime > 0) {
+        safeLogEvent('Engagement', 'Total Session Time', 'Site Wide', totalSessionTime);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [location.pathname]);
+
+  return null;
+}
+
 const App = () => {
   const appMountTime = useRef(Date.now());
 
   useEffect(() => {
     // Initialize GA4
-    initGA();
+    try {
+      initGA();
+    } catch (error) {
+      console.error('Failed to initialize GA:', error);
+    }
     
     // Log initial page view
-    logPageView();
+    try {
+      logPageView();
+    } catch (error) {
+      if (isDevelopment) {
+        console.error('Initial page view error:', error);
+      }
+    }
 
-    // Track browser and device info
-    logEvent('User Info', 'Browser', navigator.userAgent.split(' ').pop());
-    logEvent('User Info', 'Platform', navigator.platform);
-    logEvent('User Info', 'Screen Size', `${window.screen.width}x${window.screen.height}`);
-    logEvent('User Info', 'Viewport Size', `${window.innerWidth}x${window.innerHeight}`);
+    // Track browser and device info with null checks
+    try {
+      const userAgent = navigator.userAgent || 'Unknown';
+      const browser = userAgent.split(' ').pop() || 'Unknown';
+      safeLogEvent('User Info', 'Browser', browser);
+      safeLogEvent('User Info', 'Platform', navigator.platform || 'Unknown');
+      safeLogEvent('User Info', 'Screen Size', `${window.screen.width}x${window.screen.height}`);
+      safeLogEvent('User Info', 'Viewport Size', `${window.innerWidth}x${window.innerHeight}`);
+    } catch (error) {
+      if (isDevelopment) {
+        console.error('User info tracking error:', error);
+      }
+    }
 
-    // Track performance metrics
-    if (window.performance && window.performance.timing) {
+    // Track performance metrics using modern API
+    if (window.performance) {
       window.addEventListener('load', () => {
         setTimeout(() => {
-          const perfData = window.performance.timing;
-          const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-          if (pageLoadTime > 0) {
-            logEvent('Performance', 'Page Load Time', 'Homepage', Math.round(pageLoadTime));
-            console.log(`Page load time: ${pageLoadTime}ms`);
+          try {
+            const perfEntries = performance.getEntriesByType('navigation');
+            if (perfEntries && perfEntries.length > 0) {
+              const perfData = perfEntries[0];
+              const pageLoadTime = perfData.loadEventEnd - perfData.fetchStart;
+              
+              if (pageLoadTime > 0) {
+                safeLogEvent('Performance', 'Page Load Time', 'Homepage', Math.round(pageLoadTime));
+                if (isDevelopment) {
+                  console.log(`Page load time: ${pageLoadTime}ms`);
+                }
+              }
+            } else {
+              // Fallback to deprecated API if needed
+              const timing = performance.timing;
+              if (timing && timing.loadEventEnd && timing.navigationStart) {
+                const pageLoadTime = timing.loadEventEnd - timing.navigationStart;
+                if (pageLoadTime > 0) {
+                  safeLogEvent('Performance', 'Page Load Time', 'Homepage', Math.round(pageLoadTime));
+                  if (isDevelopment) {
+                    console.log(`Page load time (fallback): ${pageLoadTime}ms`);
+                  }
+                }
+              }
+            }
+          } catch (error) {
+            if (isDevelopment) {
+              console.error('Performance tracking error:', error);
+            }
           }
         }, 0);
       });
@@ -186,10 +292,16 @@ const App = () => {
 
     // Track visibility changes (tab switching)
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        logEvent('User Behavior', 'Tab Hidden', window.location.pathname);
-      } else {
-        logEvent('User Behavior', 'Tab Visible', window.location.pathname);
+      try {
+        if (document.hidden) {
+          safeLogEvent('User Behavior', 'Tab Hidden', window.location.pathname);
+        } else {
+          safeLogEvent('User Behavior', 'Tab Visible', window.location.pathname);
+        }
+      } catch (error) {
+        if (isDevelopment) {
+          console.error('Visibility tracking error:', error);
+        }
       }
     };
 
@@ -197,13 +309,6 @@ const App = () => {
 
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      
-      // Track total app session time
-      const totalAppTime = Math.round((Date.now() - appMountTime.current) / 1000);
-      if (totalAppTime > 0) {
-        logEvent('Engagement', 'App Session Time', 'Total', totalAppTime);
-        console.log(`Total app session: ${totalAppTime} seconds`);
-      }
     };
   }, []);
 
@@ -213,6 +318,7 @@ const App = () => {
       <RouteTracker />
       <ScrollDepthTracker />
       <InteractionTracker />
+      <BeforeUnloadTracker />
       <Navbar />
       <Routes>
         <Route path='/' element={<Homepage />} />

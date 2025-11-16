@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Minimize2 } from 'lucide-react';
 import Mia from '../assets/mia.png'
-
+import { trackChatbotInteraction, trackKeyEvent } from '../utils/analytics';
 
 // KNOWLEDGE BASE - Innosphere Consulting
 const knowledgeBase = {
@@ -245,7 +245,8 @@ const DeChatbot = () => {
   useEffect(() => {
     if (isOpen && !isMinimized) {
       inputRef.current?.focus();
-      
+      // Track chatbot opened
+trackChatbotInteraction('Chatbot Opened');
       // Show welcome message only once when chat first opens
       if (!hasInteracted && messages.length === 0) {
         setIsTyping(true);
@@ -267,7 +268,14 @@ const DeChatbot = () => {
   // Intelligent response matching
   const getBotResponse = (userMessage) => {
     const lowerMessage = userMessage.toLowerCase();
-    
+    // Track high-intent queries
+  if (lowerMessage.includes('consultation') || lowerMessage.includes('book') || lowerMessage.includes('schedule')) {
+    trackKeyEvent('Consultation Interest', { source: 'Chatbot', query: userMessage });
+  }
+  if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('package')) {
+    trackKeyEvent('Pricing Interest', { source: 'Chatbot', query: userMessage });
+  }
+  
     // Greetings
     if (/^(hello|hi|hey|greetings|good morning|good afternoon|good evening)/.test(lowerMessage)) {
       return "👋 Hello! I'm Mia, your virtual assistant at Innosphere Consulting. I'm here to help you explore our solutions, answer your questions, and guide you every step of the way. How can I assist you today?";
@@ -331,6 +339,9 @@ What would you like to know?`;
     setInputValue('');
     setIsTyping(true);
 
+    // Track user message sent
+trackChatbotInteraction('Message Sent', inputValue);
+
     setTimeout(() => {
       const botMessage = {
         id: messages.length + 2,
@@ -343,13 +354,13 @@ What would you like to know?`;
     }, 1200);
   };
 
-  const handleSuggestedQuestion = (question) => {
-    setInputValue(question);
-    setTimeout(() => {
-      handleSendMessage();
-    }, 100);
-  };
-
+const handleSuggestedQuestion = (question) => {
+  trackChatbotInteraction('Suggested Question Clicked', question); // ADD THIS
+  setInputValue(question);
+  setTimeout(() => {
+    handleSendMessage();
+  }, 100);
+};
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -393,14 +404,20 @@ What would you like to know?`;
             </div>
             <div className="flex items-center space-x-2">
               <button
-                onClick={() => setIsMinimized(!isMinimized)}
+               onClick={() => {
+  trackChatbotInteraction(isMinimized ? 'Chatbot Expanded' : 'Chatbot Minimized');
+  setIsMinimized(!isMinimized);
+}}
                 className="hover:bg-white/20 rounded p-1 transition-colors"
                 aria-label="Minimize chat"
               >
                 <Minimize2 size={18} />
               </button>
               <button
-                onClick={() => setIsOpen(false)}
+               onClick={() => {
+  trackChatbotInteraction('Chatbot Closed');
+  setIsOpen(false);
+}}
                 className="hover:bg-white/20 rounded p-1 transition-colors"
                 aria-label="Close chat"
               >

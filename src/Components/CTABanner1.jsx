@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, ArrowRight } from 'lucide-react';
-
+import { trackCTAConversion } from '../utils/analytics';
 const CTABanner1 = () => {
 
   return (
@@ -14,7 +14,8 @@ const CTABanner1 = () => {
             <p className="text-gray-400 text-lg mb-8">
               Let's move from strategy to execution—together.
             </p>
-            <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 transform hover:scale-105">
+            <button  onClick={() => {
+  trackCTAConversion('Get Started', 'Homepage Hero') }} className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold px-10 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/50 transform hover:scale-105">
               Start the Conversation
             </button>
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
 import solutionsData from '../Solution';
+import { trackCTAConversion } from '../utils/analytics';
 
 const SolutionDetail = () => {
   const { slug } = useParams();
@@ -183,7 +184,10 @@ const SolutionDetail = () => {
               Management Consulting Services and evolving people management that help our clients
               become more productive and profitable.
             </p>
-           <Link to='/consultation'> <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 flex gap-2 items-center justify-center mx-auto">
+           <Link to='/consultation'> <button onClick={() => {
+  trackCTAConversion('Get Started', 'Homepage Hero');
+  // ... navigate or show form
+}} className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 flex gap-2 items-center justify-center mx-auto">
               Book A free consultation <ArrowRight />
             </button>
             </Link>

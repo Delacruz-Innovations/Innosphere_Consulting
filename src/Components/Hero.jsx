@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Play, X } from 'lucide-react';
 import image from '../assets/hero.png'
 import { gsap } from 'gsap';
+import { trackCTAConversion } from '../utils/analytics';
 const Hero = () => {
   const [videoOpen, setVideoOpen] = useState(false);
   const heroRef = useRef(null);
@@ -217,7 +218,8 @@ Empowering UAE Businesses to Scale Globally.
         </div>
 
         {/* Client Logos */}
-       <button className='mt-20 p-6 bg-[#0a1929] text-white font-semibold rounded-md text-xl'>
+       <button onClick={() => {
+  trackCTAConversion('Get Started', 'Homepage Hero'); }} className='mt-20 p-6 bg-[#0a1929] text-white font-semibold rounded-md text-xl'>
         Book A 30 Minute Strategy Session
        </button>
       </div>

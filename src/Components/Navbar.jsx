@@ -179,7 +179,7 @@ const Navbar = () => {
               OUR SERVICES
             </Link>
             <Link 
-              to="/industires" 
+              to="/industries" 
               className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
                 isActive('/industries') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
               }`}

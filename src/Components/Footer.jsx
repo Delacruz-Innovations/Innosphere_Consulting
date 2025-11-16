@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import Logo from '../assets/Logo.png'
 import { Link } from 'react-router-dom';
-
+import { trackSocialEngagement } from '../utils/analytics';
 const Footer = () => {
 const [email, setEmail] = useState('');
 const [subscribed, setSubscribed] = useState(false);
@@ -193,6 +193,7 @@ const handleSubscribe = async (e) => {
                       key={index}
                       href={social.href}
                       target="_blank"
+                       onClick={() => trackSocialEngagement(social.name)}
                       rel="noopener noreferrer"
                       className="w-10 h-10 bg-gray-900/50 border border-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/30"
                       aria-label={social.name}
