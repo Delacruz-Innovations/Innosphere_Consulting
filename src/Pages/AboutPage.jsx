@@ -10,6 +10,7 @@ import {
   setupSectionTracking, 
   setupTimeTracking 
 } from '../utils/analytics'
+import FeatureCarousel from '../Components/FeatureCarousel'
 
 const AboutPage = () => {
   useEffect(() => {
@@ -35,7 +36,8 @@ const AboutPage = () => {
 
   return (
     <>
-      {/* <HeroSection /> */}
+    <div className='bg-slate-950'>
+   {/* <HeroSection /> */}
       <div data-section="about-us">
         <AboutUs />
       </div>
@@ -48,6 +50,9 @@ const AboutPage = () => {
       <div data-section="leadership-team">
         <LeadershipTeam />
       </div>
+     
+    </div>
+   
     </>
   )
 }

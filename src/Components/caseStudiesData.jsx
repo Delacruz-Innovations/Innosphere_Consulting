@@ -1,4 +1,9 @@
 // All case studies data with new format: Challenge → Approach → Result → Impact Metrics
+
+import case01 from '../assets/case01.jpg'
+import case03 from '../assets/case03.jpg'
+import case04 from '../assets/case04.jpg'
+import case05 from '../assets/case05.jpg'
 const caseStudiesData = {
   'dbt-digital-transformation': {
     id: 1,
@@ -6,7 +11,7 @@ const caseStudiesData = {
     category: "Digital Transformation",
     client: "UK Government / Public Sector",
     duration: "18 months",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80",
+    image: case01,
     overview: "The department was undergoing a large-scale migration from DataHub to the GOV.UK backend, with multiple legacy systems and cross-border teams handling highly sensitive data. Processes were inconsistent, and stakeholders were frustrated by misaligned operations.",
     details: {
       challenge: "The department was undergoing a large-scale migration from DataHub to the GOV.UK backend, with multiple legacy systems and cross-border teams handling highly sensitive data:\n\n• Multiple legacy systems with inconsistent processes across departments\n• Cross-border teams handling highly sensitive data requiring strict security protocols\n• Stakeholder frustration due to misaligned operations and workflows\n• Need to comply with Government Digital Service (GDS) standards\n• Risk of disruption during large-scale migration\n• Complex coordination across multiple regions and functions",
@@ -22,7 +27,7 @@ const caseStudiesData = {
   },
   'nhs-crm-modernisation': {
     id: 2,
-    title: "NHS England – Replatforming & CRM Modernisation",
+    title: "NHS England  Replatforming & CRM Modernisation",
     category: "Healthcare Transformation",
     client: "Healthcare / Public Sector",
     duration: "14 months",
@@ -42,11 +47,11 @@ const caseStudiesData = {
   },
   'easyjet-digital-retail': {
     id: 3,
-    title: "Easyjet – Digital Retail & Ancillary Revenue Growth",
+    title: "easyJet – Digital Retail & Ancillary Revenue Growth",
     category: "Digital Commerce",
     client: "Aviation / Travel",
     duration: "12 months",
-    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80",
+    image: case03,
     overview: "Easyjet needed to enhance personalization in digital retail to drive ancillary revenue. The challenge was aligning commercial strategy with IT systems and ensuring smooth adoption across teams.",
     details: {
       challenge: "Easyjet faced challenges in maximizing ancillary revenue through digital channels:\n\n• Need to enhance personalization in digital retail experiences\n• Misalignment between commercial strategy and IT systems\n• Limited customer behaviour insights affecting merchandising decisions\n• Cross-team collaboration gaps between commercial and IT departments\n• Lack of optimised workflows for personalization\n• Need for smooth adoption of new systems across teams",
@@ -66,7 +71,7 @@ const caseStudiesData = {
     category: "Technology & Operations",
     client: "Gambling / Technology",
     duration: "10 months",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+    image: case04,
     overview: "Sky Betting & Gaming's CRM and operational systems were fragmented, limiting visibility into customer behaviour and slowing decision-making.",
     details: {
       challenge: "Sky Betting & Gaming faced operational challenges limiting business effectiveness:\n\n• Fragmented CRM and operational systems across the organization\n• Limited visibility into customer behaviour and lifecycle\n• Slow decision-making due to data gaps\n• Inefficient workflows reducing operational effectiveness\n• Lack of scalable, measurable processes\n• Need for improved analytics and insights capabilities",
@@ -82,11 +87,11 @@ const caseStudiesData = {
   },
   'lloyds-systems-consolidation': {
     id: 5,
-    title: "Lloyds Banking Group – Legacy Systems Consolidation",
+    title: "Lloyds Banking Group – Systems Consolidation",
     category: "Systems Integration",
     client: "Banking / Financial Services",
     duration: "18 months",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80",
+    image: case05,
     overview: "The bank managed 26 legacy loan systems, resulting in slow processing times, fragmented customer experiences, and high maintenance costs.",
     details: {
       challenge: "Lloyds Banking Group faced significant challenges with legacy systems:\n\n• Management of 26 separate legacy loan systems causing complexity\n• Slow processing times impacting customer service\n• Fragmented customer experiences across different systems\n• High maintenance costs for multiple redundant systems\n• Process redundancies reducing operational efficiency\n• Need for unified, efficient system architecture",

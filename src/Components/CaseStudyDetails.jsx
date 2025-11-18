@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, Menu, X } from 'lucide-react';
-import caseStudiesData from './caseStudiesData';
+import caseStudiesData from '../Components/caseStudiesData';
 
 const CaseStudyDetails = () => {
   const { slug } = useParams();

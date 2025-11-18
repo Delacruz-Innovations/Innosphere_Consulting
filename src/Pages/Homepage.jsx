@@ -14,8 +14,8 @@ import InnosphereHero from '../Components/InnosphereAbout'
 const Homepage = () => {
   return (
     <>
-    
-    <Hero />
+    <div className='bg-gray-950'>
+ <Hero />
     <StatsBar />
     <InnosphereHero />
     {/* <SolutionsApp /> */}
@@ -25,6 +25,8 @@ const Homepage = () => {
     {/* <StrategicDifferentiators /> */}
     {/* <IndustriesWeServe /> */}
     <RequestCallBack />
+    </div>
+   
     </>
   )
 }

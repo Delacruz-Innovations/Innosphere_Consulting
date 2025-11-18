@@ -211,7 +211,7 @@ const handleSubscribe = async (e) => {
         <div className="py-5 border-t border-gray-800/50">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <p className="text-gray-500">
-              © {new Date().getFullYear()} Innosphare Consulting. Registration No - 4435 All rights reserved.
+              © {new Date().getFullYear()} Innosphare Consulting. RC-4435 All rights reserved.
             </p>
             
             <div className="flex items-center gap-4">

@@ -1,111 +1,248 @@
-import React, {useEffect} from 'react';
-import { Zap, TrendingUp, Users, Globe } from 'lucide-react';
-import { logEvent } from '../utils/analytics';
-const InnosphereAbout = () => {
-      useEffect(() => {
-    logEvent('Section View', 'About Section Viewed', 'Innosphere About');
-  }, []);
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronRight } from 'lucide-react';
 
-  const pillars = [
+const InnosphereAbout = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollContainerRef = useRef(null);
+
+  const insights = [
     {
-      icon: TrendingUp,
-      title: "Innovation that drives growth",
-      description: "We don't just ideate—we implement. Our strategies are built for measurable, sustainable growth that transforms your bottom line."
+      type: "RESEARCH REPORT",
+      title: "Destination net zero 2025",
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95"
     },
     {
-      icon: Zap,
-      title: "Transformation through execution",
-      description: "Strategy without execution is just theory. We bridge the gap between vision and reality with precision, speed, and impact."
+      type: "RESEARCH REPORT",
+      title: "Sovereign AI: From managing risk to accelerating growth",
+      description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
+      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95"
     },
     {
-      icon: Users,
-      title: "Leadership that builds capability",
-      description: "True transformation starts with people. We develop leaders who can drive change and build organizations that thrive."
+      type: "RESEARCH REPORT",
+      title: "Holiday Shopping 2025: Tis the season for smarter spending and personalized joy",
+      image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
     },
     {
-      icon: Globe,
-      title: "Local insight, global standards",
-      description: "Deep UAE and GCC market knowledge combined with world-class methodologies—the best of both worlds."
+      type: "CASE STUDY",
+      title: "Poste Italiane pivots from postal service to national platform",
+      image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
+    },
+    {
+      type: "RESEARCH REPORT",
+      title: "Learning, reinvented. Accelerating human-AI collaboration",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
+    },
+    {
+      type: "CASE STUDY",
+      title: "Bristol Myers Squibb accelerates drug development with generative AI",
+      image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
+    },
+    {
+      type: "RESEARCH REPORT",
+      title: "4 critical actions to take now to strengthen your cyber defenses",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
+    },
+    {
+      type: "RESEARCH REPORT",
+      title: "AI and your operating model: Radically new ways of working",
+      image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop",
+      color: "bg-[#0a1929]/95",
+       description: "Sovereign AI isn't just a control play—it's a game-changer for global competitiveness and cultural value. Discover how organizations are moving fast to secure their advantage and shape AI's future, following four bold moves.",
     }
   ];
 
+  // Auto-scroll functionality
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || isDragging) return;
 
-    // Add this function to track pillar card interactions
-  const handlePillarClick = (pillarTitle) => {
-    logEvent('User Interaction', 'Pillar Card Clicked', pillarTitle);
+    const autoScroll = setInterval(() => {
+      if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+        container.scrollLeft = 0;
+      } else {
+        container.scrollLeft += 1;
+      }
+    }, 30);
+
+    return () => clearInterval(autoScroll);
+  }, [isDragging]);
+
+  // Mouse drag handlers
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
-    <div className="bg-[#0a1929] text-white py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Introduction */}
-        <div className="mb-20">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-1 w-12 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
-            <span className="text-cyan-400 font-semibold uppercase tracking-wider text-sm">Who We Are</span>
+    <div className=" text-white py-2 md:py-10 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        {/* Header */}
+        <div className="mb-8 md:mb-6">
+          <div className="flex items-center gap-3 mb-4 md:mb-4">
+            <div className="h-1 w-8 md:w-12 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+            <span className="text-cyan-400 font-semibold uppercase tracking-wider text-xs md:text-sm">
+              Latest Insights
+            </span>
           </div>
           
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-            We Turn <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">Vision</span> Into <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">Value</span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight">
+            Our <span className="bg-gradient-to-r from-[#0a1929] via-white to-[#0a1929]/ bg-clip-text text-transparent">Research</span> & <span className="bg-gradient-to-r from-[#0a1929] via-white to-[#0a1929]/50 bg-clip-text text-transparent">Insights</span>
           </h2>
 
-          <div className="grid  gap-8 ">
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Innosphere Consulting UAE is a strategy, digital transformation, and product leadership consulting firm built for the modern era.
-               We bridge global best practices with local insight to help organizations across the UAE and GCC move from strategy to execution—fast, bold, and with lasting impact.
-            </p>
-          
-          </div>
+          <p className="text-base md:text-xl text-gray-300 leading-relaxed max-w-3xl">
+            Explore our latest thinking on digital transformation, AI, and innovation strategy
+          </p>
         </div>
 
-        {/* Core Messaging Pillars */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-blue-500/5 to-purple-600/5 blur-3xl"></div>
-          
-          <div className="relative">
-            <div className="text-center mb-16">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                Our Core <span className="text-cyan-400">Principles</span>
-              </h3>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Bold, disruptive, and visionary we're not here to maintain the status quo
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {pillars.map((pillar, index) => (
-                <div
-                  key={index}
-                     onClick={() => handlePillarClick(pillar.title)}
-                  className="group relative bg-gradient-to-br from-gray-900 to-black border border-gray-800 hover:border-cyan-500/50 rounded-2xl p-8 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20"
-                >
-                  {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-600/0 group-hover:from-cyan-500/5 group-hover:to-blue-600/5 rounded-2xl transition-all duration-300"></div>
-                  
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-cyan-500/20 to-blue-600/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                      <pillar.icon className="w-8 h-8 text-cyan-400" strokeWidth={2} />
-                    </div>
-                    
-                    <h4 className="text-2xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors">
-                      {pillar.title}
-                    </h4>
-                    
-                    <p className="text-gray-400 leading-relaxed">
-                      {pillar.description}
-                    </p>
+        {/* Scrollable Cards Container */}
+        <div 
+          ref={scrollContainerRef}
+          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing pb-4"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
+          {insights.map((insight, index) => (
+            <div
+              key={index}
+              className="relative flex-shrink-0 w-[280px] md:w-[320px] lg:w-[360px] group"
+              onMouseEnter={() => setHoveredCard(index)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* Card */}
+              <div className={`relative h-[480px] md:h-[520px] lg:h-[560px] rounded-2xl overflow-hidden transition-all duration-500 ${
+                hoveredCard === index ? 'shadow-2xl shadow-cyan-500/30 scale-105' : 'shadow-xl'
+              }`}>
+                {/* Background Image - Only visible on hover */}
+                <div 
+                 className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${insight.image})`
+                  }}
+                />
+                
+                {/* Gradient Overlay - Always visible, darkens on hover to show image */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${insight.color} transition-opacity duration-500 ${
+  hoveredCard === index ? 'opacity-95' : 'opacity-0'
+}`} />
+                
+                {/* Content */}
+                <div className="relative h-full flex flex-col justify-between p-6 md:p-8">
+                  {/* Type Badge */}
+                  <div>
+                    <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold uppercase tracking-wider">
+                      {insight.type}
+                    </span>
                   </div>
 
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-500/0 to-blue-600/0 group-hover:from-cyan-500/20 group-hover:to-blue-600/20 rounded-bl-full transition-all duration-300"></div>
+                  {/* Title - Always visible */}
+                  <div className={`transition-all duration-500 ${
+                    hoveredCard === index ? 'opacity-0 transform -translate-y-4' : 'opacity-100'
+                  }`}>
+                    <h3 className="text-xl md:text-2xl font-bold leading-tight">
+                      {insight.title}
+                    </h3>
+                  </div>
+
+                  {/* Expanded Content - Visible on hover/tap */}
+                  <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-between transition-all duration-500 ${
+                    hoveredCard === index 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-8 pointer-events-none'
+                  }`}>
+                    <div>
+                      <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold uppercase tracking-wider mb-4">
+                        {insight.type}
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-bold leading-tight mb-4">
+                        {insight.title}
+                      </h3>
+                      {insight.description && (
+                        <p className="text-sm md:text-base text-white/90 leading-relaxed mb-6">
+                          {insight.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <button className="group/btn flex items-center gap-2 text-sm md:text-base font-semibold hover:gap-3 transition-all">
+                      Expand
+                      <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </div>
-              ))}
+
+                {/* Animated Border on Hover */}
+                <div className={`absolute inset-0 rounded-2xl border-2 border-cyan-400 transition-opacity duration-500 ${
+                  hoveredCard === index ? 'opacity-100' : 'opacity-0'
+                }`} />
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
-     
+        {/* Scroll Indicator for Mobile */}
+        <div className="flex justify-center mt-6 md:hidden">
+          <div className="flex gap-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="w-2 h-2 rounded-full bg-gray-600" />
+            ))}
+          </div>
+        </div>
       </div>
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };

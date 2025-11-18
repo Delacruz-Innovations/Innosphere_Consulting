@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { CheckCircle, Users, Award, Calendar, ArrowRight, BookOpen, Target, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { CheckCircle, Users, Award, Calendar, ArrowRight, BookOpen, Target, TrendingUp, ArrowLeft, Building2 } from 'lucide-react';
 
 const Academy = () => {
   const heroRef = useRef(null);
   const programsRef = useRef([]);
-  const navigate = useNavigate();
+  const [flippedCard, setFlippedCard] = useState(null);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -43,7 +43,7 @@ const Academy = () => {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [showAll]);
 
   const programs = [
     {
@@ -54,12 +54,19 @@ const Academy = () => {
       duration: "12 weeks",
       level: "Intermediate to Advanced",
       icon: Target,
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
       features: [
         "BABOK-aligned curriculum",
         "Requirements elicitation techniques",
         "Stakeholder analysis and management",
         "Process modeling and documentation",
         "Certification preparation"
+      ],
+      outcomes: [
+        "Industry-recognized certification",
+        "Enhanced analytical capabilities",
+        "Improved stakeholder communication",
+        "Career advancement opportunities"
       ]
     },
     {
@@ -70,28 +77,42 @@ const Academy = () => {
       duration: "10 weeks",
       level: "Beginner to Intermediate",
       icon: TrendingUp,
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
       features: [
         "Product strategy and roadmapping",
         "User research and validation",
         "Agile product development",
         "Stakeholder management",
         "Go-to-market strategies"
+      ],
+      outcomes: [
+        "End-to-end product leadership",
+        "Data-driven decision making",
+        "Successful product launches",
+        "Increased market competitiveness"
       ]
     },
     {
       id: 3,
-      title: "Digital Strategy & Transformation Workshop",
+      title: "Digital Strategy & Transformation",
       subtitle: "Leading Change in the Digital Age",
       description: "Equip yourself with the frameworks and tools to lead digital transformation initiatives. Understand how to align technology with business strategy for competitive advantage.",
       duration: "5 days intensive",
       level: "Senior & Executive Level",
       icon: BookOpen,
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
       features: [
         "Digital transformation frameworks",
         "Technology strategy development",
         "Change management in digital context",
         "Innovation and disruption",
         "Case study analysis"
+      ],
+      outcomes: [
+        "Strategic digital vision",
+        "Organizational alignment",
+        "Accelerated transformation",
+        "Competitive advantage"
       ]
     },
     {
@@ -102,12 +123,19 @@ const Academy = () => {
       duration: "8 weeks",
       level: "Beginner to Intermediate",
       icon: Award,
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
       features: [
         "Statistical analysis fundamentals",
         "Data visualization techniques",
         "SQL and database management",
         "Business intelligence tools",
         "Data-driven decision making"
+      ],
+      outcomes: [
+        "Proficiency in analytics tools",
+        "Enhanced decision-making skills",
+        "Data storytelling capabilities",
+        "Business value creation"
       ]
     },
     {
@@ -118,12 +146,19 @@ const Academy = () => {
       duration: "3-6 months",
       level: "Executive Level",
       icon: Users,
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
       features: [
         "Personalized coaching sessions",
         "360-degree feedback assessment",
         "Leadership style development",
         "Strategic thinking enhancement",
         "Organizational influence strategies"
+      ],
+      outcomes: [
+        "Enhanced leadership presence",
+        "Improved team performance",
+        "Strategic clarity",
+        "Greater organizational impact"
       ]
     },
     {
@@ -134,15 +169,24 @@ const Academy = () => {
       duration: "6 weeks",
       level: "Intermediate",
       icon: CheckCircle,
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80",
       features: [
         "Scrum and Kanban frameworks",
         "Agile ceremonies and artifacts",
         "Team facilitation techniques",
         "Scaling Agile practices",
         "Continuous improvement mindset"
+      ],
+      outcomes: [
+        "Agile certification",
+        "Improved team velocity",
+        "Enhanced collaboration",
+        "Better product delivery"
       ]
     }
   ];
+
+  const displayedPrograms = showAll ? programs : programs.slice(0, 3);
 
   const benefits = [
     {
@@ -168,37 +212,34 @@ const Academy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className=" bg-slate-950">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
+        <div className="absolute inset-0 "></div>
         <div ref={heroRef} className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-6">
-              <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 px-4 py-2 rounded-full border border-blue-700/50">
-                Capability Academy
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <div className="order-2 lg:order-1">
+              <img 
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80" 
+                alt="Capability Academy" 
+                className="rounded-2xl shadow-2xl"
+              />
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Empower Your Future with <span className="text-blue-400">Professional Training</span>
-            </h1>
-            <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
-              Our Capability Academy empowers professionals and organizations to build the skills needed to thrive in a digital economy. Elevate your career with industry-leading programs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => navigate('/contact')}
-                className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
-              >
-                <span>Enroll Now</span>
-                <ArrowRight className="ml-2" size={20} />
-              </button>
-              <button 
-                onClick={() => document.getElementById('programs').scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
-              >
-                <span>Explore Programs</span>
-              </button>
+            
+            {/* Right - Content */}
+            <div className="order-1 lg:order-2">
+              <div className="inline-block mb-6">
+                <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 px-4 py-2 rounded-full border border-blue-700/50">
+                  Capability Academy
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Empower Your Future with <span className="text-blue-400">Professional Training</span>
+              </h1>
+              <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-3xl">
+                Our Capability Academy empowers professionals and organizations across Nigeria to build the skills needed to thrive in a digital economy. Elevate your career with industry-leading programs.
+              </p>
             </div>
           </div>
         </div>
@@ -207,9 +248,14 @@ const Academy = () => {
       {/* Benefits Section */}
       <div className="container mx-auto px-6 py-20">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
-            Why Choose Our Academy?
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Why Choose Our Academy?
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Transform your career with expert-led training and industry-recognized certifications
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <div 
@@ -227,9 +273,9 @@ const Academy = () => {
         </div>
       </div>
 
-      {/* Programs Section */}
-      <div id="programs" className="container mx-auto px-6 py-20 bg-gray-900/50">
-        <div className="max-w-6xl mx-auto">
+      {/* Programs Grid */}
+      <div className="container mx-auto px-6 py-20">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Our Training Programs
@@ -239,64 +285,223 @@ const Academy = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {programs.map((program, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedPrograms.map((program, index) => (
               <div
                 key={program.id}
                 ref={el => programsRef.current[index] = el}
-                className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-blue-600 hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 group"
+                className="relative h-[500px]"
+                style={{ perspective: '1000px' }}
               >
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="bg-blue-900/30 w-16 h-16 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <program.icon className="text-blue-400" size={32} />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-400 mb-1">Duration</div>
-                      <div className="text-white font-semibold">{program.duration}</div>
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                    {program.title}
-                  </h3>
-                  <p className="text-blue-400 text-sm font-semibold mb-4">{program.subtitle}</p>
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    {program.description}
-                  </p>
-
-                  <div className="mb-6">
-                    <div className="inline-block bg-gray-800 px-4 py-2 rounded-full text-sm text-gray-300">
-                      {program.level}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 mb-6">
-                    <h4 className="text-white font-semibold text-sm uppercase tracking-wide">What You'll Learn</h4>
-                    {program.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <CheckCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={18} />
-                        <span className="text-gray-400 text-sm">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <button 
-                    onClick={() => navigate('/contact')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 group"
+                <div
+                  className={`relative w-full h-full transition-transform duration-700 cursor-pointer`}
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    transform: flippedCard === program.id ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                  }}
+                  onClick={() => setFlippedCard(flippedCard === program.id ? null : program.id)}
+                >
+                  {/* Front of Card */}
+                  <div
+                    className="absolute w-full h-full overflow-hidden transition-colors duration-300"
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden'
+                    }}
                   >
-                    <span>Learn More</span>
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                    {/* Image */}
+                    <div className="relative h-48 overflow-hidden rounded-xl">
+                      <img
+                        src={program.image}
+                        alt={program.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/50 to-transparent"></div>
+                      <div className="absolute top-6 left-6">
+                        <div className="bg-blue-900/80 backdrop-blur-sm w-14 h-14 rounded-xl flex items-center justify-center">
+                          <program.icon className="text-blue-400" size={28} />
+                        </div>
+                      </div>
+                      <div className="absolute top-6 right-6">
+                        <div className="bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                          <span className="text-white text-sm font-semibold">{program.duration}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        {program.title}
+                      </h3>
+                      <p className="text-blue-400 text-xs font-semibold mb-4 uppercase tracking-wide">
+                        {program.subtitle}
+                      </p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                        {program.description}
+                      </p>
+                      <div className="inline-block bg-gray-800 px-3 py-1 rounded-full text-xs text-gray-300 mb-4">
+                        {program.level}
+                      </div>
+
+                      {/* <button className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors group">
+                        <span>View Details</span>
+                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </button> */}
+                    </div>
+                  </div>
+
+                  {/* Back of Card */}
+                  <div
+                    className="absolute w-full h-full rounded-2xl overflow-hidden "
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                  >
+                    <div className="p-6 h-full overflow-y-auto">
+                      {/* Back Button */}
+                      <button 
+                        className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors mb-4"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFlippedCard(null);
+                        }}
+                      >
+                        <ArrowLeft size={18} className="mr-2" />
+                        <span>Back</span>
+                      </button>
+
+                      <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <program.icon className="text-blue-400" size={24} />
+                        {program.title}
+                      </h3>
+
+                      {/* Features */}
+                      <div className="mb-6">
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                          <Building2 size={18} className="text-blue-400" />
+                          What You'll Learn
+                        </h4>
+                        <ul className="space-y-2">
+                          {program.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-400">
+                              <CheckCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={14} />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Outcomes */}
+                      <div>
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                          <TrendingUp size={18} className="text-blue-400" />
+                          Program Outcomes
+                        </h4>
+                        <ul className="space-y-2">
+                          {program.outcomes.map((outcome, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-400">
+                              <CheckCircle className="text-green-400 flex-shrink-0 mt-0.5" size={14} />
+                              <span>{outcome}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Show More/Less Button */}
+          {programs.length > 3 && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50"
+              >
+                <span>{showAll ? 'Show Less' : 'Show More Programs'}</span>
+                <ArrowRight 
+                  size={20} 
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Why Partner With Us Section */}
+      <div className="">
+        <div className="container mx-auto px-6 py-5">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                  Why Choose Our Academy?
+                </h2>
+                <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                  Our Capability Academy combines expert instruction, practical application, and industry-recognized certifications to deliver transformative learning experiences for professionals across Nigeria.
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                    <div>
+                      <div className="text-white font-semibold mb-1">Expert Instructors</div>
+                      <div className="text-gray-400 text-sm">Learn from seasoned professionals with years of practical industry experience</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                    <div>
+                      <div className="text-white font-semibold mb-1">Hands-On Learning</div>
+                      <div className="text-gray-400 text-sm">Apply concepts immediately through real-world projects and case studies</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                    <div>
+                      <div className="text-white font-semibold mb-1">Flexible Delivery</div>
+                      <div className="text-gray-400 text-sm">Choose from on-site, remote, or hybrid learning options to fit your schedule</div>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                    <div>
+                      <div className="text-white font-semibold mb-1">Career Advancement</div>
+                      <div className="text-gray-400 text-sm">Earn industry-recognized certifications that accelerate your professional growth</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6">
+                  <div className="text-4xl font-bold text-blue-400 mb-2">500+</div>
+                  <div className="text-gray-300 text-sm">Professionals Trained</div>
+                </div>
+                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6">
+                  <div className="text-4xl font-bold text-blue-400 mb-2">50+</div>
+                  <div className="text-gray-300 text-sm">Corporate Clients</div>
+                </div>
+                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6">
+                  <div className="text-4xl font-bold text-blue-400 mb-2">95%</div>
+                  <div className="text-gray-300 text-sm">Satisfaction Rate</div>
+                </div>
+                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6">
+                  <div className="text-4xl font-bold text-blue-400 mb-2">6</div>
+                  <div className="text-gray-300 text-sm">Programs Offered</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-y border-gray-800">
+      <div className="">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -307,79 +512,16 @@ const Academy = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
-                onClick={() => navigate('/contact')}
                 className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
               >
-                <span>Contact Us</span>
+                <span>Enroll Now</span>
                 <ArrowRight className="ml-2" size={20} />
               </button>
               <button 
-                onClick={() => navigate('/cases')}
                 className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
               >
-                <span>View Success Stories</span>
+                <span>Download Brochure</span>
               </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Corporate Training Section */}
-      <div className="container mx-auto px-6 py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 md:p-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Corporate Training Solutions
-                </h2>
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                  Looking to upskill your entire team? We offer customized corporate training programs tailored to your organization's specific needs and challenges.
-                </p>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <span className="text-gray-300">Customized curriculum based on your business goals</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <span className="text-gray-300">On-site or remote delivery options</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <span className="text-gray-300">Flexible scheduling to minimize business disruption</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <span className="text-gray-300">Post-training support and coaching</span>
-                  </li>
-                </ul>
-                <button 
-                  onClick={() => navigate('/contact')}
-                  className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  <span>Request Corporate Training</span>
-                  <ArrowRight className="ml-2" size={20} />
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6 text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">500+</div>
-                  <div className="text-gray-300">Professionals Trained</div>
-                </div>
-                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6 text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">50+</div>
-                  <div className="text-gray-300">Corporate Clients</div>
-                </div>
-                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6 text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">95%</div>
-                  <div className="text-gray-300">Satisfaction Rate</div>
-                </div>
-                <div className="bg-blue-900/20 border border-blue-700/50 rounded-xl p-6 text-center">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">6</div>
-                  <div className="text-gray-300">Programs Offered</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

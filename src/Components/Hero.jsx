@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Play, X } from 'lucide-react';
+import { ArrowRight, ChevronRight, Play, X } from 'lucide-react';
 import image from '../assets/hero.png'
 import { gsap } from 'gsap';
 import { trackCTAConversion } from '../utils/analytics';
@@ -125,7 +125,7 @@ const handleCloseVideo = () => {
 };
 
   return (
-    <div ref={heroRef} className="relative min-h-screen bg-black overflow-hidden">
+    <div ref={heroRef} className="relative  bg-black overflow-hidden">
       {/* Background with gradient overlay */}
       {/* Background Video */}
 <img
@@ -176,7 +176,7 @@ alt='innnosphare'
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-40 flex flex-col items-center justify-center text-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 py-40 flex flex-col items-center justify-center text-center ">
 
         <div className="max-w-7xl mx-auto w-full text-center flex flex-col items-center">
           {/* Left Content */}
@@ -219,8 +219,8 @@ Empowering UAE Businesses to Scale Globally.
 
         {/* Client Logos */}
        <button onClick={() => {
-  trackCTAConversion('Get Started', 'Homepage Hero'); }} className='mt-20 p-6 bg-[#0a1929] text-white font-semibold rounded-md text-xl'>
-        Book A 30 Minute Strategy Session
+  trackCTAConversion('Get Started', 'Homepage Hero'); }} className='mt-20 p-6 bg-[#0a1929] text-white font-semibold rounded-md text-xl flex items-center gap-2'>
+       Free Strategy Call <ChevronRight />
        </button>
       </div>
 

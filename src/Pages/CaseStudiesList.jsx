@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronRight, ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight  } from 'lucide-react';
 import caseStudiesDataObj from '../Components/caseStudiesData';
+
 const CaseStudiesList = () => {
   const heroRef = useRef(null);
   const cardsRef = useRef([]);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -17,7 +18,6 @@ const CaseStudiesList = () => {
         heroRef.current.style.transform = 'translateY(0)';
       }, 100);
     }
-    
 
     const observerOptions = {
       threshold: 0.15,
@@ -43,120 +43,154 @@ const CaseStudiesList = () => {
     });
 
     return () => observer.disconnect();
-  }, []);
-
-
+  }, [showAll]);
 
   const handleCaseClick = (slug) => {
     window.location.href = `/Innosphere_Consulting/cases/${slug}`;
   };
 
-  const handleNavigation = (path) => {
-    console.log(`Navigate to: ${path}`);
-    setMobileMenuOpen(false);
-  };
-
   const caseStudies = Object.entries(caseStudiesDataObj).map(([slug, data]) => ({
-  ...data,
-  slug: slug,
-  excerpt: data.overview.substring(0, 150) + '...' // Create excerpt from overview
-}));
-  return (
-    <div className="min-h-screen bg-gray-950">
-   
+    ...data,
+    slug: slug,
+    excerpt: data.overview.substring(0, 180) + '...'
+  }));
 
-      {/* Professional Header */}
-      <div className=" ">
-        <div ref={heroRef} className="container mx-auto px-6  pt-28">
-          <div className="max-w-4xl">
-            <div className=" mb-6 hidden">
-              <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
-                Portfolio
-              </span>
+  const displayedCases = showAll ? caseStudies : caseStudies.slice(0, 3);
+
+  return (
+    <div className="bg-slate-950">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0"></div>
+        <div ref={heroRef} className="container mx-auto px-6 pt-32 pb-20 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <div className="order-2 lg:order-1">
+              <img 
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" 
+                alt="Case Studies" 
+                className="rounded-2xl shadow-2xl"
+              />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Case Studies
-            </h1>
-            <div className="w-16 h-0.5 bg-blue-500 mb- hidd"></div>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-3xl hidden">
-              Demonstrating excellence through strategic consulting and transformative solutions. 
-              Our portfolio reflects a commitment to delivering measurable business outcomes across diverse industries.
-            </p>
+            
+            {/* Right - Content */}
+            <div className="order-1 lg:order-2">
+              <div className="inline-block mb-6">
+                <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 px-4 py-2 rounded-full border border-blue-700/50">
+                  Our Work
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Case Studies: <span className="text-blue-400">Proven Results</span>
+              </h1>
+              <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-3xl">
+                Explore real-world transformations delivered for clients across Nigeria and West Africa. Each case study demonstrates our commitment to delivering measurable business outcomes.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Case Studies Grid */}
-      <div className="container mx-auto px-6 py-16">
-        <div className="space-y-8">
-          {caseStudies.map((study, index) => (
-            <div
-              key={study.id}
-              ref={el => cardsRef.current[index] = el}
-              className="group md:bg-gray-900 md:border md:border-gray-800 md:rounded-lg overflow-hidden hover:border-blue-600 hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 cursor-pointer"
-              onClick={() => handleCaseClick(study.slug)}
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-2/5 relative overflow-hidden max-md:rounded-xl bg-gray-800">
+      <div className="container mx-auto px-6 py-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Featured Case Studies
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Strategic consulting solutions that drive transformation and sustainable growth
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedCases.map((study, index) => (
+              <div
+                key={study.id}
+                ref={el => cardsRef.current[index] = el}
+                className=" rounded-2xl overflow-hidden  hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 cursor-pointer group"
+                onClick={() => handleCaseClick(study.slug)}
+              >
+                {/* Image */}
+                <div className="relative h-64 overflow-hidden">
                   <img
                     src={study.image}
                     alt={study.title}
-                    className="w-full h-64 md:h-80 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
-                  <div className="absolute top-6 left-6">
-                    <span className="inline-block bg-gray-900 text-white px-4 py-2 rounded text-sm font-bold shadow-lg border border-gray-700">
-                      Case #{String(study.id).padStart(2, '0')}
-                    </span>
-                  </div>
-                </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
                 
-                <div className="md:w-3/5 p-4 md:p-10 flex flex-col justify-center">
-                  <div className="mb-4 hidden md:block">
-                    <span className="inline-block text-blue-400 text-xs font-semibold tracking-wider uppercase">
+                  <div className="absolute bottom-6 left-6">
+                    <span className="inline-block bg-gray-900/90 backdrop-blur-sm text-blue-400 px-3 py-1 rounded text-xs font-semibold uppercase tracking-wide">
                       {study.category}
                     </span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-3 transition-colors">
                     {study.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-6">
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6">
                     {study.excerpt}
                   </p>
-                  <div className="flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors group/btn">
-                    <span className="mr-2">View Case Study</span>
-                    <ArrowRight className="transform group-hover/btn:translate-x-1 transition-transform" size={20} />
-                  </div>
+
+                  <button className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors group/btn">
+                    <span>Read Full Story</span>
+                    <ArrowRight size={18} className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* Show More/Less Button */}
+          {caseStudies.length > 3 && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50"
+              >
+                <span>{showAll ? 'Show Less' : 'Show More Case Studies'}</span>
+                <ArrowRight 
+                  size={20} 
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                />
+              </button>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
-      {/* Professional CTA */}
-      <div className="bg-gray-900 border-t border-gray-800">
+ 
+
+      {/* CTA Section */}
+      <div className="">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Partner With Us
+              Ready to Write Your Success Story?
             </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Discover how our strategic consulting expertise can drive meaningful transformation 
-              and sustainable growth for your organization.
+            <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+              Let's discuss how our proven approach can help your organization achieve transformational results. Schedule a consultation with our experts today.
             </p>
-            <button 
-              onClick={() => handleNavigation('/consultation')}
-              className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
-            >
-              <span>Request Consultation</span>
-              <ChevronRight className="ml-2" size={20} />
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
+              >
+                <span>Schedule Consultation</span>
+                <ArrowRight className="ml-2" size={20} />
+              </button>
+              <button 
+                className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+              >
+                <span>Download Portfolio</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-   
     </div>
   );
 };

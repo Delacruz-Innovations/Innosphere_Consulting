@@ -73,7 +73,7 @@ const Navbar = () => {
 
   return (
     <nav ref={navRef} className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
-      <div className="bg-[#0a1929]/90 backdrop-blur-xl border border-gray-700/50 rounded-full px-8 py-4 shadow-2xl">
+      <div className="bg-slate-950 backdrop-blur-xl border border-gray-700/50 rounded-full px-8 py-4 shadow-2xl">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to='/' className="flex items-center gap-3">
@@ -158,7 +158,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="mobile-menu lg:hidden absolute top-full left-0 right-0 mt-4 bg-[#0a1929]/95 backdrop-blur-xl border border-[#1e3a5f]/50 rounded-3xl shadow-2xl overflow-hidden">
+        <div className="mobile-menu lg:hidden absolute top-full left-0 right-0 mt-4 bg-slate-950 backdrop-blur-xl border border-[#1e3a5f]/50 rounded-3xl shadow-2xl overflow-hidden">
           <div className="py-4">
             <Link 
               to="/about" 

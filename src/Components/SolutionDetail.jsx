@@ -1,8 +1,185 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Sparkles, ChevronRight } from 'lucide-react';
 import solutionsData from '../Solution';
 import { trackCTAConversion } from '../utils/analytics';
+
+// Approach Carousel Component with Background Images
+const ApproachCarousel = ({ approach }) => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollContainerRef = useRef(null);
+
+  // Background images for each approach step
+  const backgroundImages = [
+    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=600&fit=crop', // Analytics/Discovery
+    'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=600&fit=crop', // Strategy/Planning
+    'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=600&fit=crop', // Implementation
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=600&fit=crop', // Team collaboration
+    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=600&fit=crop', // Optimization
+    'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=600&fit=crop', // Support
+  ];
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || isDragging) return;
+
+    const autoScroll = setInterval(() => {
+      if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+        container.scrollLeft = 0;
+      } else {
+        container.scrollLeft += 0.5;
+      }
+    }, 30);
+
+    return () => clearInterval(autoScroll);
+  }, [isDragging]);
+
+  // Mouse drag handlers
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  return (
+    <>
+      <div 
+        ref={scrollContainerRef}
+        className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing pb-4"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch'
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+      >
+        {approach.map((item, index) => (
+          <div
+            key={item.id}
+            className="relative flex-shrink-0 w-[300px] md:w-[340px] lg:w-[380px] group"
+            onMouseEnter={() => setHoveredCard(index)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
+            {/* Card */}
+            <div className={`relative h-[420px] md:h-[460px] rounded-2xl overflow-hidden transition-all duration-500 ${
+              hoveredCard === index ? 'shadow-2xl shadow-cyan-500/30 scale-105' : 'shadow-xl'
+            }`}>
+              {/* Background Image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700"
+                style={{
+                  backgroundImage: `url(${backgroundImages[index % backgroundImages.length]})`,
+                  transform: hoveredCard === index ? 'scale(1.1)' : 'scale(1)'
+                }}
+              />
+              
+              {/* Dark Overlay - Lighter on hover to show image more */}
+              <div className={`absolute inset-0 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/95 transition-opacity duration-500 ${
+                hoveredCard === index ? 'opacity-70' : 'opacity-95'
+              }`} />
+              
+              {/* Animated Gradient Overlay - Visible on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-600/20 to-purple-600/20 transition-opacity duration-500 ${
+                hoveredCard === index ? 'opacity-100' : 'opacity-0'
+              }`} />
+              
+              {/* Content */}
+              <div className="relative h-full flex flex-col justify-between p-6 md:p-8">
+                {/* Step Number Badge */}
+                <div>
+                  <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl shadow-lg">
+                    <span className="text-white font-bold text-2xl">{item.id}</span>
+                  </div>
+                </div>
+
+                {/* Title - Always visible */}
+                <div className={`transition-all duration-500 ${
+                  hoveredCard === index ? 'opacity-0 transform -translate-y-4' : 'opacity-100'
+                }`}>
+                  <h3 className="text-2xl md:text-3xl font-bold leading-tight text-white drop-shadow-lg">
+                    {item.title}
+                  </h3>
+                </div>
+
+                {/* Expanded Content - Visible on hover */}
+                <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-between transition-all duration-500 ${
+                  hoveredCard === index 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-8 pointer-events-none'
+                }`}>
+                  <div>
+                    <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl shadow-lg mb-6">
+                      <span className="text-white font-bold text-2xl">{item.id}</span>
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-3xl font-bold leading-tight mb-4 text-white drop-shadow-lg">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-base md:text-lg text-white leading-relaxed drop-shadow-md">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Arrow indicator */}
+                  <div className="flex items-center gap-2 text-cyan-400 font-semibold drop-shadow-lg">
+                    <span className="text-sm">Step {item.id}</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Animated Border on Hover */}
+              <div className={`absolute inset-0 rounded-2xl border-2 border-cyan-400 transition-opacity duration-500 ${
+                hoveredCard === index ? 'opacity-100' : 'opacity-0'
+              }`} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+    </>
+  );
+};
 
 const SolutionDetail = () => {
   const { slug } = useParams();
@@ -38,143 +215,66 @@ const SolutionDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
-      {/* Hero Section with Animated Background */}
-      <div className="relative pt-38 pb-16 px-6 overflow-hidden">
-        {/* Animated Orbs */}
-        <div className="absolute inset-0 z-0">
-          <div
-            className="absolute top-0 right-1/4 w-96 h-96 md:w-[600px] md:h-[600px] rounded-full "
-            style={{
-              filter: 'blur(120px)',
-              opacity: 0.2,
-              animation: 'float 8s ease-in-out infinite'
-            }}
-          ></div>
-          <div
-            className="absolute -top-20 left-0 w-80 h-80 md:w-[500px] md:h-[500px] rounded-full "
-            style={{
-              filter: 'blur(100px)',
-              opacity: 0.15,
-              animation: 'float 10s ease-in-out infinite reverse'
-            }}
-          ></div>
-        </div>
-
+    <div className="pt-35 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+   {/* Hero Section - Split Layout */}
+      <div className="relative  px-6 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto">
-      
-          {/* Title with staggered animation */}
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
-              <span className="text-white">{solution.title.split(' ').slice(0, -1).join(' ')}</span>
-              {' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                {solution.title.split(' ').slice(-1)}
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl">
-              {solution.shortDescription}
-            </p>
-          </div>
-        </div>
-      </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+            {/* Left Side - Illustration */}
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
+              <div className="relative">
+                {/* Glowing background effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-full blur-3xl"></div>
+                
+                {/* Tech illustration placeholder - you can replace with actual SVG */}
+                <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-3xl  border border-slate-700/50">
+                <img src="https://media.istockphoto.com/id/2162329881/video/two-businessmen-working-on-a-digital-tablet-and-laptop-computer-in-the-office-a-board-room-or.avif?s=640x640&k=20&c=WE-nvPG5fkbuxEn-t-TZ70_j3kUCeDhfMZB0IhrqQG8=" alt="" />
+                </div>
+              </div>
+            </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 pb-20">
-        {/* Image and Description Grid */}
-        <div className={`grid lg:grid-cols-2 gap-12 mb-20 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
-          <div className="rounded-2xl overflow-hidden shadow-2xl group">
-            <img
-              src={solution.image}
-              alt={solution.title}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
-            />
-          </div>
-          
-          <div className="flex flex-col justify-center space-y-6">
-            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50">
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                <Sparkles className="w-6 h-6 text-cyan-400" />
-                About This Service
-              </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
+            {/* Right Side - Title and Description */}
+            <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
+              <h1 className="text-4xl md:text-5xl lg:text-4xl font-bold mb-8 leading-tight">
+                {solution.title}
+              </h1>
+              <p className="text-sm md:text-lg text-gray-300 leading-relaxed mb-8">
                 {solution.fullDescription}
               </p>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 pb-4">
+
 
         {/* Our Approach Section */}
-        <div className={`mt-32 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className={` transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="mb-6 md:mb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-1 w-12 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+              <span className="text-cyan-400 font-semibold uppercase tracking-wider text-sm">
+                Our Methodology
+              </span>
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
               OUR <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">APPROACH</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+
+            <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-3xl">
               A systematic methodology designed to deliver exceptional results
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solution.approach.map((item, index) => (
-              <div
-                key={item.id}
-                className="group relative bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2"
-                style={{
-                  transitionDelay: `${index * 100}ms`
-                }}
-              >
-                {/* Step Number */}
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white font-bold text-lg">{item.id}</span>
-                </div>
-
-                {/* Content */}
-                <div className="mt-4">
-                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-400 leading-relaxed text-sm">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Hover Effect Indicator */}
-                <div className="absolute bottom-4 right-4 w-2 h-2 rounded-full bg-slate-600 group-hover:bg-cyan-400 transition-colors duration-300"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-       
-        <div className='grid md:grid-cols-2 gap-8 mt-20'>
-          {/* {solution.marketOpportunity && (
-            <div className="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-l-4 border-cyan-400 rounded-xl">
-              <p className="text-cyan-300 font-medium text-base">
-                <span className="font-bold text-cyan-400 block mb-2 text-lg">💡 Market Opportunity</span>
-                {solution.marketOpportunity}
-              </p>
-            </div>
-          )} */}
-          
-          {/* License Coverage */}
-          {/* {solution.licenses && solution.licenses.length > 0 && (
-            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50">
-              <h3 className="text-xl font-bold mb-4 text-cyan-400">License Coverage</h3>
-              <div className="grid grid-cols-1 gap-3">
-                {solution.licenses.map((license, idx) => (
-                  <div key={idx} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-300 text-sm">{license}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )} */}
+          {/* Scrollable Approach Cards */}
+          <ApproachCarousel approach={solution.approach} />
         </div>
 
         {/* CTA Section */}
-        <div className={`mt-32 text-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className={`mt-4 text-center transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           <div className="rounded-3xl p-12">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">
               What your next big move ?
@@ -184,10 +284,13 @@ const SolutionDetail = () => {
               Management Consulting Services and evolving people management that help our clients
               become more productive and profitable.
             </p>
-           <Link to='/consultation'> <button onClick={() => {
-  trackCTAConversion('Get Started', 'Homepage Hero');
-  // ... navigate or show form
-}} className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 flex gap-2 items-center justify-center mx-auto">
+           <Link to='/consultation'> 
+             <button 
+               onClick={() => {
+                 trackCTAConversion('Get Started', 'Homepage Hero');
+               }} 
+               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-cyan-500/50 flex gap-2 items-center justify-center mx-auto"
+             >
               Book A free consultation <ArrowRight />
             </button>
             </Link>

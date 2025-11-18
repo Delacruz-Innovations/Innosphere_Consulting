@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { Building2, Heart, Zap, Landmark, ShoppingCart, TrendingUp, ArrowRight, CheckCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Building2, Heart, Zap, Landmark, ShoppingCart, TrendingUp, ArrowRight, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Industries = () => {
   const heroRef = useRef(null);
   const industriesRef = useRef([]);
-  const navigate = useNavigate();
+  const [flippedCard, setFlippedCard] = useState(null);
+const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -162,33 +163,43 @@ const Industries = () => {
       ]
     }
   ];
-
-
+const displayedIndustries = showAll ? industries : industries.slice(0, 3);
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className=" bg-slate-950 pt-4">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
-        <div ref={heroRef} className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-6">
-              <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 px-4 py-2 rounded-full border border-blue-700/50">
-                Industry Expertise
-              </span>
+        <div className="absolute inset-0 "></div>
+        <div ref={heroRef} className="container mx-auto px-6 pt-32 pb-2 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Image */}
+            <div className="order-2 lg:order-1">
+              <img 
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" 
+                alt="Industries" 
+                className="rounded-2xl shadow-2xl"
+              />
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Transforming Industries Across <span className="text-blue-400">Nigeria & West Africa</span>
-            </h1>
-            <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
-              We serve clients across multiple sectors in Nigeria and the West African region, each with distinct growth and transformation needs. Our deep industry knowledge combined with technical expertise delivers measurable results.
-            </p>
+            
+            {/* Right - Content */}
+            <div className="order-1 lg:order-2">
+              <div className="inline-block mb-6">
+                <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900/30 px-4 py-2 rounded-full border border-blue-700/50">
+                  Industry Expertise
+                </span>
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Transforming Industries Across <span className="text-blue-400">Nigeria & West Africa</span>
+              </h1>
+              <p className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-3xl">
+                We serve clients across multiple sectors in Nigeria and the West African region, each with distinct growth and transformation needs. Our deep industry knowledge combined with technical expertise delivers measurable results.
+              </p>
+            </div>
           </div>
-
         </div>
       </div>
 
       {/* Industries Grid */}
-      <div className="container mx-auto px-6 py-20">
+      <div className="container mx-auto px-6 py-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -199,52 +210,101 @@ const Industries = () => {
             </p>
           </div>
 
-          <div className="space-y-12">
-            {industries.map((industry, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedIndustries.map((industry, index) => (
               <div
                 key={industry.id}
                 ref={el => industriesRef.current[index] = el}
-                className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-600 hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 group"
+                className="relative h-[500px]"
+                style={{ perspective: '1000px' }}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
-                  {/* Image Section */}
-                  <div className="lg:col-span-2 relative overflow-hidden h-64 lg:h-auto">
-                    <img
-                      src={industry.image}
-                      alt={industry.name}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-transparent"></div>
-                    <div className="absolute top-8 left-8">
-                      <div className="bg-blue-900/80 backdrop-blur-sm w-16 h-16 rounded-xl flex items-center justify-center">
-                        <industry.icon className="text-blue-400" size={32} />
+                <div
+                  className={`relative w-full h-full transition-transform duration-700 cursor-pointer`}
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    transform: flippedCard === industry.id ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                  }}
+                  onClick={() => setFlippedCard(flippedCard === industry.id ? null : industry.id)}
+                >
+                  {/* Front of Card */}
+                  <div
+                    className="absolute w-full h-full  overflow-hidden   transition-colors duration-300"
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden'
+                    }}
+                  >
+                    {/* Image */}
+                    <div className="relative h-68 overflow-hidden rounded-xl">
+                      <img
+                        src={industry.image}
+                        alt={industry.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 "></div>
+                      <div className="absolute top-6 left-6">
+                        <div className="bg-blue-900/80 backdrop-blur-sm w-14 h-14 rounded-xl flex items-center justify-center">
+                          <industry.icon className="text-blue-400" size={28} />
+                        </div>
                       </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 ">
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        {industry.name}
+                      </h3>
+                      <p className="text-blue-400 text-xs font-semibold mb-4 uppercase tracking-wide">
+                        {industry.tagline}
+                      </p>
+                      <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                        {industry.description}
+                      </p>
+
+                      <button className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors group">
+                        <span>Learn More</span>
+                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </button>
                     </div>
                   </div>
 
-                  {/* Content Section */}
-                  <div className="lg:col-span-3 p-8 lg:p-10">
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
-                      {industry.name}
-                    </h3>
-                    <p className="text-blue-400 text-sm font-semibold mb-4 uppercase tracking-wide">
-                      {industry.tagline}
-                    </p>
-                    <p className="text-gray-300 leading-relaxed mb-6">
-                      {industry.description}
-                    </p>
+                  {/* Back of Card */}
+                  <div
+                    className="absolute w-full h-full rounded-2xl overflow-hidden "
+                    style={{
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                  >
+                    <div className="p-6 h-full overflow-y-auto">
+                      {/* Back Button */}
+                      <button 
+                        className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors mb-4"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFlippedCard(null);
+                        }}
+                      >
+                        <ArrowLeft size={18} className="mr-2" />
+                        <span>Back</span>
+                      </button>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <industry.icon className="text-blue-400" size={24} />
+                        {industry.name}
+                      </h3>
+
                       {/* Capabilities */}
-                      <div>
-                        <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+                      <div className="mb-6">
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
                           <Building2 size={18} className="text-blue-400" />
                           Our Capabilities
                         </h4>
                         <ul className="space-y-2">
                           {industry.capabilities.map((capability, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-sm text-gray-400">
-                              <CheckCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={16} />
+                              <CheckCircle className="text-blue-400 flex-shrink-0 mt-0.5" size={14} />
                               <span>{capability}</span>
                             </li>
                           ))}
@@ -253,39 +313,48 @@ const Industries = () => {
 
                       {/* Outcomes */}
                       <div>
-                        <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+                        <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
                           <TrendingUp size={18} className="text-blue-400" />
                           Typical Outcomes
                         </h4>
                         <ul className="space-y-2">
                           {industry.outcomes.map((outcome, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-sm text-gray-400">
-                              <CheckCircle className="text-green-400 flex-shrink-0 mt-0.5" size={16} />
+                              <CheckCircle className="text-green-400 flex-shrink-0 mt-0.5" size={14} />
                               <span>{outcome}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     </div>
-
-                    <button 
-                      onClick={() => navigate('/cases')}
-                      className="inline-flex items-center text-blue-400 font-semibold hover:text-blue-300 transition-colors group/btn"
-                    >
-                      <span>View Case Studies</span>
-                      <ArrowRight size={18} className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+           {/* Show More/Less Button */}
+          {industries.length > 3 && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50"
+              >
+                <span>{showAll ? 'Show Less' : 'Show More Industries'}</span>
+                <ArrowRight 
+                  size={20} 
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                />
+              </button>
+            </div>
+          )}
+        
+    
         </div>
       </div>
 
       {/* Why Choose Us Section */}
-      <div className="bg-gray-900/50 border-y border-gray-800">
-        <div className="container mx-auto px-6 py-20">
+      <div className="">
+        <div className="container mx-auto px-6 py-10">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -350,7 +419,7 @@ const Industries = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-t border-gray-800">
+      <div className="">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -360,19 +429,20 @@ const Industries = () => {
               Let's discuss how our industry expertise can help your organization achieve its digital transformation goals. Schedule a consultation with our experts today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => navigate('/contact')}
+            <Link to="/consultation" >  <button 
                 className="inline-flex items-center justify-center bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-900/30"
               >
                 <span>Schedule Consultation</span>
                 <ArrowRight className="ml-2" size={20} />
               </button>
+              </Link>
+              <Link to="/cases">
               <button 
-                onClick={() => navigate('/cases')}
                 className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
               >
                 <span>View Case Studies</span>
               </button>
+              </Link>
             </div>
           </div>
         </div>

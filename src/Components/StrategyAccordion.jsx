@@ -114,7 +114,7 @@ const sections = [
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white py-12 px-4 md:px-8" ref={containerRef}>
+    <div className="relative max-md: bg-black text-white py-12 px-4 md:px-8" ref={containerRef}>
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
               {/* Image Card - Hidden on Mobile */}

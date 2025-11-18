@@ -78,7 +78,7 @@ const valuePoints = [
   ];
 
   return (
-    <div className="bg-black py-16 px-4">
+    <div className="bg-black py-4 px-4">
       <div className="max-w-7xl mx-auto">
         
         {/* Mobile Slider */}

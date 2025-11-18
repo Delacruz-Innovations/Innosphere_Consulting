@@ -74,16 +74,16 @@ const InsightDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className=" bg-slate-950">
       {/* Hero Section */}
       <div className="relative">
         <div 
           ref={heroRef}
-          className="container mx-auto px-6 pt-24 pb-16"
+          className="container mx-auto px-6 pt-24 "
         >
        
 
-          <div className="max-w-4xl pt-8">
+          <div className="max-w-7xl mx-auto pt-10">
             <span className="inline-block text-blue-400 text-sm font-semibold tracking-wider uppercase mb-4">
               {article.category}
             </span>
@@ -289,7 +289,7 @@ const InsightDetails = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gray-900 border-t border-gray-800 mt-20">
+      <div className=" mt-4">
         <div className="container mx-auto px-6 py-16">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
