@@ -17,7 +17,7 @@ const Homepage = () => {
     <div className='bg-gray-950'>
  <Hero />
     <StatsBar />
-    <InnosphereHero />
+    {/* <InnosphereHero /> */}
     {/* <SolutionsApp /> */}
     {/* <AboutUs /> */}
     <Testimonials />

@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Building2, Blocks, TrendingUp, Zap, ArrowRight, ChevronRight, Plus, Minus } from 'lucide-react';
+import { ArrowRight, ChevronRight, Plus, Minus } from 'lucide-react';
+import servicesData from '../servicesData';
 
-import solutionsData from '../Solution';
-
-const SolutionsPage = () => {
+const ServicesPage = () => {
   const navigate = useNavigate();
   const heroRef = useRef(null);
   const cardsRef = useRef([]);
@@ -12,7 +11,7 @@ const SolutionsPage = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  const visibleSolutions = showAll ? solutionsData.solutions : solutionsData.solutions.slice(0, 4);
+  const visibleServices = showAll ? servicesData.services : servicesData.services.slice(0, 4);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -50,12 +49,11 @@ const SolutionsPage = () => {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [showAll]);
 
-  const handleSolutionClick = (slug, index) => {
-    // Only navigate if not expanded
+  const handleServiceClick = (slug, index) => {
     if (expandedIndex !== index) {
-      navigate(`/solution/${slug}`);
+      navigate(`/service/${slug}`);
     }
   };
 
@@ -64,25 +62,10 @@ const SolutionsPage = () => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-
-  const getIcon = (iconName) => {
-    const icons = {
-      building: Building2,
-      blocks: Blocks,
-      trending: TrendingUp,
-      zap: Zap
-    };
-    const Icon = icons[iconName] || Building2;
-    return <Icon className="w-8 h-8" />;
-  };
-
   return (
     <div className="bg-gray-950 min-h-screen">
       {/* Hero Section with Video Background */}
-      <div className="relative h-[70vh] md:h-[80vh]  overflow-hidden">
+      <div className="relative h-[70vh] md:h-[80vh] overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
@@ -114,28 +97,28 @@ const SolutionsPage = () => {
         </div>
       </div>
 
-      {/* Solutions Grid */}
+      {/* Services Grid */}
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {visibleSolutions.map((solution, index) => {
+          {visibleServices.map((service, index) => {
             const isHovered = hoveredIndex === index;
             const isExpanded = expandedIndex === index;
             const showContent = isHovered || isExpanded;
 
             return (
               <div
-                key={solution.id}
+                key={service.id}
                 ref={el => cardsRef.current[index] = el}
                 className="relative rounded-2xl overflow-hidden transition-all duration-500 h-[500px] cursor-pointer group"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                onClick={() => handleSolutionClick(solution.slug, index)}
+                onClick={() => handleServiceClick(service.slug, index)}
               >
                 {/* Background Image */}
                 <div 
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
-                    backgroundImage: `url(${solution.image})`
+                    backgroundImage: `url(${service.image})`
                   }}
                 />
                 
@@ -143,27 +126,16 @@ const SolutionsPage = () => {
                 <div className="absolute inset-0 bg-gray-900/60" />
                 
                 {/* Gradient Overlay - Appears on hover/expand */}
-                <div className={`absolute inset-0 bg-[#0a1929]/50 transition-opacity duration-500 ${
+                <div className={`absolute inset-0 bg-gradient-to-br from-cyan-600/30 to-blue-700/30 transition-opacity duration-500 ${
                   showContent ? 'opacity-100' : 'opacity-0'
                 }`} />
-
-              
-
-                {/* Category Badge - Shows on hover/expand */}
-                <div className={`absolute top-6 right-16 md:right-6 transition-all duration-500 z-10 ${
-                  showContent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-                }`}>
-                  <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold uppercase tracking-wider text-white border border-white/30">
-                    {solution.category}
-                  </span>
-                </div>
 
                 {/* Title - Always visible, hides on hover/expand */}
                 <div className={`absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white transition-all duration-500 ${
                   showContent ? 'opacity-0 transform -translate-y-4' : 'opacity-100'
                 }`}>
                   <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                    {solution.title}
+                    {service.title}
                   </h2>
                 </div>
 
@@ -177,18 +149,18 @@ const SolutionsPage = () => {
                   
                   <div className="space-y-3 md:space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                      {solution.title}
+                      {service.title}
                     </h2>
                     
                     <p className="text-base md:text-lg leading-relaxed text-white/90">
-                      {solution.shortDescription}
+                      {service.shortDescription}
                     </p>
                     
                     <button 
                       className="flex items-center gap-2 text-base md:text-lg font-semibold hover:gap-3 transition-all group/btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/solution/${solution.slug}`);
+                        navigate(`/service/${service.slug}`);
                       }}
                     >
                       Learn More
@@ -210,7 +182,7 @@ const SolutionsPage = () => {
                 </button>
 
                 {/* Animated Border on Hover/Expand */}
-                <div className={`absolute inset-0 rounded-2xl border-2 border-[#0a1929] transition-opacity duration-500 ${
+                <div className={`absolute inset-0 rounded-2xl border-2 border-cyan-400 transition-opacity duration-500 ${
                   showContent ? 'opacity-100' : 'opacity-0'
                 }`} />
               </div>
@@ -219,13 +191,13 @@ const SolutionsPage = () => {
         </div>
 
         {/* Show More/Less Button */}
-        {solutionsData.solutions.length > 4 && (
+        {servicesData.services.length > 4 && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAll(!showAll)}
               className="group inline-flex items-center gap-3 px-8 py-4 bg-gray-800 hover:bg-[#6b9dc7] text-white rounded-lg font-semibold transition-all duration-300 border border-gray-700 hover:border-cyan-500 shadow-lg hover:shadow-cyan-900/30"
             >
-              <span>{showAll ? 'Show Less' : `Show More (${solutionsData.solutions.length - 4} more)`}</span>
+              <span>{showAll ? 'Show Less' : `Show More (${servicesData.services.length - 4} more)`}</span>
               <ChevronRight 
                 className={`w-5 h-5 transition-transform duration-300 ${
                   showAll ? 'rotate-90' : '-rotate-90'
@@ -237,29 +209,27 @@ const SolutionsPage = () => {
       </div>
 
       {/* Professional CTA */}
-      <div className="">
-        <div className="container mx-auto px-6 py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              What you next big move?
-            </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Our team of experts can help you design and implement tailored solutions 
-              for your unique business needs and drive measurable results.
-            </p>
-           <Link to="/consultation"> <button 
-              onClick={() => handleNavigation('/consultation')}
+      <div className="container mx-auto px-6 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            What's your next big move?
+          </h2>
+          <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+            Our team of experts can help you design and implement tailored solutions 
+            for your unique business needs and drive measurable results.
+          </p>
+          <Link to="/consultation">
+            <button 
               className="inline-flex items-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors shadow-lg shadow-cyan-900/30"
             >
-              <span>Book A Free Consultation Now </span>
+              <span>Book A Free Consultation Now</span>
               <ChevronRight className="ml-2" size={20} />
             </button>
-            </Link>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default SolutionsPage;
+export default ServicesPage;

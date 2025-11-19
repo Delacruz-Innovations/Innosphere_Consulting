@@ -5,8 +5,8 @@ import Navbar from './Components/Navbar';
 import Homepage from './Pages/Homepage';
 import Footer from './Components/Footer';
 import AboutPage from './Pages/AboutPage';
-import SolutionPages from '../src/Pages/SolutionPage';
-import SolutionDetail from './Components/SolutionDetail';
+import SolutionPages from '../src/Pages/ServicesPage';
+import SolutionDetail from './Components/ServiceDetail';
 import ScrollToTop from './Components/ScrollToTop';
 import Notfound from './Components/Notfound';
 import CaseStudies from './Pages/CaseStudiesList';
@@ -30,7 +30,7 @@ const getPageTitle = (pathname) => {
   const routes = {
     '/': 'Home',
     '/about': 'About Us',
-    '/solutions': 'Solutions',
+    '/service': 'Solutions',
     '/cases': 'Case Studies',
     '/insights': 'Insights',
     '/contact': 'Contact',
@@ -48,7 +48,7 @@ const getPageTitle = (pathname) => {
   }
 
   // Handle dynamic routes
-  if (pathname.startsWith('/solution/')) return 'Solution Detail';
+  if (pathname.startsWith('/service/')) return 'Solution Detail';
   if (pathname.startsWith('/cases/')) return 'Case Study Detail';
   if (pathname.startsWith('/insights/')) return 'Insight Detail';
 
@@ -324,7 +324,7 @@ const App = () => {
         <Route path='/' element={<Homepage />} />
         <Route path='about' element={<AboutPage />} />
         <Route path='solutions' element={<SolutionPages />} />
-        <Route path='solution/:slug' element={<SolutionDetail />} />
+        <Route path='service/:slug' element={<SolutionDetail />} />
         <Route path='cases' element={<CaseStudies />} />
         <Route path='cases/:slug' element={<CaseStudyDetails />} />
         <Route path='insights' element={<InsightsList />} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Building2, Heart, Zap, Landmark, ShoppingCart, TrendingUp, ArrowRight, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Building2, Heart, Zap, Landmark, ShoppingCart, TrendingUp, ArrowRight, CheckCircle, ArrowLeft, BookOpen, CreditCard, Truck, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Industries = () => {
@@ -46,123 +46,170 @@ const [showAll, setShowAll] = useState(false);
     return () => observer.disconnect();
   }, []);
 
-  const industries = [
-    {
-      id: 1,
-      name: "Financial Services & Fintech",
-      slug: "financial-services",
-      icon: TrendingUp,
-      tagline: "Enabling Digital Platforms and Data-Driven Operations",
-      description: "We partner with banks, insurance companies, and fintech startups across Nigeria and West Africa to accelerate digital transformation and unlock new revenue streams through innovative financial technology solutions.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-      capabilities: [
-        "Digital banking platform modernization",
-        "Payment system integration and optimization",
-        "Risk management and compliance automation",
-        "Customer data analytics and personalization",
-        "Mobile and online banking solutions",
-        "Blockchain and cryptocurrency advisory"
-      ],
-      outcomes: [
-        "40% reduction in transaction processing time",
-        "60% increase in digital channel adoption",
-        "Enhanced regulatory compliance",
-        "Improved customer satisfaction scores"
-      ]
-    },
-    {
-      id: 2,
-      name: "Healthcare & MedTech",
-      slug: "healthcare",
-      icon: Heart,
-      tagline: "Supporting Innovation and Patient Experience Transformation",
-      description: "From hospitals to health tech startups, we help healthcare organizations in Lagos, Abuja, and Port Harcourt leverage technology to improve patient outcomes, streamline operations, and deliver exceptional care experiences.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-      capabilities: [
-        "Electronic Health Records (EHR) implementation",
-        "Telemedicine platform development",
-        "Patient engagement and portal solutions",
-        "Healthcare analytics and reporting",
-        "Medical device integration",
-        "Regulatory compliance management"
-      ],
-      outcomes: [
-        "50% reduction in administrative workload",
-        "30% improvement in patient satisfaction",
-        "Enhanced care coordination",
-        "Streamlined clinical workflows"
-      ]
-    },
-    {
-      id: 3,
-      name: "Energy & Infrastructure",
-      slug: "energy-infrastructure",
-      icon: Zap,
-      tagline: "Driving Efficiency Through Automation and Analytics",
-      description: "We support energy companies and infrastructure providers across Nigeria in optimizing operations, enhancing safety, and preparing for the future of sustainable energy through digital innovation.",
-      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80",
-      capabilities: [
-        "Smart grid and energy management systems",
-        "Predictive maintenance solutions",
-        "Asset performance optimization",
-        "Supply chain digitization",
-        "Safety and compliance monitoring",
-        "Renewable energy integration"
-      ],
-      outcomes: [
-        "25% improvement in operational efficiency",
-        "Reduced downtime and maintenance costs",
-        "Enhanced safety compliance",
-        "Better resource allocation"
-      ]
-    },
-    {
-      id: 4,
-      name: "Public Sector",
-      slug: "public-sector",
-      icon: Landmark,
-      tagline: "Aligning Digital Strategy with National Innovation Agenda",
-      description: "We work with government agencies and public institutions to modernize service delivery, improve citizen engagement, and drive digital transformation aligned with Nigeria's national development goals.",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-      capabilities: [
-        "E-government platform development",
-        "Citizen service digitization",
-        "Data governance and security",
-        "Process automation and optimization",
-        "Change management for digital adoption",
-        "Performance measurement frameworks"
-      ],
-      outcomes: [
-        "Improved service delivery times",
-        "Enhanced citizen satisfaction",
-        "Transparent and efficient operations",
-        "Data-driven policy making"
-      ]
-    },
-    {
-      id: 5,
-      name: "Retail & E-commerce",
-      slug: "retail-ecommerce",
-      icon: ShoppingCart,
-      tagline: "Scaling Digital Sales Channels and Customer Engagement",
-      description: "From traditional retailers to digital-first brands, we help Nigerian businesses build compelling online experiences, optimize operations, and compete effectively in the digital marketplace.",
-      image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
-      capabilities: [
-        "E-commerce platform development",
-        "Omnichannel retail strategy",
-        "Customer relationship management (CRM)",
-        "Inventory and supply chain optimization",
-        "Digital marketing and analytics",
-        "Payment gateway integration"
-      ],
-      outcomes: [
-        "120% growth in online sales",
-        "Enhanced customer lifetime value",
-        "Improved inventory turnover",
-        "Seamless omnichannel experience"
-      ]
-    }
-  ];
+const industries = [
+  {
+    id: 1,
+    name: "IT Tech Startups",
+    slug: "tech-startups",
+    icon: TrendingUp,
+    tagline: "Building Scalable Digital Products for Emerging Startups",
+    description:
+      "We support tech-driven startups in developing scalable digital platforms, improving user experience, and accelerating product deployment.",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    capabilities: [
+      "MVP development and product scaling",
+      "Backend and frontend engineering",
+      "Cloud infrastructure setup",
+      "UI/UX design and improvement",
+      "Automation and workflow optimization"
+    ],
+    outcomes: [
+      "Faster product launch cycles",
+      "Improved user engagement",
+      "Reduced development overhead",
+      "Stable and scalable system architecture"
+    ]
+  },
+  {
+    id: 2,
+    name: "Government & Public Sector",
+    slug: "public-sector",
+    icon: Landmark,
+    tagline: "Digitizing Public Services and Improving Citizen Engagement",
+    description:
+      "We work with government agencies to modernize public services through secure digital platforms and workflow automation.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    capabilities: [
+      "E-government solutions",
+      "Citizen service portals",
+      "Process automation",
+      "Data governance and security",
+      "Performance tracking systems"
+    ],
+    outcomes: [
+      "Improved service delivery",
+      "Enhanced transparency",
+      "Better citizen satisfaction",
+      "Efficient governmental operations"
+    ]
+  },
+  {
+    id: 3,
+    name: "Education & Training",
+    slug: "education-training",
+    icon: BookOpen,
+    tagline: "Driving Digital Transformation in Learning Institutions",
+    description:
+      "We help educational institutions adopt digital solutions for improved learning, student management, and online training delivery.",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
+    capabilities: [
+      "E-learning platform development",
+      "Student information systems",
+      "Digital content creation",
+      "Virtual classrooms and LMS integration",
+      "Online assessment systems"
+    ],
+    outcomes: [
+      "Better student engagement",
+      "Seamless digital learning experience",
+      "Improved administrative efficiency",
+      "Scalable education delivery"
+    ]
+  },
+  {
+    id: 4,
+    name: "FinTech & Payments",
+    slug: "fintech-payments",
+    icon: CreditCard,
+    tagline: "Delivering Secure and Scalable Financial Technology Solutions",
+    description:
+      "We support fintech companies and payment providers with digital financial platforms, automation, and secure transaction systems.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    capabilities: [
+      "Payment system development",
+      "Digital banking solutions",
+      "Fraud detection tools",
+      "API and gateway integrations",
+      "Customer analytics"
+    ],
+    outcomes: [
+      "Faster transaction processing",
+      "Enhanced security and compliance",
+      "Increased user adoption",
+      "Optimized financial operations"
+    ]
+  },
+  {
+    id: 5,
+    name: "Logistics & Mobility",
+    slug: "logistics-mobility",
+    icon: Truck,
+    tagline: "Optimizing Delivery Operations and Fleet Efficiency",
+    description:
+      "We build digital solutions that help logistics and mobility companies streamline deliveries, enhance tracking, and improve customer experience.",
+    image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=800&q=80",
+    capabilities: [
+      "Delivery tracking systems",
+      "Fleet management tools",
+      "Route optimization",
+      "Inventory and warehouse automation",
+      "Customer communication systems"
+    ],
+    outcomes: [
+      "Reduced delivery delays",
+      "Lower operational costs",
+      "Improved fleet efficiency",
+      "Better tracking accuracy"
+    ]
+  },
+  {
+    id: 6,
+    name: "Real Estate & Property Tech",
+    slug: "real-estate-proptech",
+    icon: Home,
+    tagline: "Digitizing Property Management and Real Estate Services",
+    description:
+      "We help property companies and real estate firms build digital tools for listings, tenant management, and automated reporting.",
+    image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
+    capabilities: [
+      "Property listing platforms",
+      "Tenant and landlord portals",
+      "Automated payment systems",
+      "Virtual tours and 3D interface",
+      "Data analytics for property insights"
+    ],
+    outcomes: [
+      "Improved tenant experience",
+      "Faster property sales and rentals",
+      "Automated rent collection",
+      "Better property visibility"
+    ]
+  },
+  {
+    id: 7,
+    name: "E-commerce",
+    slug: "ecommerce",
+    icon: ShoppingCart,
+    tagline: "Scaling Digital Stores and Boosting Customer Engagement",
+    description:
+      "We help online sellers and retail brands build seamless e-commerce platforms that drive sales and customer loyalty.",
+    image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
+    capabilities: [
+      "E-commerce website development",
+      "Inventory and order management",
+      "Payment integration",
+      "Customer analytics",
+      "Marketing automation"
+    ],
+    outcomes: [
+      "Higher online sales conversion",
+      "Faster order processing",
+      "Better customer retention",
+      "Stronger digital presence"
+    ]
+  }
+];
+
 const displayedIndustries = showAll ? industries : industries.slice(0, 3);
   return (
     <div className=" bg-slate-950 pt-4">
@@ -182,11 +229,7 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
             
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              <div className="inline-block mb-6">
-                <span className="text-sm font-semibold tracking-wider text-[#6b9dc7] uppercase bg-[#6b9dc7]/30 px-4 py-2 rounded-full border border-[#6b9dc7]/50">
-                  Industry Expertise
-                </span>
-              </div>
+              
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 Transforming Industries Across <span className="text-[#6b9dc7]">Nigeria & West Africa</span>
               </h1>

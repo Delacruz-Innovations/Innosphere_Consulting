@@ -17,7 +17,7 @@ const MissionVisionValues = () => {
     setCurrentSlide((prev) => (prev - 1 + 4) % 4);
   };
 
-  const missionText = 'To deliver reliable, scalable, and context-relevant digital systems for organisations in transition — from traditional operations to modern, automated ecosystems.';
+  const missionText = 'To deliver reliable, scalable, and context-relevant digital systems for organisations in transition from traditional operations to modern, automated ecosystems.';
 
   const visionText = 'A digitally empowered Africa where innovation drives inclusion, efficiency, and sustainable growth.';
 

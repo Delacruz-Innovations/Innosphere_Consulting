@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ChevronRight, Menu, X } from 'lucide-react';
+import { 
+  ArrowLeft, ChevronRight, Menu, X, 
+  TrendingUp, Users, Target, Zap, CheckCircle, 
+  BarChart3, Clock, DollarSign, Shield, Database,
+  LineChart, Package, RefreshCw
+} from 'lucide-react';
+
 import caseStudiesData from '../Components/caseStudiesData';
 
 const CaseStudyDetails = () => {
@@ -84,7 +90,7 @@ const CaseStudyDetails = () => {
 
   if (!currentCase) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className=" bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-6">Case Study Not Found</h1>
           <button
@@ -102,7 +108,7 @@ const CaseStudyDetails = () => {
   return (
     <div className=" bg-slate-950">
       {/* Hero Section - Mobile with background image */}
-      <div className="relative pt-20 pb-10">
+      <div className="relative pt-20 pb-2">
         {/* Mobile Background Image */}
         <div className="md:hidden absolute inset-0 h-[500px]">
           <img
@@ -113,7 +119,7 @@ const CaseStudyDetails = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-gray-900/95 via-gray-900/90 to-gray-950"></div>
         </div>
 
-        <div ref={heroRef} className="container mx-auto px-6 py-12 md:py-20">
+        <div ref={heroRef} className="container mx-auto px-6 pb-4 pt-12 md:pt-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative z-10">
               <span className="inline-block bg-[#6b9dc7] text-white px-4 py-2 rounded text-sm font-semibold mb-6">
@@ -155,7 +161,7 @@ const CaseStudyDetails = () => {
           <div className="max-w-5xl mx-auto">
             
             {/* Challenge */}
-            <div className="mb-16">
+            <div className="mb-2">
               <div className="flex items-start mb-6">
                 <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
                   <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
@@ -173,7 +179,7 @@ const CaseStudyDetails = () => {
             </div>
 
             {/* Approach */}
-            <div className="mb-16">
+            <div className="mb-2">
               <div className="flex items-start mb-6">
                 <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
                   <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
@@ -191,7 +197,7 @@ const CaseStudyDetails = () => {
             </div>
 
             {/* Result */}
-            <div className="mb-16">
+            <div className="mb-2">
               <div className="flex items-start mb-6">
                 <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
                   <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
@@ -209,31 +215,62 @@ const CaseStudyDetails = () => {
             </div>
 
             {/* Impact Metrics */}
-            <div className="mb-16">
-              <div className="flex items-start mb-6">
-                <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
-                  <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Impact Metrics</h2>
-                  <div className="w-16 h-0.5 bg-[#6b9dc7]"></div>
-                </div>
+<div className="mb-2">
+  <div className="flex items-start mb-6">
+    <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
+      <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
+    </div>
+    <div>
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Impact Metrics</h2>
+      <div className="w-16 h-0.5 bg-[#6b9dc7]"></div>
+    </div>
+  </div>
+  <div className="ml-0 md:ml-16">
+    <div className="grid md:grid-cols-2 gap-6">
+      {currentCase.details.impactMetrics && currentCase.details.impactMetrics.map((metric, index) => {
+        // Assign icons based on metric value/label keywords
+        const getIcon = (value, label) => {
+          const text = `${value} ${label}`.toLowerCase();
+          
+          if (text.includes('revenue') || text.includes('ancillary')) return DollarSign;
+          if (text.includes('process') || text.includes('faster') || text.includes('speed')) return Clock;
+          if (text.includes('align') || text.includes('collaboration') || text.includes('cross')) return Users;
+          if (text.includes('accuracy') || text.includes('integrity') || text.includes('data')) return Database;
+          if (text.includes('efficiency') || text.includes('operational')) return BarChart3;
+          if (text.includes('improved') || text.includes('enhanced') || text.includes('increased')) return TrendingUp;
+          if (text.includes('satisfaction') || text.includes('experience')) return CheckCircle;
+          if (text.includes('security') || text.includes('protected')) return Shield;
+          if (text.includes('reduced') || text.includes('cost')) return Target;
+          if (text.includes('scalable') || text.includes('framework')) return RefreshCw;
+          if (text.includes('personalization') || text.includes('insights')) return LineChart;
+          if (text.includes('systems') || text.includes('consolidated')) return Package;
+          
+          return Zap; // Default icon
+        };
+        
+        const Icon = getIcon(metric.value, metric.label);
+        
+        return (
+          <div key={index} className="rounded-lg p-6 transition-colors">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10  rounded-lg flex items-center justify-center  flex-shrink-0">
+                <Icon className="text-[#6b9dc7]" size={20} />
               </div>
-              <div className="ml-0 md:ml-16">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {currentCase.details.impactMetrics && currentCase.details.impactMetrics.map((metric, index) => (
-                    <div key={index} className="bg-gray-800/50 border border-gray-700 rounded-lg p-6">
-                      <div className="text-3xl md:text-4xl font-bold text-[#6b9dc7] mb-2">
-                        {metric.value}
-                      </div>
-                      <p className="text-gray-300 text-sm md:text-base">
-                        {metric.label}
-                      </p>
-                    </div>
-                  ))}
+              <div className="flex-1">
+                <div className="text-3xl md:text-4xl font-bold text-[#6b9dc7] mb-2">
+                  {metric.value}
                 </div>
+                <p className="text-gray-300 text-sm md:text-base">
+                  {metric.label}
+                </p>
               </div>
             </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </div>

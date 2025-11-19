@@ -41,15 +41,13 @@ const AboutPage = () => {
       <div data-section="about-us">
         <AboutUs />
       </div>
-      <div data-section="strategy">
-        <StrategyAccordion />
-      </div>
+   
       <div data-section="mission-vision-values">
         <MissionVisionValues />
       </div>
-      <div data-section="leadership-team">
+      {/* <div data-section="leadership-team">
         <LeadershipTeam />
-      </div>
+      </div> */}
      
     </div>
    

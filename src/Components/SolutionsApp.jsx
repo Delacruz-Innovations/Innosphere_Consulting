@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Building2, Blocks, TrendingUp, Zap } from 'lucide-react';
 
-import solutionsData from '../Solution';
+import solutionsData from '../servicesData';
 
 const SolutionsApp = () => {
   const navigate = useNavigate();

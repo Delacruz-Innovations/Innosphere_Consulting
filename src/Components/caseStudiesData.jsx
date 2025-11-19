@@ -1,16 +1,17 @@
 // All case studies data with new format: Challenge → Approach → Result → Impact Metrics
 
 import case01 from '../assets/case01.jpg'
+import case02 from '../assets/case02.jpg'
 import case03 from '../assets/case03.jpg'
 import case04 from '../assets/case04.jpg'
 import case05 from '../assets/case05.jpg'
 const caseStudiesData = {
   'dbt-digital-transformation': {
     id: 1,
-    title: "Department for Business & Trade – Digital Transformation",
+    title: "Department for Business & Trade  Digital Transformation",
     category: "Digital Transformation",
     client: "UK Government / Public Sector",
-    duration: "18 months",
+    duration: "12 months",
     image: case01,
     overview: "The department was undergoing a large-scale migration from DataHub to the GOV.UK backend, with multiple legacy systems and cross-border teams handling highly sensitive data. Processes were inconsistent, and stakeholders were frustrated by misaligned operations.",
     details: {
@@ -31,7 +32,7 @@ const caseStudiesData = {
     category: "Healthcare Transformation",
     client: "Healthcare / Public Sector",
     duration: "14 months",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
+    image: case02,
     overview: "NHS 111 online was outdated, with duplicated workflows that caused frustration for call handlers and administrators. The CRM system was under-optimised, leading to inefficiencies in managing clinical data.",
     details: {
       challenge: "NHS 111 online faced critical challenges impacting service delivery and user experience:\n\n• Outdated online service platform requiring modernization\n• Duplicated workflows causing frustration for call handlers and administrators\n• Under-optimised CRM system limiting efficiency\n• Inefficiencies in managing clinical data\n• Processing errors affecting data accuracy\n• Need for improved user experience across all touchpoints",
@@ -47,10 +48,10 @@ const caseStudiesData = {
   },
   'easyjet-digital-retail': {
     id: 3,
-    title: "easyJet – Digital Retail & Ancillary Revenue Growth",
+    title: "easyJet  Digital Retail & Ancillary Revenue Growth",
     category: "Digital Commerce",
     client: "Aviation / Travel",
-    duration: "12 months",
+    duration: "6 months",
     image: case03,
     overview: "Easyjet needed to enhance personalization in digital retail to drive ancillary revenue. The challenge was aligning commercial strategy with IT systems and ensuring smooth adoption across teams.",
     details: {

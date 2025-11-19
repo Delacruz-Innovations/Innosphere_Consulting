@@ -123,7 +123,7 @@ const handleSubscribe = async (e) => {
               
               {/* Description */}
               <p className="text-gray-400 text-sm max-w-md leading-relaxed">
-               We will move things around as we go along but use this for now  Engineering Value. Delivering Excellence
+               Strategy. Innovation. Digital Transformation - Built in the UAE.
               </p>
 
               {/* Newsletter */}
@@ -161,23 +161,7 @@ const handleSubscribe = async (e) => {
   )}
 </div>
 
-              {/* Contact Info - Compact */}
-              <div className="flex flex-wrap gap-4 sm:gap-6 pt-2">
-                {contactInfo.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <a
-                      key={index}
-                      target='_blank'
-                      href={item.href}
-                      className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors group"
-                    >
-                      <Icon className="w-4 h-4 " />
-                      <span className="text-xs sm:text-sm">{item.text}</span>
-                    </a>
-                  );
-                })}
-              </div>
+           
             </div>
 
             {/* Right Side - Social Links */}
@@ -203,6 +187,23 @@ const handleSubscribe = async (e) => {
                   );
                 })}
               </div>
+                 {/* Contact Info - Compact */}
+              <div className="flex flex-wrap gap-4 sm:gap-6 pt-2">
+                {contactInfo.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={index}
+                      target='_blank'
+                      href={item.href}
+                      className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors group"
+                    >
+                      <Icon className="w-4 h-4 " />
+                      <span className="text-xs sm:text-sm">{item.text}</span>
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -211,7 +212,7 @@ const handleSubscribe = async (e) => {
         <div className="py-5 border-t border-gray-800/50">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <p className="text-gray-500">
-              © {new Date().getFullYear()} Innosphare Consulting. RC-4435 All rights reserved.
+              © {new Date().getFullYear()} Innosphare Consulting FZE LLC. RC-4435 All rights reserved.
             </p>
             
             <div className="flex items-center gap-4">
