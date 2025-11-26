@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CheckCircle, Users, Award, Calendar, ArrowRight, BookOpen, Target, TrendingUp, ArrowLeft, Building2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Academy = () => {
   const heroRef = useRef(null);
@@ -361,17 +362,8 @@ const Academy = () => {
                     }}
                   >
                     <div className="p-6 h-full overflow-y-auto">
-                      {/* Back Button */}
-                      <button 
-                        className="inline-flex items-center text-[#6b9dc7] font-semibold hover:text-blue-300 transition-colors mb-4"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFlippedCard(null);
-                        }}
-                      >
-                        <ArrowLeft size={18} className="mr-2" />
-                        <span>Back</span>
-                      </button>
+                    
+                     
 
                       <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <program.icon className="text-[#6b9dc7]" size={24} />
@@ -511,12 +503,13 @@ const Academy = () => {
               Join hundreds of professionals who have accelerated their careers through our academy. Get in touch to discuss which program is right for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-colors shadow-lg shadow-blue-900/30"
+            <Link to='/consultation'>  <button 
+                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-colors shadow-lg s    hadow-blue-900/30"
               >
                 <span>Enroll Now</span>
                 <ArrowRight className="ml-2" size={20} />
               </button>
+              </Link>
               <button 
                 className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
               >

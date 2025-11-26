@@ -140,7 +140,7 @@ const Navbar = () => {
 
             <Link 
               to="/contact" 
-              className={`transition-colors text-sm font-medium tracking-wide bg-[#6b9dc7] px-6 py-3 hover:bg-blue-700 rounded-full text-white hidden md:block`}
+              className={`transition-colors text-sm font-medium tracking-wide bg-[#6b9dc7] px-6 py-3 hover:bg-blue-700 rounded-full text-white hidden lg:block`}
             >
               CONTACT US
             </Link>

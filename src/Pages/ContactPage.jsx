@@ -169,7 +169,7 @@ useEffect(() => {
 <div>
                 <label className="block text-gray-400 text-sm mb-2">PHONE</label>
                 <PhoneInput
-                  country={'ng'}
+                  country={'ae'}
                   value={formData.phone}
                   onChange={(phone, country) => {
                     setFormData({

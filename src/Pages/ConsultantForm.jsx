@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { CheckCircle, Rocket, TrendingUp, Cpu, Layers, Users, Phone, Clock, ArrowRight, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Rocket, TrendingUp, Cpu, Layers, Users, Phone, Clock, ArrowRight, ArrowLeft, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function ConsultantForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -9,7 +11,8 @@ export default function ConsultantForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     businessName: '',
-    contact: '',
+    email: '',
+    phone: '',
     businessGoal: [],
     businessSize: '',
     startTime: '',
@@ -44,8 +47,22 @@ export default function ConsultantForm() {
     }
   };
 
+  // Validation functions
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidPhone = (phone) => {
+    // Phone validation is handled by react-phone-input-2
+    return phone && phone.replace(/\D/g, '').length >= 10;
+  };
+
   const isStep1Valid = () => {
-    return formData.fullName && formData.businessName && formData.contact;
+    return formData.fullName && 
+           formData.businessName && 
+           isValidEmail(formData.email) && 
+           isValidPhone(formData.phone);
   };
 
   const isStep2Valid = () => {
@@ -75,7 +92,8 @@ export default function ConsultantForm() {
         body: JSON.stringify({
           fullName: formData.fullName,
           businessName: formData.businessName,
-          contact: formData.contact,
+          email: formData.email,
+          phone: formData.phone,
           businessGoal: formData.businessGoal.join(', '),
           businessSize: formData.businessSize,
           startTime: formData.startTime,
@@ -130,7 +148,7 @@ export default function ConsultantForm() {
           
             className="px-6 py-3 bg-[#6b9dc7] text-white rounded-lg font-medium hover:bg-[#5a8bb5] transition"
           >
-            Keep Expoloring
+            Keep Exploring
           </button>
           </Link>
         </div>
@@ -157,8 +175,13 @@ export default function ConsultantForm() {
             </div>
 
             <div className="bg-gray-700 rounded-lg p-4">
-              <p className="text-gray-400 text-sm mb-1">Contact</p>
-              <p className="text-white font-medium">{formData.contact}</p>
+              <p className="text-gray-400 text-sm mb-1">Email</p>
+              <p className="text-white font-medium">{formData.email}</p>
+            </div>
+
+            <div className="bg-gray-700 rounded-lg p-4">
+              <p className="text-gray-400 text-sm mb-1">Phone</p>
+              <p className="text-white font-medium">{formData.phone}</p>
             </div>
 
             <div className="bg-gray-700 rounded-lg p-4">
@@ -222,24 +245,24 @@ export default function ConsultantForm() {
         {/* Progress Steps */}
         <div className="flex items-center justify-between mb-10 px-4">
           <div className="flex flex-col items-center gap-2">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 1 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${step >= 1 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
               {step > 1 ? '✓' : '1'}
             </div>
-            <span className={`text-xs sm:text-sm font-medium ${step >= 1 ? 'text-white' : 'text-gray-500'}`}>Details</span>
+            <span className={`text-xs sm:text-sm font-medium ${step >= 1 ? 'text-white' : 'text-gray-500'}`}>Your Details</span>
           </div>
           <div className={`flex-1 h-1 mx-3 ${step >= 2 ? 'bg-[#6b9dc7]' : 'bg-gray-700'}`}></div>
           <div className="flex flex-col items-center gap-2">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 2 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${step >= 2 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
               {step > 2 ? '✓' : '2'}
             </div>
-            <span className={`text-xs sm:text-sm font-medium ${step >= 2 ? 'text-white' : 'text-gray-500'}`}>Needs</span>
+            <span className={`text-xs sm:text-sm font-medium ${step >= 2 ? 'text-white' : 'text-gray-500'}`}>Your Needs</span>
           </div>
           <div className={`flex-1 h-1 mx-3 ${step >= 3 ? 'bg-[#6b9dc7]' : 'bg-gray-700'}`}></div>
           <div className="flex flex-col items-center gap-2">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= 3 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${step >= 3 ? 'bg-[#6b9dc7] text-white' : 'bg-gray-700 text-gray-400'}`}>
               3
             </div>
-            <span className={`text-xs sm:text-sm font-medium ${step >= 3 ? 'text-white' : 'text-gray-500'}`}>Expectations</span>
+            <span className={`text-xs sm:text-sm font-medium ${step >= 3 ? 'text-white' : 'text-gray-500'}`}>Your Expectations</span>
           </div>
         </div>
 
@@ -275,15 +298,68 @@ export default function ConsultantForm() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Email or WhatsApp Number *</label>
-                  <input
-                    type="text"
-                    value={formData.contact}
-                    onChange={(e) => handleChange('contact', e.target.value)}
-                    placeholder="your@email.com or +1234567890"
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
-                  />
-                  <p className="text-gray-500 text-xs mt-2">👉 One contact point only — reduces friction</p>
+                  <label className="block text-gray-300 text-sm font-medium mb-2">Email Address *</label>
+                  <div className="relative">
+                    <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleChange('email', e.target.value)}
+                      placeholder="your@email.com"
+                      className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
+                    />
+                  </div>
+                  {formData.email && !isValidEmail(formData.email) && (
+                    <p className="text-red-400 text-xs mt-1">Please enter a valid email address</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 text-sm font-medium mb-2">Phone Number *</label>
+                  <div className="react-phone-input-container">
+                
+<PhoneInput
+  country={'ae'}
+  value={formData.phone}
+  onChange={(phone, country) => {
+    setFormData({
+      ...formData,
+      phone: phone,
+      countryCode: '+' + country.dialCode
+    });
+  }}
+  containerClass="w-full"
+  inputClass="w-full"
+  buttonClass="!bg-gray-700/50 !border-gray-600 hover:!bg-gray-600/50"
+  dropdownClass="!bg-gray-700 !border-gray-600"
+  searchClass="!bg-gray-600 !text-white !border-gray-500"
+  inputStyle={{
+    width: '100%',
+    height: '48px',
+    backgroundColor: 'rgba(55, 65, 81, 0.5)',
+    border: '1px solid rgb(75, 85, 99)',
+    borderRadius: '0.5rem',
+    color: 'white',
+    fontSize: '1rem',
+    paddingLeft: '48px'
+  }}
+  buttonStyle={{
+    backgroundColor: 'rgba(55, 65, 81, 0.5)',
+    border: '1px solid rgb(75, 85, 99)',
+    borderTopLeftRadius: '0.5rem',
+    borderBottomLeftRadius: '0.5rem'
+  }}
+  dropdownStyle={{
+    backgroundColor: 'rgb(55, 65, 81)',
+    border: '1px solid rgb(75, 85, 99)',
+    color: 'white'
+  }}
+/>
+                  </div>
+                  {formData.phone && !isValidPhone(formData.phone) && (
+                    <p className="text-red-400 text-xs mt-1">Please enter a valid phone number</p>
+                  )}
+                  <p className="text-gray-500 text-xs mt-2">👉We require this informations to contact you</p>
                 </div>
 
                 <button

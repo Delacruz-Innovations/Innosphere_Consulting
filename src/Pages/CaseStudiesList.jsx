@@ -46,7 +46,7 @@ const CaseStudiesList = () => {
   }, [showAll]);
 
   const handleCaseClick = (slug) => {
-    window.location.href = `/Innosphere_Consulting/cases/${slug}`;
+    window.location.href = `/cases/${slug}`;
   };
 
   const caseStudies = Object.entries(caseStudiesDataObj).map(([slug, data]) => ({

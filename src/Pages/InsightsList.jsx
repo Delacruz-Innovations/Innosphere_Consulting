@@ -50,7 +50,7 @@ const InsightsList = () => {
   const displayedInsights = showAll ? insights : insights.slice(0, 3);
 
   const handleInsightClick = (slug) => {
-    window.location.href = `/Innosphere_Consulting/insights/${slug}`;
+    window.location.href = `/insights/${slug}`;
   };
 
   const handleSubscribe = () => {

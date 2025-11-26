@@ -313,7 +313,7 @@ const App = () => {
   }, []);
 
   return (
-    <Router basename='/Innosphere_Consulting'>
+    <Router >
       <ScrollToTop />
       <RouteTracker />
       <ScrollDepthTracker />
