@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { 
+import {
   ArrowLeft, Users, Target, TrendingUp, Award, Clock, ChevronRight,
   Package, Lightbulb, BookOpen, UserCheck, FileText, GitBranch,
   CheckSquare, Search, Map, Rocket, RefreshCw, Zap, User, Crown,
@@ -8,19 +8,20 @@ import {
 } from 'lucide-react';
 
 import servicesData from '../servicesData';
+import CalendlyPopup from './CalendlyPopup';
 
 const ServiceDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const heroRef = useRef(null);
   const contentRef = useRef(null);
-  
+
   const service = servicesData.services.find(s => s.slug === slug);
 
   // Function to get icon based on item text
   const getItemIcon = (itemText, sectionType) => {
     const text = itemText.toLowerCase();
-    
+
     // Common keywords mapping to icons
     if (text.includes('documentation') || text.includes('document')) return FileText;
     if (text.includes('process') || text.includes('workflow')) return GitBranch;
@@ -43,21 +44,21 @@ const ServiceDetail = () => {
     if (text.includes('dashboard') || text.includes('performance')) return TrendingUp;
     if (text.includes('technology') || text.includes('recommendations')) return Settings;
     if (text.includes('sop')) return FileText;
-    
+
     // Default icons based on section type
     if (sectionType === 'deliverables') return Box;
     if (sectionType === 'solutions') return Lightbulb;
     if (sectionType === 'courses') return GraduationCap;
     if (sectionType === 'access') return UserCheck;
-    
+
     return CheckSquare;
   };
 
   // Get section configuration
   const getSectionConfig = () => {
     if (service.deliverables) {
-      return { 
-        title: 'What You Get', 
+      return {
+        title: 'What You Get',
         Icon: Package,
         iconColor: 'text-[#4a7ba7]',
         iconBg: 'bg-[#4a7ba7]/10',
@@ -67,8 +68,8 @@ const ServiceDetail = () => {
       };
     }
     if (service.solutions) {
-      return { 
-        title: 'Solutions include', 
+      return {
+        title: 'Solutions include',
         Icon: Lightbulb,
         iconColor: 'text-purple-400',
         iconBg: 'bg-purple-500/10',
@@ -78,8 +79,8 @@ const ServiceDetail = () => {
       };
     }
     if (service.deliver) {
-      return { 
-        title: 'We deliver', 
+      return {
+        title: 'We deliver',
         Icon: Lightbulb,
         iconColor: 'text-purple-400',
         iconBg: 'bg-purple-500/10',
@@ -90,8 +91,8 @@ const ServiceDetail = () => {
     }
 
     if (service.courses) {
-      return { 
-        title: 'Courses Offereds', 
+      return {
+        title: 'Courses Offereds',
         Icon: BookOpen,
         iconColor: 'text-blue-400',
         iconBg: 'bg-blue-500/10',
@@ -100,8 +101,8 @@ const ServiceDetail = () => {
         items: service.courses
       };
     }
-    return { 
-      title: 'Expert Access', 
+    return {
+      title: 'Expert Access',
       Icon: UserCheck,
       iconColor: 'text-emerald-400',
       iconBg: 'bg-emerald-500/10',
@@ -113,12 +114,12 @@ const ServiceDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     // Hero animation
     if (heroRef.current) {
       heroRef.current.style.opacity = '0';
       heroRef.current.style.transform = 'translateY(20px)';
-      
+
       setTimeout(() => {
         heroRef.current.style.transition = 'all 0.8s ease-out';
         heroRef.current.style.opacity = '1';
@@ -165,12 +166,12 @@ const ServiceDetail = () => {
     <div className="bg-gray-950 min-h-screen">
       {/* Hero Section */}
       <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${service.heroImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/80 to-gray-950/40" />
-        
+
         <div ref={heroRef} className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-6 pb-12 md:pb-16">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
@@ -209,8 +210,8 @@ const ServiceDetail = () => {
               )}
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden">
-              <img 
-                src={service.image} 
+              <img
+                src={service.image}
                 alt={service.title}
                 className="w-full h-full object-cover"
               />
@@ -223,7 +224,7 @@ const ServiceDetail = () => {
         <div className="fade-in-section mb-20">
           {/* Title Section with Icon */}
           <div className="text-center mb-12">
-       
+
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               {sectionConfig.title}
             </h2>
@@ -234,7 +235,7 @@ const ServiceDetail = () => {
             {sectionConfig.items.map((item, index) => {
               const ItemIcon = getItemIcon(item, sectionConfig.type);
               return (
-                <div 
+                <div
                   key={index}
                   className=" rounded-xl p-6  transition-all duration-300 hover:shadow-lg  group"
                 >
@@ -252,7 +253,7 @@ const ServiceDetail = () => {
               <p className="text-[#4a7ba7] text-lg font-medium">{service.note}</p>
             </div>
           )}
-          
+
           {service.designedFor && (
             <div className="mt-10 bg-gradient-to-br from-blue-900/20 to-[#4a7ba7]/20 border border-blue-800/30 rounded-xl p-6 hover:border-blue-700/50 transition-colors">
               <div className="flex items-start gap-4">
@@ -278,12 +279,10 @@ const ServiceDetail = () => {
               Let's discuss how we can help transform your business with our {service.title.toLowerCase()} services.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/consultation">
-                <button className="inline-flex items-center bg-[#4a7ba7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-all shadow-lg shadow-[#4a7ba7]/30">
-                  <span>Book A Free Consultation</span>
-                  <ChevronRight className="ml-2 w-5 h-5" />
-                </button>
-              </Link>
+              <CalendlyPopup
+                text="Book A Free Consultation"
+                className="inline-flex items-center bg-[#4a7ba7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-all shadow-lg shadow-[#4a7ba7]/30 border-none cursor-pointer"
+              />
               <Link to="/our_services">
                 <button className="inline-flex items-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-all border border-gray-700">
                   <span>View All Services</span>

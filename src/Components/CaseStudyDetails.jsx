@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, ChevronRight, Menu, X, 
-  TrendingUp, Users, Target, Zap, CheckCircle, 
+import {
+  ArrowLeft, ChevronRight, Menu, X,
+  TrendingUp, Users, Target, Zap, CheckCircle,
   BarChart3, Clock, DollarSign, Shield, Database,
   LineChart, Package, RefreshCw
 } from 'lucide-react';
 
 import caseStudiesData from '../Components/caseStudiesData';
+import CalendlyPopup from './CalendlyPopup';
 
 const CaseStudyDetails = () => {
   const { slug } = useParams();
@@ -18,7 +19,7 @@ const CaseStudyDetails = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const currentCase = caseStudiesData[slug];
-  
+
   // Get related cases from same category
   const relatedCases = Object.entries(caseStudiesData)
     .filter(([key, value]) => key !== slug && value.category === currentCase?.category)
@@ -131,7 +132,7 @@ const CaseStudyDetails = () => {
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8">
                 {currentCase.overview}
               </p>
-              
+
               <div className="grid grid-cols-2 gap-6 bg-gray-900/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none p-4 md:p-0 rounded-lg">
                 <div>
                   <p className="text-[#6b9dc7] font-semibold text-sm mb-2 uppercase tracking-wider">Client</p>
@@ -143,7 +144,7 @@ const CaseStudyDetails = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="relative hidden md:block">
               <img
                 src={currentCase.image}
@@ -159,7 +160,7 @@ const CaseStudyDetails = () => {
       <div ref={contentRef} className=" py-4 ">
         <div className="container mx-auto px-6">
           <div className="max-w-5xl mx-auto">
-            
+
             {/* Challenge */}
             <div className="mb-2">
               <div className="flex items-start mb-6">
@@ -215,62 +216,62 @@ const CaseStudyDetails = () => {
             </div>
 
             {/* Impact Metrics */}
-<div className="mb-2">
-  <div className="flex items-start mb-6">
-    <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
-      <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
-    </div>
-    <div>
-      <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Impact Metrics</h2>
-      <div className="w-16 h-0.5 bg-[#6b9dc7]"></div>
-    </div>
-  </div>
-  <div className="ml-0 md:ml-16">
-    <div className="grid md:grid-cols-2 gap-6">
-      {currentCase.details.impactMetrics && currentCase.details.impactMetrics.map((metric, index) => {
-        // Assign icons based on metric value/label keywords
-        const getIcon = (value, label) => {
-          const text = `${value} ${label}`.toLowerCase();
-          
-          if (text.includes('revenue') || text.includes('ancillary')) return DollarSign;
-          if (text.includes('process') || text.includes('faster') || text.includes('speed')) return Clock;
-          if (text.includes('align') || text.includes('collaboration') || text.includes('cross')) return Users;
-          if (text.includes('accuracy') || text.includes('integrity') || text.includes('data')) return Database;
-          if (text.includes('efficiency') || text.includes('operational')) return BarChart3;
-          if (text.includes('improved') || text.includes('enhanced') || text.includes('increased')) return TrendingUp;
-          if (text.includes('satisfaction') || text.includes('experience')) return CheckCircle;
-          if (text.includes('security') || text.includes('protected')) return Shield;
-          if (text.includes('reduced') || text.includes('cost')) return Target;
-          if (text.includes('scalable') || text.includes('framework')) return RefreshCw;
-          if (text.includes('personalization') || text.includes('insights')) return LineChart;
-          if (text.includes('systems') || text.includes('consolidated')) return Package;
-          
-          return Zap; // Default icon
-        };
-        
-        const Icon = getIcon(metric.value, metric.label);
-        
-        return (
-          <div key={index} className="rounded-lg p-6 transition-colors">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10  rounded-lg flex items-center justify-center  flex-shrink-0">
-                <Icon className="text-[#6b9dc7]" size={20} />
-              </div>
-              <div className="flex-1">
-                <div className="text-3xl md:text-4xl font-bold text-[#6b9dc7] mb-2">
-                  {metric.value}
+            <div className="mb-2">
+              <div className="flex items-start mb-6">
+                <div className="w-12 h-12 bg-[#6b9dc7]/10 rounded-lg flex items-center justify-center border border-[#6b9dc7]/30 mr-4 flex-shrink-0">
+                  <div className="w-6 h-6 bg-[#6b9dc7] rounded"></div>
                 </div>
-                <p className="text-gray-300 text-sm md:text-base">
-                  {metric.label}
-                </p>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Impact Metrics</h2>
+                  <div className="w-16 h-0.5 bg-[#6b9dc7]"></div>
+                </div>
+              </div>
+              <div className="ml-0 md:ml-16">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {currentCase.details.impactMetrics && currentCase.details.impactMetrics.map((metric, index) => {
+                    // Assign icons based on metric value/label keywords
+                    const getIcon = (value, label) => {
+                      const text = `${value} ${label}`.toLowerCase();
+
+                      if (text.includes('revenue') || text.includes('ancillary')) return DollarSign;
+                      if (text.includes('process') || text.includes('faster') || text.includes('speed')) return Clock;
+                      if (text.includes('align') || text.includes('collaboration') || text.includes('cross')) return Users;
+                      if (text.includes('accuracy') || text.includes('integrity') || text.includes('data')) return Database;
+                      if (text.includes('efficiency') || text.includes('operational')) return BarChart3;
+                      if (text.includes('improved') || text.includes('enhanced') || text.includes('increased')) return TrendingUp;
+                      if (text.includes('satisfaction') || text.includes('experience')) return CheckCircle;
+                      if (text.includes('security') || text.includes('protected')) return Shield;
+                      if (text.includes('reduced') || text.includes('cost')) return Target;
+                      if (text.includes('scalable') || text.includes('framework')) return RefreshCw;
+                      if (text.includes('personalization') || text.includes('insights')) return LineChart;
+                      if (text.includes('systems') || text.includes('consolidated')) return Package;
+
+                      return Zap; // Default icon
+                    };
+
+                    const Icon = getIcon(metric.value, metric.label);
+
+                    return (
+                      <div key={index} className="rounded-lg p-6 transition-colors">
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10  rounded-lg flex items-center justify-center  flex-shrink-0">
+                            <Icon className="text-[#6b9dc7]" size={20} />
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-3xl md:text-4xl font-bold text-[#6b9dc7] mb-2">
+                              {metric.value}
+                            </div>
+                            <p className="text-gray-300 text-sm md:text-base">
+                              {metric.label}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
-  </div>
-</div>
           </div>
         </div>
       </div>
@@ -280,7 +281,7 @@ const CaseStudyDetails = () => {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Related Case Studies</h2>
           <p className="text-gray-400 mb-12">Explore more success stories from our portfolio</p>
-          
+
           <div className="grid md:grid-cols-2  gap-8">
             {relatedCases.map((study, index) => (
               <div
@@ -300,7 +301,7 @@ const CaseStudyDetails = () => {
                     {study.category}
                   </span>
                 </div>
-                
+
                 <div className="p-6">
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-[#6b9dc7] transition-colors">
                     {study.title}
@@ -329,13 +330,10 @@ const CaseStudyDetails = () => {
             <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               Let's discuss how we can help transform your organization and deliver measurable outcomes.
             </p>
-            <button 
-              onClick={() => handleNavigation('/consultation')}
-              className="inline-flex items-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-colors shadow-lg shadow-[#6b9dc7]/30 cursor-pointer"
-            >
-              <span>Schedule a Consultation</span>
-              <ChevronRight className="ml-2" size={20} />
-            </button>
+            <CalendlyPopup
+              text="Schedule a Consultation"
+              className="inline-flex items-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-lg shadow-[#6b9dc7]/30 border-none cursor-pointer"
+            />
           </div>
         </div>
       </div>

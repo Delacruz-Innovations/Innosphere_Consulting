@@ -4,13 +4,14 @@ import { trackPhoneClick, trackEmailClick } from '../utils/analytics';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { trackContactSubmission } from '../utils/analytics';
+import CalendlyPopup from '../Components/CalendlyPopup';
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   // Add this state
-const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-const dropdownRef = useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -35,7 +36,7 @@ const dropdownRef = useRef(null);
     setSubmitSuccess(false);
 
     trackContactSubmission('Contact Form');
-    
+
     try {
       const response = await fetch('https://formspree.io/f/mjkpnawy', {
         method: 'POST',
@@ -71,15 +72,15 @@ const dropdownRef = useRef(null);
     }
   };
   // Add click outside handler
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
-    }
-  };
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => document.removeEventListener('mousedown', handleClickOutside);
-}, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-950 pt-20">
@@ -93,12 +94,22 @@ useEffect(() => {
         {/* Contact Form and Info */}
         <div className="max-w-5xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-3xl p-6 md:p-12 shadow-2xl">
           <div className=" gap-12">
-            {/* Left Side - Contact Info
+            {/* Left Side - Contact Info */}
             <div>
               <h2 className="text-4xl font-bold text-white mb-6">Let's talk!</h2>
-              
+              <div className="mb-8">
+                <CalendlyPopup
+                  text="Book a Strategy Call"
+                  className="w-full py-4 bg-[#6b9dc7] text-white font-semibold rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-none cursor-pointer"
+                />
+                <div className="flex items-center my-6">
+                  <div className="flex-1 border-t border-gray-600"></div>
+                  <span className="px-4 text-gray-400 text-sm">OR SEND A MESSAGE</span>
+                  <div className="flex-1 border-t border-gray-600"></div>
+                </div>
+              </div>
               <p className="text-gray-300 mb-8">
-                hate forms? Instead, send us an <a href="mailto:connect@innosphereconsulting.ae" className="text-blue-400 hover:text-blue-300">e-mail</a>.
+                Prefer to talk directly? Book a call using the button above for the fastest response.
               </p>
 
               <div className="space-y-6" onClick={trackPhoneClick}>
@@ -131,12 +142,6 @@ useEffect(() => {
                   </div>
                 </div>
               </div>
-            </div> */}
-
-            <div>
-              <h2 className="text-4xl font-bold text-white mb-6">Let's talk!</h2>
-              
-            
             </div>
 
             {/* Right Side - Form */}
@@ -166,7 +171,7 @@ useEffect(() => {
                   placeholder="Enter your email"
                 />
               </div>
-<div>
+              <div>
                 <label className="block text-gray-400 text-sm mb-2">PHONE</label>
                 <PhoneInput
                   country={'ae'}

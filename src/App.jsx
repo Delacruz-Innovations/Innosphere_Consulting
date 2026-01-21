@@ -20,6 +20,7 @@ import TermsAndConditions from './Components/TermsAndConditions';
 import Policy from './Pages/Policy';
 import Academy from './Pages/Academy';
 import Industries from './Pages/Industries';
+import CalendlyTracker from './Components/CalendlyTracker';
 
 import { initGA, logPageView, logEvent } from './utils/analytics';
 
@@ -159,14 +160,14 @@ function InteractionTracker() {
       try {
         const link = e.target.closest('a');
         const button = e.target.closest('button');
-        
+
         if (link) {
           const href = link.getAttribute('href');
           if (href?.startsWith('http') && !href.includes(window.location.hostname)) {
             safeLogEvent('Outbound Link', 'Click', href);
           }
         }
-        
+
         if (button) {
           const buttonText = button.textContent?.trim() || button.getAttribute('aria-label') || 'Unknown Button';
           safeLogEvent('Button', 'Click', buttonText);
@@ -228,7 +229,7 @@ const App = () => {
     } catch (error) {
       console.error('Failed to initialize GA:', error);
     }
-    
+
     // Log initial page view
     try {
       logPageView();
@@ -261,7 +262,7 @@ const App = () => {
             if (perfEntries && perfEntries.length > 0) {
               const perfData = perfEntries[0];
               const pageLoadTime = perfData.loadEventEnd - perfData.fetchStart;
-              
+
               if (pageLoadTime > 0) {
                 safeLogEvent('Performance', 'Page Load Time', 'Homepage', Math.round(pageLoadTime));
                 if (isDevelopment) {
@@ -314,6 +315,7 @@ const App = () => {
 
   return (
     <Router >
+      <CalendlyTracker />
       <ScrollToTop />
       <RouteTracker />
       <ScrollDepthTracker />

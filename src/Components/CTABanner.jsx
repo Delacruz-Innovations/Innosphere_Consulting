@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import CalendlyPopup from './CalendlyPopup';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,12 +25,12 @@ const CTABanner = () => {
       { scale: 0.8, opacity: 0 },
       { scale: 1, opacity: 1, duration: 0.8, ease: 'power3.out' }
     )
-    .fromTo(
-      buttonsRef.current.children,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: 'power3.out' },
-      '-=0.4'
-    );
+      .fromTo(
+        buttonsRef.current.children,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.2, ease: 'power3.out' },
+        '-=0.4'
+      );
 
     // Floating animation for the banner
     gsap.to(bannerRef.current, {
@@ -56,7 +57,7 @@ const CTABanner = () => {
         >
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-3xl"></div>
-          
+
           {/* Main banner */}
           <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl overflow-hidden">
             {/* Pattern overlay */}
@@ -78,14 +79,10 @@ const CTABanner = () => {
               </div>
 
               <div ref={buttonsRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  to="/contact"
-                  className="group inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto justify-center"
-                >
-                  <Calendar className="w-5 h-5" />
-                  Schedule Consultation
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <CalendlyPopup
+                  text="Schedule Consultation"
+                  className="group inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto justify-center border-none cursor-pointer"
+                />
 
                 <Link
                   to="/work"

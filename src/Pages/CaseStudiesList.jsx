@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight  } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import caseStudiesDataObj from '../Components/caseStudiesData';
+import CalendlyPopup from '../Components/CalendlyPopup';
 
 const CaseStudiesList = () => {
   const heroRef = useRef(null);
@@ -11,7 +12,7 @@ const CaseStudiesList = () => {
     if (heroRef.current) {
       heroRef.current.style.opacity = '0';
       heroRef.current.style.transform = 'translateY(20px)';
-      
+
       setTimeout(() => {
         heroRef.current.style.transition = 'all 0.8s ease-out';
         heroRef.current.style.opacity = '1';
@@ -66,16 +67,16 @@ const CaseStudiesList = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <img 
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" 
-                alt="Case Studies" 
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
+                alt="Case Studies"
                 className="rounded-2xl shadow-2xl"
               />
             </div>
-            
+
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 Case Studies: <span className="text-[#6b9dc7]">Proven Results</span>
               </h1>
@@ -115,7 +116,7 @@ const CaseStudiesList = () => {
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                
+
                   <div className="absolute bottom-6 left-6">
                     <span className="inline-block bg-gray-900/90 backdrop-blur-sm text-[#6b9dc7] px-3 py-1 rounded text-xs font-semibold uppercase tracking-wide">
                       {study.category}
@@ -149,9 +150,9 @@ const CaseStudiesList = () => {
                 className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-[#6b9dc7]/30 hover:shadow-[#6b9dc7]/50"
               >
                 <span>{showAll ? 'Show Less' : 'Show More Case Studies'}</span>
-                <ArrowRight 
-                  size={20} 
-                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                <ArrowRight
+                  size={20}
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 />
               </button>
             </div>
@@ -159,7 +160,7 @@ const CaseStudiesList = () => {
         </div>
       </div>
 
- 
+
 
       {/* CTA Section */}
       <div className="">
@@ -169,16 +170,14 @@ const CaseStudiesList = () => {
               Ready to Write Your Success Story?
             </h2>
             <p className="text-gray-300 text-md mb-10 max-w-2xl mx-auto leading-relaxed">
-             Let's discuss how tested and trusted approach can help your business achieve transformational results. Schedule a consultation with our experts consultants today.
+              Let's discuss how tested and trusted approach can help your business achieve transformational results. Schedule a consultation with our experts consultants today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-[#6b9dc7]/30"
-              >
-                <span>Schedule A Free Consultation</span>
-                <ArrowRight className="ml-2" size={20} />
-              </button>
-              <button 
+              <CalendlyPopup
+                text="Schedule A Free Consultation"
+                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-[#6b9dc7]/30 border-none cursor-pointer"
+              />
+              <button
                 className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
               >
                 <span>Download Portfolio</span>

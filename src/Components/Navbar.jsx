@@ -3,6 +3,7 @@ import { Play, X, ChevronDown, Menu } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import Logo from '../assets/Logo.png'
+import CalendlyPopup from './CalendlyPopup';
 
 const Navbar = () => {
   const navRef = useRef(null);
@@ -79,58 +80,52 @@ const Navbar = () => {
           <Link to='/' className="flex items-center gap-3">
             <img src={Logo} className='w-44 h-14 object-cover' alt="Logo" />
           </Link>
-          
+
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8">
-            <Link 
-              to="/about" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/about') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/about"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/about') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
               ABOUT US
             </Link>
 
-             <Link 
-              to="/our_services" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/our_services') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/our_services"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/our_services') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
-             OUR SERVICES
+              OUR SERVICES
             </Link>
 
-            <Link 
-              to="/industries" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/industries') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/industries"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/industries') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
               INDUSTRIES
             </Link>
-            <Link 
-              to="/cases" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/cases') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/cases"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/cases') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
               CASE STUDIES
             </Link>
 
-            <Link 
-              to="/insights" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/insights') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/insights"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/insights') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
               INSIGHTS
             </Link>
 
-            <Link 
-              to="/academy" 
-              className={`transition-colors text-sm font-medium tracking-wide ${
-                isActive('/academy') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/academy"
+              className={`transition-colors text-sm font-medium tracking-wide ${isActive('/academy') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
             >
               ACADEMY
             </Link>
@@ -138,16 +133,14 @@ const Navbar = () => {
           </div>
           <div>
 
-            <Link 
-              to="/contact" 
-              className={`transition-colors text-sm font-medium tracking-wide bg-[#6b9dc7] px-6 py-3 hover:bg-blue-700 rounded-full text-white hidden lg:block`}
-            >
-              CONTACT US
-            </Link>
+            <CalendlyPopup
+              text="BOOK A CALL"
+              className="transition-colors text-sm font-medium tracking-wide bg-[#6b9dc7] px-6 py-3 hover:bg-blue-700 rounded-full text-white hidden lg:block border-none cursor-pointer"
+            />
           </div>
-          
+
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden text-white"
           >
@@ -160,75 +153,66 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="mobile-menu lg:hidden absolute top-full left-0 right-0 mt-4 bg-slate-950 backdrop-blur-xl border border-[#1e3a5f]/50 rounded-3xl shadow-2xl overflow-hidden">
           <div className="py-4">
-            <Link 
-              to="/about" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/about') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/about"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/about') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               ABOUT US
             </Link>
-            <Link 
-              to="/our_services" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/our_services') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/our_services"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/our_services') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               OUR SERVICES
             </Link>
-            <Link 
-              to="/industries" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/industries') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/industries"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/industries') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               INDUSTRIES
             </Link>
 
-           
 
-         
 
-            <Link 
-              to="/cases" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/cases') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+
+
+            <Link
+              to="/cases"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/cases') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               CASE STUDIES
             </Link>
 
-            <Link 
-              to="/insights" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/insights') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/insights"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/insights') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               INSIGHTS
             </Link>
 
-            <Link 
-              to="/academy" 
-              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${
-                isActive('/academy') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
-              }`}
+            <Link
+              to="/academy"
+              className={`block px-6 py-3 transition-colors text-sm font-medium tracking-wide ${isActive('/academy') ? 'text-[#6b9dc7]' : 'text-gray-300 hover:text-[#a8c5e0]'
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               ACADEMY
             </Link>
 
-            <Link 
-              to="/contact" 
-              className={`block px-6 py-3 mx-6 mt-2 text-center transition-colors text-sm font-medium tracking-wide bg-blue-500 hover:bg-blue-700 rounded-full text-white`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              CONTACT US
-            </Link>
+            <CalendlyPopup
+              text="BOOK A CALL"
+              className="block w-[calc(100%-3rem)] px-6 py-3 mx-6 mt-2 text-center transition-colors text-sm font-medium tracking-wide bg-blue-500 hover:bg-blue-700 rounded-full text-white border-none cursor-pointer"
+            />
           </div>
         </div>
       )}

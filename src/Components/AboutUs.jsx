@@ -9,7 +9,7 @@ const AboutUs = () => {
   const rightContentRef = useRef(null);
   const cardRef = useRef(null);
 
-   const fullText = `Innosphere Consulting was founded by seasoned consultant Tosin, with over 15 years of international experience spanning the UK, Ireland, and Africa. The firm now operates in Dubai, serving MENA-based companies seeking practical, tech-driven strategies for sustainable growth. Our work is grounded in execution  every recommendation is backed by hands-on implementation and measurable results.`;
+   const fullText = `Inosphere Consulting was founded by our Lead Business Consultant - Tosin Samuel Ojo. Boasting over 15 years of international experience spanning the UK, Europe, and Africa. The firm now operates in Dubai, serving MENA-based companies seeking practical, tech-driven strategies for sustainable growth. Our work is grounded in execution every recommendation is backed by hands-on implementation and measurable results.`;
 
   const [displayedText, setDisplayedText] = useState("");
   const index = useRef(0);

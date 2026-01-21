@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Building2, Heart, Zap, Landmark, ShoppingCart, TrendingUp, ArrowRight, CheckCircle, ArrowLeft, BookOpen, CreditCard, Truck, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import CalendlyPopup from '../Components/CalendlyPopup';
 
 const Industries = () => {
   const heroRef = useRef(null);
   const industriesRef = useRef([]);
   const [flippedCard, setFlippedCard] = useState(null);
-const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
       heroRef.current.style.opacity = '0';
       heroRef.current.style.transform = 'translateY(20px)';
-      
+
       setTimeout(() => {
         heroRef.current.style.transition = 'all 0.8s ease-out';
         heroRef.current.style.opacity = '1';
@@ -46,171 +47,171 @@ const [showAll, setShowAll] = useState(false);
     return () => observer.disconnect();
   }, []);
 
-const industries = [
-  {
-    id: 1,
-    name: "IT Tech Startups",
-    slug: "tech-startups",
-    icon: TrendingUp,
-    tagline: "Building Scalable Digital Products for Emerging Startups",
-    description:
-      "We support tech-driven startups in developing scalable digital platforms, improving user experience, and accelerating product deployment.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    capabilities: [
-      "MVP development and product scaling",
-      "Backend and frontend engineering",
-      "Cloud infrastructure setup",
-      "UI/UX design and improvement",
-      "Automation and workflow optimization"
-    ],
-    outcomes: [
-      "Faster product launch cycles",
-      "Improved user engagement",
-      "Reduced development overhead",
-      "Stable and scalable system architecture"
-    ]
-  },
-  {
-    id: 2,
-    name: "Government & Public Sector",
-    slug: "public-sector",
-    icon: Landmark,
-    tagline: "Digitizing Public Services and Improving Citizen Engagement",
-    description:
-      "We work with government agencies to modernize public services through secure digital platforms and workflow automation.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-    capabilities: [
-      "E-government solutions",
-      "Citizen service portals",
-      "Process automation",
-      "Data governance and security",
-      "Performance tracking systems"
-    ],
-    outcomes: [
-      "Improved service delivery",
-      "Enhanced transparency",
-      "Better citizen satisfaction",
-      "Efficient governmental operations"
-    ]
-  },
-  {
-    id: 3,
-    name: "Education & Training",
-    slug: "education-training",
-    icon: BookOpen,
-    tagline: "Driving Digital Transformation in Learning Institutions",
-    description:
-      "We help educational institutions adopt digital solutions for improved learning, student management, and online training delivery.",
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
-    capabilities: [
-      "E-learning platform development",
-      "Student information systems",
-      "Digital content creation",
-      "Virtual classrooms and LMS integration",
-      "Online assessment systems"
-    ],
-    outcomes: [
-      "Better student engagement",
-      "Seamless digital learning experience",
-      "Improved administrative efficiency",
-      "Scalable education delivery"
-    ]
-  },
-  {
-    id: 4,
-    name: "FinTech & Payments",
-    slug: "fintech-payments",
-    icon: CreditCard,
-    tagline: "Delivering Secure and Scalable Financial Technology Solutions",
-    description:
-      "We support fintech companies and payment providers with digital financial platforms, automation, and secure transaction systems.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    capabilities: [
-      "Payment system development",
-      "Digital banking solutions",
-      "Fraud detection tools",
-      "API and gateway integrations",
-      "Customer analytics"
-    ],
-    outcomes: [
-      "Faster transaction processing",
-      "Enhanced security and compliance",
-      "Increased user adoption",
-      "Optimized financial operations"
-    ]
-  },
-  {
-    id: 5,
-    name: "Logistics & Mobility",
-    slug: "logistics-mobility",
-    icon: Truck,
-    tagline: "Optimizing Delivery Operations and Fleet Efficiency",
-    description:
-      "We build digital solutions that help logistics and mobility companies streamline deliveries, enhance tracking, and improve customer experience.",
-    image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=800&q=80",
-    capabilities: [
-      "Delivery tracking systems",
-      "Fleet management tools",
-      "Route optimization",
-      "Inventory and warehouse automation",
-      "Customer communication systems"
-    ],
-    outcomes: [
-      "Reduced delivery delays",
-      "Lower operational costs",
-      "Improved fleet efficiency",
-      "Better tracking accuracy"
-    ]
-  },
-  {
-    id: 6,
-    name: "Real Estate & Property Tech",
-    slug: "real-estate-proptech",
-    icon: Home,
-    tagline: "Digitizing Property Management and Real Estate Services",
-    description:
-      "We help property companies and real estate firms build digital tools for listings, tenant management, and automated reporting.",
-    image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
-    capabilities: [
-      "Property listing platforms",
-      "Tenant and landlord portals",
-      "Automated payment systems",
-      "Virtual tours and 3D interface",
-      "Data analytics for property insights"
-    ],
-    outcomes: [
-      "Improved tenant experience",
-      "Faster property sales and rentals",
-      "Automated rent collection",
-      "Better property visibility"
-    ]
-  },
-  {
-    id: 7,
-    name: "E-commerce",
-    slug: "ecommerce",
-    icon: ShoppingCart,
-    tagline: "Scaling Digital Stores and Boosting Customer Engagement",
-    description:
-      "We help online sellers and retail brands build seamless e-commerce platforms that drive sales and customer loyalty.",
-    image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
-    capabilities: [
-      "E-commerce website development",
-      "Inventory and order management",
-      "Payment integration",
-      "Customer analytics",
-      "Marketing automation"
-    ],
-    outcomes: [
-      "Higher online sales conversion",
-      "Faster order processing",
-      "Better customer retention",
-      "Stronger digital presence"
-    ]
-  }
-];
+  const industries = [
+    {
+      id: 1,
+      name: "IT Tech Startups",
+      slug: "tech-startups",
+      icon: TrendingUp,
+      tagline: "Building Scalable Digital Products for Emerging Startups",
+      description:
+        "We support tech-driven startups in developing scalable digital platforms, improving user experience, and accelerating product deployment.",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+      capabilities: [
+        "MVP development and product scaling",
+        "Backend and frontend engineering",
+        "Cloud infrastructure setup",
+        "UI/UX design and improvement",
+        "Automation and workflow optimization"
+      ],
+      outcomes: [
+        "Faster product launch cycles",
+        "Improved user engagement",
+        "Reduced development overhead",
+        "Stable and scalable system architecture"
+      ]
+    },
+    {
+      id: 2,
+      name: "Government & Public Sector",
+      slug: "public-sector",
+      icon: Landmark,
+      tagline: "Digitizing Public Services and Improving Citizen Engagement",
+      description:
+        "We work with government agencies to modernize public services through secure digital platforms and workflow automation.",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+      capabilities: [
+        "E-government solutions",
+        "Citizen service portals",
+        "Process automation",
+        "Data governance and security",
+        "Performance tracking systems"
+      ],
+      outcomes: [
+        "Improved service delivery",
+        "Enhanced transparency",
+        "Better citizen satisfaction",
+        "Efficient governmental operations"
+      ]
+    },
+    {
+      id: 3,
+      name: "Education & Training",
+      slug: "education-training",
+      icon: BookOpen,
+      tagline: "Driving Digital Transformation in Learning Institutions",
+      description:
+        "We help educational institutions adopt digital solutions for improved learning, student management, and online training delivery.",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80",
+      capabilities: [
+        "E-learning platform development",
+        "Student information systems",
+        "Digital content creation",
+        "Virtual classrooms and LMS integration",
+        "Online assessment systems"
+      ],
+      outcomes: [
+        "Better student engagement",
+        "Seamless digital learning experience",
+        "Improved administrative efficiency",
+        "Scalable education delivery"
+      ]
+    },
+    {
+      id: 4,
+      name: "FinTech & Payments",
+      slug: "fintech-payments",
+      icon: CreditCard,
+      tagline: "Delivering Secure and Scalable Financial Technology Solutions",
+      description:
+        "We support fintech companies and payment providers with digital financial platforms, automation, and secure transaction systems.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+      capabilities: [
+        "Payment system development",
+        "Digital banking solutions",
+        "Fraud detection tools",
+        "API and gateway integrations",
+        "Customer analytics"
+      ],
+      outcomes: [
+        "Faster transaction processing",
+        "Enhanced security and compliance",
+        "Increased user adoption",
+        "Optimized financial operations"
+      ]
+    },
+    {
+      id: 5,
+      name: "Logistics & Mobility",
+      slug: "logistics-mobility",
+      icon: Truck,
+      tagline: "Optimizing Delivery Operations and Fleet Efficiency",
+      description:
+        "We build digital solutions that help logistics and mobility companies streamline deliveries, enhance tracking, and improve customer experience.",
+      image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=800&q=80",
+      capabilities: [
+        "Delivery tracking systems",
+        "Fleet management tools",
+        "Route optimization",
+        "Inventory and warehouse automation",
+        "Customer communication systems"
+      ],
+      outcomes: [
+        "Reduced delivery delays",
+        "Lower operational costs",
+        "Improved fleet efficiency",
+        "Better tracking accuracy"
+      ]
+    },
+    {
+      id: 6,
+      name: "Real Estate & Property Tech",
+      slug: "real-estate-proptech",
+      icon: Home,
+      tagline: "Digitizing Property Management and Real Estate Services",
+      description:
+        "We help property companies and real estate firms build digital tools for listings, tenant management, and automated reporting.",
+      image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
+      capabilities: [
+        "Property listing platforms",
+        "Tenant and landlord portals",
+        "Automated payment systems",
+        "Virtual tours and 3D interface",
+        "Data analytics for property insights"
+      ],
+      outcomes: [
+        "Improved tenant experience",
+        "Faster property sales and rentals",
+        "Automated rent collection",
+        "Better property visibility"
+      ]
+    },
+    {
+      id: 7,
+      name: "E-commerce",
+      slug: "ecommerce",
+      icon: ShoppingCart,
+      tagline: "Scaling Digital Stores and Boosting Customer Engagement",
+      description:
+        "We help online sellers and retail brands build seamless e-commerce platforms that drive sales and customer loyalty.",
+      image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&q=80",
+      capabilities: [
+        "E-commerce website development",
+        "Inventory and order management",
+        "Payment integration",
+        "Customer analytics",
+        "Marketing automation"
+      ],
+      outcomes: [
+        "Higher online sales conversion",
+        "Faster order processing",
+        "Better customer retention",
+        "Stronger digital presence"
+      ]
+    }
+  ];
 
-const displayedIndustries = showAll ? industries : industries.slice(0, 3);
+  const displayedIndustries = showAll ? industries : industries.slice(0, 3);
   return (
     <div className=" bg-slate-950 pt-4">
       {/* Hero Section */}
@@ -220,16 +221,16 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <img 
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" 
-                alt="Industries" 
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
+                alt="Industries"
                 className="rounded-2xl shadow-2xl"
               />
             </div>
-            
+
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
-              
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 Transforming Industries Across <span className="text-[#6b9dc7]">Nigeria & West Africa</span>
               </h1>
@@ -241,7 +242,7 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
         </div>
       </div>
 
-      {/* Industries Grid */} 
+      {/* Industries Grid */}
       <div className="container mx-auto px-6 py-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -321,8 +322,8 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
                     }}
                   >
                     <div className="p-6 h-full overflow-y-auto">
-                  
-                  
+
+
 
                       <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <industry.icon className="text-[#6b9dc7]" size={24} />
@@ -366,7 +367,7 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
               </div>
             ))}
           </div>
-           {/* Show More/Less Button */}
+          {/* Show More/Less Button */}
           {industries.length > 3 && (
             <div className="text-center mt-12">
               <button
@@ -374,15 +375,15 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
                 className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-all duration-300 shadow-lg shadow-[#6b9dc7]/30 hover:shadow-[#6b9dc7]/50"
               >
                 <span>{showAll ? 'Show Less' : 'Show More Industries'}</span>
-                <ArrowRight 
-                  size={20} 
-                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                <ArrowRight
+                  size={20}
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 />
               </button>
             </div>
           )}
-        
-    
+
+
         </div>
       </div>
 
@@ -463,19 +464,16 @@ const displayedIndustries = showAll ? industries : industries.slice(0, 3);
               Let's discuss how our industry expertise can help your organization achieve its digital transformation goals. Schedule a consultation with our experts today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/consultation" >  <button 
-                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-colors shadow-lg shadow-[#6b9dc7]/30"
-              >
-                <span>Schedule Consultation</span>
-                <ArrowRight className="ml-2" size={20} />
-              </button>
-              </Link>
+              <CalendlyPopup
+                text="Schedule Consultation"
+                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-lg shadow-[#6b9dc7]/30 border-none cursor-pointer"
+              />
               <Link to="/cases">
-              <button 
-                className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
-              >
-                <span>View Case Studies</span>
-              </button>
+                <button
+                  className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
+                >
+                  <span>View Case Studies</span>
+                </button>
               </Link>
             </div>
           </div>

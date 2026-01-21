@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ChevronRight, Plus, Minus } from 'lucide-react';
+import CalendlyPopup from '../Components/CalendlyPopup';
 import servicesData from '../servicesData';
 
 const ServicesPage = () => {
@@ -17,14 +18,14 @@ const ServicesPage = () => {
     if (heroRef.current) {
       heroRef.current.style.opacity = '0';
       heroRef.current.style.transform = 'translateY(20px)';
-      
+
       setTimeout(() => {
         heroRef.current.style.transition = 'all 0.8s ease-out';
         heroRef.current.style.opacity = '1';
         heroRef.current.style.transform = 'translateY(0)';
       }, 100);
     }
-    
+
     const observerOptions = {
       threshold: 0.15,
       rootMargin: '0px 0px -80px 0px'
@@ -115,48 +116,45 @@ const ServicesPage = () => {
                 onClick={() => handleServiceClick(service.slug, index)}
               >
                 {/* Background Image */}
-                <div 
+                <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
                     backgroundImage: `url(${service.image})`
                   }}
                 />
-                
+
                 {/* Dark Overlay for better text contrast */}
                 <div className="absolute inset-0 bg-gray-900/60" />
-                
+
                 {/* Gradient Overlay - Appears on hover/expand */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-cyan-600/30 to-blue-700/30 transition-opacity duration-500 ${
-                  showContent ? 'opacity-100' : 'opacity-0'
-                }`} />
+                <div className={`absolute inset-0 bg-gradient-to-br from-cyan-600/30 to-blue-700/30 transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'
+                  }`} />
 
                 {/* Title - Always visible, hides on hover/expand */}
-                <div className={`absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white transition-all duration-500 ${
-                  showContent ? 'opacity-0 transform -translate-y-4' : 'opacity-100'
-                }`}>
+                <div className={`absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white transition-all duration-500 ${showContent ? 'opacity-0 transform -translate-y-4' : 'opacity-100'
+                  }`}>
                   <h2 className="text-2xl md:text-3xl font-bold leading-tight">
                     {service.title}
                   </h2>
                 </div>
 
                 {/* Expanded Content - Visible on hover/expand */}
-                <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white transition-all duration-500 ${
-                  showContent
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-8 pointer-events-none'
-                }`}>
+                <div className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white transition-all duration-500 ${showContent
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-8 pointer-events-none'
+                  }`}>
                   <div></div>
-                  
+
                   <div className="space-y-3 md:space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold leading-tight">
                       {service.title}
                     </h2>
-                    
+
                     <p className="text-base md:text-lg leading-relaxed text-white/90">
                       {service.shortDescription}
                     </p>
-                    
-                    <button 
+
+                    <button
                       className="flex items-center gap-2 text-base md:text-lg font-semibold hover:gap-3 transition-all group/btn"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -170,7 +168,7 @@ const ServicesPage = () => {
                 </div>
 
                 {/* Action Button - Bottom right */}
-                <button 
+                <button
                   onClick={(e) => handleToggle(index, e)}
                   className="absolute bottom-6 right-6 md:bottom-8 md:right-8 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/30 transition-all duration-300 z-20"
                 >
@@ -182,9 +180,8 @@ const ServicesPage = () => {
                 </button>
 
                 {/* Animated Border on Hover/Expand */}
-                <div className={`absolute inset-0 rounded-2xl border-2 border-cyan-400 transition-opacity duration-500 ${
-                  showContent ? 'opacity-100' : 'opacity-0'
-                }`} />
+                <div className={`absolute inset-0 rounded-2xl border-2 border-cyan-400 transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'
+                  }`} />
               </div>
             );
           })}
@@ -198,10 +195,9 @@ const ServicesPage = () => {
               className="group inline-flex items-center gap-3 px-8 py-4 bg-gray-800 hover:bg-[#6b9dc7] text-white rounded-lg font-semibold transition-all duration-300 border border-gray-700 hover:border-cyan-500 shadow-lg hover:shadow-cyan-900/30"
             >
               <span>{showAll ? 'Show Less' : `Show More (${servicesData.services.length - 4} more)`}</span>
-              <ChevronRight 
-                className={`w-5 h-5 transition-transform duration-300 ${
-                  showAll ? 'rotate-90' : '-rotate-90'
-                }`}
+              <ChevronRight
+                className={`w-5 h-5 transition-transform duration-300 ${showAll ? 'rotate-90' : '-rotate-90'
+                  }`}
               />
             </button>
           </div>
@@ -215,17 +211,13 @@ const ServicesPage = () => {
             What's your next big move?
           </h2>
           <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Our team of experts can help you design and implement tailored solutions 
+            Our team of experts can help you design and implement tailored solutions
             for your unique business needs and drive measurable results.
           </p>
-          <Link to="/consultation">
-            <button 
-              className="inline-flex items-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors shadow-lg shadow-cyan-900/30"
-            >
-              <span>Book A Free Consultation Now</span>
-              <ChevronRight className="ml-2" size={20} />
-            </button>
-          </Link>
+          <CalendlyPopup
+            text="Book A Free Consultation Now"
+            className="inline-flex items-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors shadow-lg shadow-cyan-900/30 border-none cursor-pointer"
+          />
         </div>
       </div>
     </div>

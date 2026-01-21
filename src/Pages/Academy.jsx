@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CheckCircle, Users, Award, Calendar, ArrowRight, BookOpen, Target, TrendingUp, ArrowLeft, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import CalendlyPopup from '../Components/CalendlyPopup';
 
 const Academy = () => {
   const heroRef = useRef(null);
@@ -12,7 +13,7 @@ const Academy = () => {
     if (heroRef.current) {
       heroRef.current.style.opacity = '0';
       heroRef.current.style.transform = 'translateY(20px)';
-      
+
       setTimeout(() => {
         heroRef.current.style.transition = 'all 0.8s ease-out';
         heroRef.current.style.opacity = '1';
@@ -221,13 +222,13 @@ const Academy = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Image */}
             <div className="order-2 lg:order-1">
-              <img 
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80" 
-                alt="Capability Academy" 
+              <img
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80"
+                alt="Capability Academy"
                 className="rounded-2xl shadow-2xl"
               />
             </div>
-            
+
             {/* Right - Content */}
             <div className="order-1 lg:order-2">
               <div className="inline-block mb-6">
@@ -259,7 +260,7 @@ const Academy = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-[#6b9dc7] transition-all duration-300"
               >
@@ -362,8 +363,8 @@ const Academy = () => {
                     }}
                   >
                     <div className="p-6 h-full overflow-y-auto">
-                    
-                     
+
+
 
                       <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <program.icon className="text-[#6b9dc7]" size={24} />
@@ -416,9 +417,9 @@ const Academy = () => {
                 className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-all duration-300 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50"
               >
                 <span>{showAll ? 'Show Less' : 'Show More Programs'}</span>
-                <ArrowRight 
-                  size={20} 
-                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} 
+                <ArrowRight
+                  size={20}
+                  className={`ml-2 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 />
               </button>
             </div>
@@ -503,14 +504,11 @@ const Academy = () => {
               Join hundreds of professionals who have accelerated their careers through our academy. Get in touch to discuss which program is right for you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to='/consultation'>  <button 
-                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6b9dc7] transition-colors shadow-lg s    hadow-blue-900/30"
-              >
-                <span>Enroll Now</span>
-                <ArrowRight className="ml-2" size={20} />
-              </button>
-              </Link>
-              <button 
+              <CalendlyPopup
+                text="Enroll Now"
+                className="inline-flex items-center justify-center bg-[#6b9dc7] text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors shadow-lg shadow-blue-900/30 border-none cursor-pointer"
+              />
+              <button
                 className="inline-flex items-center justify-center bg-gray-800 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors border border-gray-700"
               >
                 <span>Download Brochure</span>
